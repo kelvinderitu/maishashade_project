@@ -364,28 +364,28 @@ foreach ($result as $row) {
 								if (isset($_SESSION['customer'])) {
 								?>
 									<center>
-										<a href="customer-order.php"><button class="btn btn-sm btn-primary">
-												<font color="white"><i class="fa fa-clipboard"></i>
+										<a href="customer-order.php"><button class="btn btn-sm btn-secondary">
+												<font color="black"><i class="fa fa-clipboard"></i>
 													<h6>My Orders</h6>
 												</font>
 											</button></a>
-										<a href="services/mybookings.php"><button class="btn btn-sm btn-primary">
-												<font color="white"><i class="fa fa-list"></i>
+										<a href="services/mybookings.php"><button class="btn btn-sm btn-secondary">
+												<font color="black"><i class="fa fa-list"></i>
 													<h6>My Bookings</h6>
 												</font>
 											</button></a>
-										<a href="register/inbox.php"><button class="btn btn-sm btn-primary">
-												<font color="white"><i class="fa fa-envelope"></i>
+										<a href="register/inbox.php"><button class="btn btn-sm btn-secondary">
+												<font color="black"><i class="fa fa-envelope"></i>
 													<h6>Feedback</h6>
 												</font>
 											</button></a>
-										<a href="customer-profile-update.php"><button class="btn btn-sm btn-primary">
-												<font color="white"><i class="fa fa-user"></i>
+										<a href="customer-profile-update.php"><button class="btn btn-sm btn-secondary">
+												<font color="black"><i class="fa fa-user"></i>
 													<h6>Profile</h6>
 												</font>
 											</button></a>
-										<a href="logout.php"><button class="btn btn-sm btn-primary">
-												<font color="white"><i class="fa fa-power-off"></i>
+										<a href="logout.php"><button class="btn btn-sm btn-secondary">
+												<font color="black"><i class="fa fa-power-off"></i>
 													<h6> Logout</h6>
 												</font>
 											</button></a>
@@ -394,20 +394,20 @@ foreach ($result as $row) {
 								} else {
 								?>
 									<center>
-										<a href="login.php"><button class="btn btn-sm btn-primary">
+										<a href="login.php"><button class="btn btn-sm btn-secondary">
 												<font color="black"><i class="fa fa-users"></i>
 													<font color="black">
 														<h6>Customer </h6>
 											</button></a></font>
-										<a href="registration.php"><button class="btn btn-sm btn-primary">
+										<a href="registration.php"><button class="btn btn-sm btn-secondary">
 												<font color="black"><i class="fa fa-user-plus"></i>
 													<h6> Register</h6>
 											</button></a></font>
-										<a href="login-staff.php"><button class="btn btn-sm btn-primary">
+										<a href="login-staff.php"><button class="btn btn-sm btn-secondary">
 												<font color="black"><i class="fa fa-users"></i>
 													<h6>Staff </h6>
 											</button></a></font>
-										<a href="contactus.php"><button class="btn btn-sm btn-primary">
+										<a href="contactus.php"><button class="btn btn-sm btn-secondary">
 												<font color="black"><i class="fa fa-send"></i>
 													<h6>Contact Us</h6>
 											</button></a></font>

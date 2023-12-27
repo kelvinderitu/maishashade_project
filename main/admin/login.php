@@ -16,7 +16,7 @@ if(isset($_POST['form1'])) {
 		$email = strip_tags($_POST['email']);
 		$password = strip_tags($_POST['password']);
 
-    	$statement = $pdo->prepare("SELECT * FROM tbl_staff WHERE email=? AND status=?");
+    	$statement = $pdo->prepare("SELECT * FROM tbl_staff WHERE email=? AND status=? AND role ='Inventory Manager'");
     	$statement->execute(array($email,'1'));
     	$total = $statement->rowCount();    
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);    

@@ -52,9 +52,9 @@ echo "<script type='text/javascript'> document.location = 'dashboard.php'; </scr
 		<div class="form-content">
 			<div class="container">
 				<div class="">
-				<h2 class="text-center text-bold text-light "><font color="black"><b>HARROW LIGHTING EAST AFRICA LTD</b></font></h2><hr>
+				<h2 class="text-center text-bold text-light "><font color="black"><b>MAISHA CAR PARKING SHADES AND CARPORTS LIMITED</b></font></h2><hr>
 					<div class="col-md-6 col-md-offset-3">
-						<h2 class="text-center text-bold text-light "><font color="black">ADMINISTRATOR LOGIN</font></h2><hr>
+						<h2 class="text-center text-bold text-light "><font color="black">ADMIN LOGIN</font></h2><hr>
 						<div class="well row pt-2x pb-3x bk-light">
 							<div class="col-md-8 col-md-offset-2">
 								<form method="post">

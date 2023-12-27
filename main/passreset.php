@@ -17,7 +17,7 @@ if(isset($_POST['form1'])) {
     } else {
         
         $cust_email = strip_tags($_POST['cust_email']);
-        $cust_phone = strip_tags($_POST['cust_phone']);
+        $cust_phone = strip_tags($_POST['cust_password']);
 
         $statement = $pdo->prepare("SELECT * FROM tbl_customer WHERE cust_email=?");
         $statement->execute(array($cust_email));
@@ -74,7 +74,7 @@ if(isset($_POST['form1'])) {
                                     <input type="email" class="form-control" name="cust_email">
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Enter Your Phone Number *</label>
+                                    <label for="">Enter Your new password *</label>
                                     <input type="text" class="form-control" name="cust_phone">
                                 </div>
                                 <div class="form-group">
