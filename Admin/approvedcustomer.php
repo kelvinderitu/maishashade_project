@@ -35,7 +35,7 @@ if (strlen($_SESSION['login_username']) == 0) {
 
 
 ?>
-   
+
     <body>
         <!------MENU SECTION START-->
 
@@ -45,7 +45,9 @@ if (strlen($_SESSION['login_username']) == 0) {
                 <div class="row pad-botm">
                     <div class="col-md-12">
                         <h4>
-                            <font color="black"><center>APPROVED CUSTOMERS REGISTRATION</center></font>
+                            <font color="black">
+                                <center>APPROVED CUSTOMERS REGISTRATION</center>
+                            </font>
                         </h4>
 
                     </div>
@@ -98,6 +100,8 @@ if (strlen($_SESSION['login_username']) == 0) {
                                                 <th>
                                                     <font color="blue">Action</font>
                                                 </th>
+                                                
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -131,6 +135,7 @@ if (strlen($_SESSION['login_username']) == 0) {
                                                                     <?php } ?>
 
                                                         </td>
+                                                        
                                                     </tr>
                                             <?php $cnt = $cnt + 1;
                                                 }
@@ -155,7 +160,7 @@ if (strlen($_SESSION['login_username']) == 0) {
 
             </div>
         </div>
-        
+
 
     </body>
 

@@ -145,13 +145,13 @@ $error="Something went wrong. Please try again";
                 <p>
                     <abbr title="address">Address</abbr>:  Nairobi
                     , Kenya<br>
-                    Po Box 4262,01002, Parklands <br>
+                     Kimathi House Nairobi CBD <br>
                 </p>
                 <p>
-                    <abbr title="Phone">Phone</abbr>: +254 733365444<br>
+                    <abbr title="Phone">Phone</abbr>: +254706071232<br>
                 </p>
                 <p>
-                    <abbr title="Email">Email</abbr>: contact@harrowlighting.com
+                    <abbr title="Email">Email</abbr>: info@maishashades.co.ke
                     </a>
                 </p>
           

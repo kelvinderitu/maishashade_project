@@ -179,7 +179,7 @@ if(!isset($_SESSION['cart_p_id'])) {
 	                                    <select name="payment_method" class="form-control select2" id="advFieldsStatus">
 	                                        <option value=""><?php echo LANG_VALUE_35; ?></option>
 	                                        <!--<option value="PayPal"><?php echo LANG_VALUE_36; ?></option>-->
-	                                        <option value="Bank Deposit">M-Pesa</option>
+	                                        <option value="Bank Deposit">EQUITY BANK</option>
 	                                    </select>
 	                                </div>
 <br><hr>
