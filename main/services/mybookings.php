@@ -3,10 +3,6 @@ session_start();
 error_reporting(0);
 include('inc/config1.php');
 
-
-
-
-
     ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -30,13 +26,14 @@ include('inc/config1.php');
 </head>
 <body>
       <!------MENU SECTION START-->
+      
 
 <!-- MENU SECTION END-->
     <div class="content-wrapper">
          <div class="container">
         <div class="row pad-botm">
             <div class="col-md-12">
-                <center><h4 > <font color="red">MY BOOKINGS</font></h4></center>
+                <center><h3 > <font color="black">MY BOOKINGS</font></h3></center>
                   
     </div>
     <div class="container">

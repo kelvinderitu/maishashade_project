@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Nyabondo bricks</title>
+    <title>MAISHA SHADES </title>
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -53,45 +51,44 @@
                                 <div class="col-lg-6">
                                     <form role="form" action="#" method="post">
 
-<?php
+                                        <?php
 
-				include 'dbconnect.php';
-                function test_input($data)
-                {
-                   $data = trim($data);
-                   $data = stripslashes($data);
-                   $data = htmlspecialchars($data);
-                   return $data;
-                }
-                $id = $_POST["id"]; 
-                $total = $_POST["total"]; 
-				$transactioncode=test_input($_POST['transactioncode']);
-$per='M1OPQRST6U8V2X3ABCDEFG45NYZ7W9HIJ0KL';
-$newS=substr(str_shuffle($per),0,8);
+                                        include 'dbconnect.php';
+                                        function test_input($data)
+                                        {
+                                            $data = trim($data);
+                                            $data = stripslashes($data);
+                                            $data = htmlspecialchars($data);
+                                            return $data;
+                                        }
+                                        $id = $_POST["id"];
+                                        $total = $_POST["total"];
+                                        $transactioncode = test_input($_POST['transactioncode']);
+                                        $per = 'M1OPQRST6U8V2X3ABCDEFG45NYZ7W9HIJ0KL';
+                                        $newS = substr(str_shuffle($per), 0, 8);
 
-$naming = "/^(?=.*[A-Z])(?=.*[0-9])/";
+                                        $naming = "/^(?=.*[A-Z])(?=.*[0-9])/";
 
-if (!preg_match($naming,$transactioncode)) {
-    $error="Please Enter a valid MPESA ID";
-    header("Refresh:0.05; url=../bookin_pay_error.php");
-  }
-else{  
-				//update query
-				$qry = "update tbl_bookings set transactioncode='$transactioncode',total='$total' where id='$id'";
-				$result = mysqli_query($conn,$qry); //query executes
+                                        if (!preg_match($naming, $transactioncode)) {
+                                            $error = "Please Enter a valid EQUITY BANK ACCOUNT NUMBER";
+                                            header("Refresh:0.05; url=../bookin_pay_error.php");
+                                        } else {
+                                            //update query
+                                            $qry = "update tbl_bookings set transactioncode='$transactioncode',total='$total' where id='$id'";
+                                            $result = mysqli_query($conn, $qry); //query executes
 
-				if(!$result){
-					echo"ERROR". mysqli_error();
-				}else {
-					echo"Payment Added Successlfully";
-				}
-            }
+                                            if (!$result) {
+                                                echo "ERROR" . mysqli_error();
+                                            } else {
+                                                echo "Payment Added Successlfully";
+                                            }
+                                        }
 
-?>
+                                        ?>
 
-                                  </form>
+                                    </form>
                                 </div>
-                                
+
                             </div>
                             <!-- /.row (nested) -->
                         </div>
@@ -122,23 +119,23 @@ else{
 
 </body>
 
-	
-	<style>
-	footer{
-   background-color: #424558;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 35px;
-    text-align: center;
-    color: #CCC;
-}
 
-footer p {
-    padding: 10.5px;
-    margin: 0px;
-    line-height: 100%;
-}
-	</style>
+<style>
+    footer {
+        background-color: #424558;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 35px;
+        text-align: center;
+        color: #CCC;
+    }
+
+    footer p {
+        padding: 10.5px;
+        margin: 0px;
+        line-height: 100%;
+    }
+</style>
 
 </html>
