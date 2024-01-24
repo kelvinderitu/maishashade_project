@@ -159,8 +159,8 @@ if ($success_message != '') {
                             ?>
                                 <center>
                                     <div class="card"><br>
-                                     
-                                        <center><img src ="../assets/uploads/log.png"></center><br>
+
+                                        <center><img src="../assets/uploads/log.png"></center><br>
                                         <b>CUSTOMER DETAILS</b><br>
                                         <b>Name:</b><br> <?php echo $row['cust_name'] . ' ' . $row['cust_lname']; ?><br>
                                         <b>Email:</b><?php echo $row['email']; ?><br>
@@ -173,27 +173,29 @@ if ($success_message != '') {
 
 
                                 <div class="container">
-                                    <b>SERVICE: </b><?php echo $row['service']; ?>
-                                    <br>
+                                    <center>
+                                        <b>SERVICE: </b><?php echo $row['service']; ?>
+                                        <br>
 
-                                    <b>CHARGES :</b> Ksh <?php echo $row['charges']; ?><br>
-                                    <b>FEE :</b> Ksh <?php echo $row['fee']; ?><br>
-                                    <b>DURATION :</b> <?php echo $row['duration']; ?><br>
-                                    <b>SERVICE PERIOD :</b>From <?php echo $row['sdate']; ?> To <?php echo $row['edate']; ?><br>
-                                    <b> Booking Date :</b><?php echo $row['pdate']; ?><br>
-                                    <hr>
-                                    
+                                        <b>CHARGES :</b> Ksh <?php echo $row['charges']; ?><br>
+                                        <b>FEE :</b> Ksh <?php echo $row['fee']; ?><br>
+                                        <b>DURATION :</b> <?php echo $row['duration']; ?><br>
+                                        <b>SERVICE PERIOD :</b>From <?php echo $row['sdate']; ?> To <?php echo $row['edate']; ?><br>
+                                        <b> Booking Date :</b><?php echo $row['pdate']; ?><br>
+                                        <hr>
 
-                                    <b>AMOUNT PAID :</b> Ksh <?php echo $row['charges'] + $row['fee']; ?><br>
-                                    <b>EQUITY BANK CODE :</b> <?php echo $row['transactioncode']; ?><br>
-                                    <b>PAID ON :</b> <?php echo $row['bdate']; ?><br>
-                                    <hr>
 
-                                    <i> SERVED BY:</i>
-                                    <br>
-                                    <b> SUPERVISOR'S NAME:</b> <?php echo $row['supervisor']; ?><br>
-                                    
-                                    
+                                        <b>AMOUNT PAID :</b> Ksh <?php echo $row['charges'] + $row['fee']; ?><br>
+                                        <b>BANK CODE :</b> <?php echo $row['transactioncode']; ?><br>
+                                        <b>PAID ON :</b> <?php echo $row['bdate']; ?><br>
+                                        <hr>
+
+                                        <i> SERVED BY:</i>
+                                        <br>
+                                        <b> SUPERVISOR'S NAME:</b> <?php echo $row['supervisor']; ?><br>
+                                    </center>
+
+
                                     </tr>
                                 <?php
 
@@ -211,8 +213,3 @@ if ($success_message != '') {
 
 
 <?php require_once('footer.php'); ?>
-<script>
-    function printPage() {
-        window.print();
-    }
-</script>

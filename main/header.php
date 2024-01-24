@@ -264,9 +264,8 @@ foreach ($result as $row) {
 			<div class="row">
 				<div class="col-md-12 pl_0 pr_0">
 					<center>
-						<h4><b>
-								<font color="white">MAISHA CAR SHADES AND CARPARKING PORTS LIMITED </font>
-							</b></h4>
+						<img src = "assets/uploads/log.png">
+						
 					</center>
 					<div class="menu-container" style="background-color:gray">
 						<div class="menu ">

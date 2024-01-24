@@ -124,46 +124,48 @@ if (!isset($_SESSION['customer'])) {
                                     $tip++;
                                 ?>
 
-                                    <div class="card">
-                                        <b>CUSTOMER DETAILS.</b>
-                                        <?php
-                                        $statement1 = $pdo->prepare("SELECT * FROM tbl_customer WHERE cust_id=?");
-                                        $statement1->execute(array($row['customer_id']));
-                                        $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
-                                        foreach ($result1 as $row1) {
-                                            echo '<br><b>Full Name: </b>' . $row1['cust_name'] . ' ' . $row1['cust_lname'];
-                                            echo '<br><b>Phone: </b>' . $row1['cust_phone'];
-                                            echo '<br><b>Email: </b>' . $row1['cust_email'];
-                                        }
+                                    <div class="card ">
+                                        <tr>
+                                            <center>
+                                                <b>CUSTOMER DETAILS.</b>
+                                                <?php
+                                                $statement1 = $pdo->prepare("SELECT * FROM tbl_customer WHERE cust_id=?");
+                                                $statement1->execute(array($row['customer_id']));
+                                                $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
+                                                foreach ($result1 as $row1) {
+                                                    echo '<br><b>Full Name: </b>' . $row1['cust_name'] . ' ' . $row1['cust_lname'];
+                                                    echo '<br><b>Phone: </b>' . $row1['cust_phone'];
+                                                    echo '<br><b>Email: </b>' . $row1['cust_email'];
+                                                }
 
-                                        ?>
+                                                ?><br>
+
+
+
+
+                                                <td><center>
+                                                    <?php
+                                                    $statement1 = $pdo->prepare("SELECT * FROM tbl_order WHERE payment_id=?");
+                                                    $statement1->execute(array($row['payment_id']));
+                                                    $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
+                                                    foreach ($result1 as $row1) {
+                                                        echo '<br><b>Product Name: </b>' . $row1['product_name'];
+                                                        echo '<br><b>Quantity: </b>' . $row1['quantity'];
+                                                        echo '<br><b>Price Per Quantity: </b>' . $row1['unit_price'];
+                                                    }
+                                                    ?><br>
+
+                                                    <b>Date :</b><?php echo $row['payment_date']; ?><br>
+                                                    <b>Transaction id :</b><?php echo $row['bank_transaction_info']; ?><br>
+                                                    <b>Delivey Fee :</b><?php echo $row['shipping_fee']; ?><br>
+                                                    <b>Amount Paid :</b> <?php echo 'Ksh' . $row['paid_amount']; ?><br>
+                                                </td>
+                                            </center>
+
+
+                                        </tr>
                                     </div>
 
-                                    <tr>
-                                        <td><?php echo $tip; ?></td>
-                                        <td>
-                                            <?php
-                                            $statement1 = $pdo->prepare("SELECT * FROM tbl_order WHERE payment_id=?");
-                                            $statement1->execute(array($row['payment_id']));
-                                            $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
-                                            foreach ($result1 as $row1) {
-                                                echo '<br><b>Product Name: </b>' . $row1['product_name'];
-                                                echo '<br><b>Quantity: </b>' . $row1['quantity'];
-                                                echo '<br><b>Price Per Quantity: </b>' . $row1['unit_price'];
-                                            }
-                                            ?><br>
-
-                                            <b>Date :</b><?php echo $row['payment_date']; ?><br>
-                                            <b>Transaction id :</b><?php echo $row['bank_transaction_info']; ?><br>
-                                            <b>Delivey Fee :</b><?php echo $row['shipping_fee']; ?><br>
-                                            <b>Amount Paid :</b> <?php echo 'Ksh' . $row['paid_amount']; ?><br>
-                                        </td>
-
-
-                                    </tr>
-                                    <button id="printButton" onclick="printPage()">
-                                        <font color="black"><i class="fa fa-print"></i>&nbsp;Generate report</font>
-                                    </button>
                                     <style>
                                         .button-container {
                                             display: inline-block;
@@ -195,8 +197,3 @@ if (!isset($_SESSION['customer'])) {
     </div>
 
 </html>
-<script>
-    function printPage() {
-        window.print();
-    }
-</script>
