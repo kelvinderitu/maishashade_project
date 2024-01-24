@@ -109,6 +109,7 @@ if(!isset($_SESSION['user'])) {
                             <i class="fa fa-truck"></i> <span>Completed Deliveries</span>
                         </a>
                     </li>
+					
 
 					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
                         <a href="allocations.php">

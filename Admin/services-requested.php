@@ -123,11 +123,14 @@ if($success_message != '') {
 
 <section class="content-header">
 	<div class="content-header-left">
-		<center><h4>SERVICES REQUESTED REPORT</h4></center>
+           
+		<center>
+            <img src ="uploads/log.png">
+            <h3>SERVICES REQUESTED REPORT</h3></center>
 	</div>
 </section>
-<div class="container">
-    <button id="printButton" onclick="printPage()"><font color="black">Print</font></button>
+<div class="container float-right">
+    <button id="printButton" onclick="printPage()"><font color="black"><i class="fa fa-print"></i>&nbsp;Generate report</font>
     <style>
         .button-container {
     display: inline-block;
@@ -140,8 +143,8 @@ if($success_message != '') {
 
     </style>
 </div>
-<div class="container">
-<button><a href="dashboard.php"><font color="black">Back</font></a></button>
+<div class="container float-left">
+<button class ="btn btn-warning"><a href="dashboard.php"><font color="black"><i class="fa fa-arrow-left "></i>&nbsp;Back</font></button>
 </div>
 
 <section class="content">

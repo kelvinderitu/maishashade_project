@@ -159,7 +159,8 @@ if ($success_message != '') {
                             ?>
                                 <center>
                                     <div class="card"><br>
-                                        <b>MAISHA CAR PARKING SHADES AND CARPORTS LIMITED</b><br><br>
+                                     
+                                        <center><img src ="../assets/uploads/log.png"></center><br>
                                         <b>CUSTOMER DETAILS</b><br>
                                         <b>Name:</b><br> <?php echo $row['cust_name'] . ' ' . $row['cust_lname']; ?><br>
                                         <b>Email:</b><?php echo $row['email']; ?><br>

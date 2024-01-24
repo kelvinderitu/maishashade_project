@@ -36,7 +36,7 @@ if( !isset($_REQUEST['msg']) ) {
 		$naming = "/^(?=.*[A-Z])(?=.*[0-9])/";
 		
 		if (!preg_match($naming,$transaction_info)) {
-			$error="Enter a valid MPESA ID";
+			$error="Enter a valid BANK ACCOUNT CODE";
 			header('location: ../../pay-error.php');
 		  }
 		else{ 
@@ -55,11 +55,12 @@ if( !isset($_REQUEST['msg']) ) {
 	                            card_month,
 	                            card_year,
 	                            bank_transaction_info,
+								Bank_Name,
 	                            payment_method,
 	                            payment_status,
 	                            shipping_status,
 	                            payment_id
-	                        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+	                        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 	    $statement->execute(array(
 	                            $_SESSION['customer']['cust_id'],
 	                            $_SESSION['customer']['cust_name'],
@@ -74,7 +75,8 @@ if( !isset($_REQUEST['msg']) ) {
 	                            '', 
 	                            '',
 	                            $_POST['transaction_info'],
-	                            'M-Pesa Deposit',
+								$_POST['BankName'],
+	                            'Bank Deposit',
 	                            'Pending',
 	                            'Not Available',
 	                            $payment_id

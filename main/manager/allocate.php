@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,7 +35,9 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                  <center>  <h4 class="page-header"><a href="approvedbookings.php">Back</h4></center>
+                    <center>
+                        <h4 class="page-header"><a href="approvedbookings.php">Back</h4>
+                    </center>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -45,35 +45,34 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                        
+
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <form role="form" action="#" method="post">
 
-<?php
+                                        <?php
 
-				include 'dbconnect.php';
-                $id = $_POST["id"]; 
-				$cust_name = $_POST["cust_name"];    
-				$technician = $_POST["technician"];
-				//update query
-				$qry = "update tbl_bookings set id='$id', cust_name='$cust_name', technician='$technician' where id='$id'";
-				$result = mysqli_query($conn,$qry); //query executes
+                                        include 'dbconnect.php';
+                                        $id = $_POST["id"];
+                                        $cust_name = $_POST["cust_name"];
+                                        $technician = $_POST["technician"];
+                                        //update query
+                                        $qry = "update tbl_bookings set id='$id', cust_name='$cust_name', technician='$technician' where id='$id'";
+                                        $result = mysqli_query($conn, $qry); //query executes
 
-				if(!$result){
-					echo "ERROR: " . mysqli_error($conn);
+                                        if (!$result) {
+                                            echo "ERROR: " . mysqli_error($conn);
+                                        } else {
+                                            echo "ALLOCATION MADE SUCCESSFULLY ";
+                                        }
 
-				}else {
-					echo"ALLOCATION MADE SUCCESSFULLY ";
-				}
 
+                                        ?>
 
-?>
-
-                                  </form>
+                                    </form>
                                 </div>
-                                
+
                             </div>
                             <!-- /.row (nested) -->
                         </div>
@@ -103,23 +102,23 @@
     <script src="dist/js/sb-admin-2.js"></script>
 
 </body>
-	
-	<style>
-	footer{
-   background-color: #424558;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 35px;
-    text-align: center;
-    color: #CCC;
-}
 
-footer p {
-    padding: 10.5px;
-    margin: 0px;
-    line-height: 100%;
-}
-	</style>
+<style>
+    footer {
+        background-color: #424558;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 35px;
+        text-align: center;
+        color: #CCC;
+    }
+
+    footer p {
+        padding: 10.5px;
+        margin: 0px;
+        line-height: 100%;
+    }
+</style>
 
 </html>

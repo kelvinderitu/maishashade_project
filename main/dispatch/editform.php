@@ -37,6 +37,28 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h3 class="page-header">ASSIGN DRIVER</h3>
+                    <?php
+
+                    include 'dbconnect.php';
+                    if (isset($_POST['driverbtn'])) {
+                        $id = $_POST["id"];
+                        $customer_name = $_POST["customer_name"];
+                        $driver = $_POST["driver"];
+                        $order_status = $_POST["order_status"];
+                        //update query
+                        $qry = "update tbl_payment set id='$id', customer_name='$customer_name', driver='$driver',order_status='$order_status' where id='$id'";
+                        $result = mysqli_query($conn, $qry); //query executes
+
+                        if (!$result) {
+                            echo "ERROR" . mysqli_error();
+                        } else {
+                        
+                            echo '<div class="alert alert-success">Driver successfully assigned!</div>';
+                        }
+                    }
+
+
+                    ?>
                     <a class="btn btn-info" href="pendingpayment.php">Back</a>
                 </div><br>
                 <!-- /.col-lg-12 -->
@@ -45,60 +67,59 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                      
-                        
+
+
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6">
-                                
-                                <?php
-include 'dbconnect.php';
-$id=$_GET['id'];
-$qry= "SELECT * FROM tbl_payment where id='$id'
-"; 
-$result=mysqli_query($conn,$qry);
-while($row=mysqli_fetch_array($result)){
-    
-?>                                    
-                                    <form role="form" action="edit.php" method="post">
-                                     
-                                    <input class="form-control" readonly name="order_status" type="hidden" value='Goods On Transit' required>
+
+                                    <?php
+                                    include 'dbconnect.php';
+                                    $id = $_GET['id'];
+                                    $qry = "SELECT * FROM tbl_payment where id='$id'
+";
+                                    $result = mysqli_query($conn, $qry);
+                                    while ($row = mysqli_fetch_array($result)) {
+
+                                    ?>
+                                        <form role="form" action="#" method="post">
+
+                                            <input class="form-control" readonly name="order_status" type="hidden" value='Goods On Transit' required>
                                             <input class="form-control" readonly name="id" type="hidden" value='<?php echo $row['id']; ?>' required>
-                                         <input class="form-control" type="hidden" readonly  name="customer_name" value='<?php echo $row['customer_name']; ?>' required>
-                                        
+                                            <input class="form-control" type="hidden" readonly name="customer_name" value='<?php echo $row['customer_name']; ?>' required>
 
-<div class="form-group">
-<div class="font-italic">Driver<span style="color:red">*</span></div>
 
-<select name="driver" onchange="showLoanDetails(this.value)" class="form-control" required>
-<option value="">Select</option>
-<?php
-$q1=mysqli_query($conn,"SELECT * from tbl_staff  where role='driver' and  status='1' ");
-while($r1=mysqli_fetch_assoc($q1))
-{
-echo "<option value='".$r1['full_name']."'>".$r1['full_name']."</option>";
-}
-?>
-</select>
-</div>
+                                            <div class="form-group">
+                                                <div class="font-italic">Driver<span style="color:red">*</span></div>
 
-                                       
-                       <!-- id hidden grna input type ma "hidden" -->
-                      
-                                     
-    <input type="hidden" name="id" value="<?php echo $row['id'];?>">              
-                                    
-                                
-                                        
-                
-                                    
-                                    <button type="submit" class="btn btn-success">Submit</button>
-                                    </form>
+                                                <select name="driver" onchange="showLoanDetails(this.value)" class="form-control" required>
+                                                    <option value="">Select</option>
+                                                    <?php
+                                                    $q1 = mysqli_query($conn, "SELECT * from tbl_staff  where role='driver' and  status='1' ");
+                                                    while ($r1 = mysqli_fetch_assoc($q1)) {
+                                                        echo "<option value='" . $r1['full_name'] . "'>" . $r1['full_name'] . "</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+
+
+                                            <!-- id hidden grna input type ma "hidden" -->
+
+
+                                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+
+
+
+
+
+                                            <button type="submit" class="btn btn-success" name="driverbtn">Submit</button>
+                                        </form>
                                 </div>
-    <?php
-}
-?>
-                                
+                            <?php
+                                    }
+                            ?>
+
                             </div>
                             <!-- /.row (nested) -->
                         </div>
@@ -129,23 +150,23 @@ echo "<option value='".$r1['full_name']."'>".$r1['full_name']."</option>";
 
 </body>
 
-	
-	<style>
-	footer{
-   background-color: #424558;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 35px;
-    text-align: center;
-    color: #CCC;
-}
 
-footer p {
-    padding: 10.5px;
-    margin: 0px;
-    line-height: 100%;
-}
-	</style>
+<style>
+    footer {
+        background-color: #424558;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 35px;
+        text-align: center;
+        color: #CCC;
+    }
+
+    footer p {
+        padding: 10.5px;
+        margin: 0px;
+        line-height: 100%;
+    }
+</style>
 
 </html>

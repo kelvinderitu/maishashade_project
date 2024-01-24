@@ -1,3 +1,39 @@
+<?php
+
+
+$success_message = "";
+$error_message = "";
+$conn = new mysqli('localhost', 'root', '', 'nyabondobricks');
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Your form processing logic goes here
+    $serviceid = $_POST['serviceid'];
+    $servicename = $_POST['servicename'];
+    $pricing = $_POST['pricing'];
+    $description = $_POST['description'];
+    $duration = $_POST['duration'];
+
+    // Perform the database update here
+
+    $updateQuery = "UPDATE tbl_services SET servicename='$servicename', pricing='$pricing', description='$description', duration='$duration' WHERE serviceid='$serviceid'";
+    $result = mysqli_query($conn, $updateQuery);
+
+    if ($success_message != "") {
+        echo '<script>';
+        echo 'alert("' . $success_message . '");';
+        echo 'window.location.href = "manage_services.php";';  // Redirect to the manage_services.php page after displaying the alert
+        echo '</script>';
+    
+    } else {
+        $error_message = 'Error updating service: ' . mysqli_error($conn);
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,7 +72,9 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                   <center> <h3 class="page-header">EDIT SERVICES</h3></center>
+                    <center>
+                        <h3 class="page-header">EDIT SERVICES</h3>
+                    </center>
                     <a class="btn btn-default" href="manage_services.php">Back</a>
                 </div><br>
                 <!-- /.col-lg-12 -->
@@ -46,70 +84,71 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            
+
                         </div>
-                        
+
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6">
-                                
-                                <?php
-include 'dbconnect.php';
-$serviceid=$_GET['serviceid'];
-$qry= "SELECT * FROM tbl_services where serviceid='$serviceid'
-"; 
-$result=mysqli_query($conn,$qry);
-while($row=mysqli_fetch_array($result)){
-    
-?>                                    
-                                    <form role="form" action="serviceedit.php" method="post">
-                                     
-                                        
-                                            <input class="form-control"  name="room_id" type="hidden" value='<?php echo $row['room_id']; ?>' >
-                                         
-                                        <div class="form-group">
-                                            <label>Service Name</label>
-                                            <input class="form-control"  name="servicename" value='<?php echo $row['servicename']; ?>' >
-                                            
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Charges</label>
-                                            <input class="form-control" type="number"  name="pricing" value='<?php echo $row['pricing']; ?>' >
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label>Description</label>
-                                            <input class="form-control" type="text"  name="description" value='<?php echo $row['description']; ?>' >
-                                        </div>
 
-                                        <div class="form-group">
-                                            <label>Duration</label>
-                                            <select name="duration" class="form-control">
-    <option>Select Duration</option>
-    <option value="One Week">One Week</option>
-    <option value="Two Weeks">Two Weeks</option>
-    <option value="Three weeks">Three Weeks</option>
-</select>
-                                        </div>
+                                    <?php
+                                    include 'dbconnect.php';
+                                    $serviceid = $_GET['serviceid'];
+                                    $qry = "SELECT * FROM tbl_services where serviceid='$serviceid'
+";
+                                    $result = mysqli_query($conn, $qry);
+                                    while ($row = mysqli_fetch_array($result)) {
 
-                                       
-                                       
-                       <!-- id hidden grna input type ma "hidden" -->
-                      
-                                          
-    <input type="hidden" name="serviceid" value="<?php echo $row['serviceid'];?>">              
-                                    
-                                
-                                        
-                
-                                    
-                                    <button type="submit" class="btn btn-success">Update</button>
-                                    </form>
+                                    ?>
+                                        <form role="form" action="" method="post">
+
+
+                                            <input class="form-control" name="room_id" type="hidden" value='<?php echo $row['room_id']; ?>'>
+
+                                            <div class="form-group">
+                                                <label>Service Name</label>
+                                                <input class="form-control" name="servicename" value='<?php echo $row['servicename']; ?>'>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Charges</label>
+                                                <input class="form-control" type="number" name="pricing" value='<?php echo $row['pricing']; ?>'>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Description</label>
+                                                <input class="form-control" type="text" name="description" value='<?php echo $row['description']; ?>'>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Duration</label>
+                                                <select name="duration" class="form-control" >
+                                                    <option> <?php echo $row['duration'];?></option>
+                                                    <option value="Below One Week">Below One Week</option>
+                                                    <option value="One Week">One Week</option>
+                                                    <option value="Two Weeks">Two Weeks</option>
+                                                    <option value="Three weeks">Three Weeks</option>
+                                                </select>
+                                            </div>
+
+
+
+                                            <!-- id hidden grna input type ma "hidden" -->
+
+
+                                            <input type="hidden" name="serviceid" value="<?php echo $row['serviceid']; ?>">
+
+
+
+
+
+                                            <button type="submit" class="btn btn-success">Update</button>
+                                        </form>
                                 </div>
-    <?php
-}
-?>
-                                
+                            <?php
+                                    }
+                            ?>
+
                             </div>
                             <!-- /.row (nested) -->
                         </div>
@@ -137,26 +176,26 @@ while($row=mysqli_fetch_array($result)){
 
     <!-- Custom Theme JavaScript -->
     <script src="dist/js/sb-admin-2.js"></script>
-
+    
 </body>
 
-	
-	<style>
-	footer{
-   background-color: #424558;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 35px;
-    text-align: center;
-    color: #CCC;
-}
 
-footer p {
-    padding: 10.5px;
-    margin: 0px;
-    line-height: 100%;
-}
-	</style>
+<style>
+    footer {
+        background-color: #424558;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 35px;
+        text-align: center;
+        color: #CCC;
+    }
+
+    footer p {
+        padding: 10.5px;
+        margin: 0px;
+        line-height: 100%;
+    }
+</style>
 
 </html>

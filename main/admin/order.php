@@ -163,7 +163,7 @@ if($success_message != '') {
             	foreach ($result as $row) {
             		$i++;
             		?>
-					<tr class="<?php if($row['payment_status']=='Pending'){echo 'bg-r';}else{echo 'bg-g';} ?>">
+					<tr class="<?php if($row['payment_status']=='Pending'){echo 'bg';}else{echo 'bg';} ?>">
 	                    <td><?php echo $i; ?></td>
 	                    <td>
                             <b>Id:</b> <?php echo $row['customer_id']; ?><br>

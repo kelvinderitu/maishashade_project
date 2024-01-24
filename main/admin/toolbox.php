@@ -1,198 +1,202 @@
 <?php require_once('header.php'); ?>
 
 <?php
-$error_message = '';
-if(isset($_POST['form1'])) {
-    $valid = 1;
-    if(empty($_POST['subject_text'])) {
-        $valid = 0;
-        $error_message .= 'Subject can not be empty\n';
-    }
-    if(empty($_POST['message_text'])) {
-        $valid = 0;
-        $error_message .= 'Subject can not be empty\n';
-    }
-    if($valid == 1) {
+// Your existing PHP code for database connection and other functionalities
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "nyabondobricks";
 
-        $subject_text = strip_tags($_POST['subject_text']);
-        $message_text = strip_tags($_POST['message_text']);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-        // Getting Customer Email Address
-        $statement = $pdo->prepare("SELECT * FROM tbl_customer WHERE cust_id=?");
-        $statement->execute(array($_POST['cust_id']));
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);                            
-        foreach ($result as $row) {
-            $cust_email = $row['cust_email'];
-        }
-
-        // Getting Admin Email Address
-        $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
-        $statement->execute();
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);                            
-        foreach ($result as $row) {
-            $admin_email = $row['contact_email'];
-        }
-
-        $order_detail = '';
-        $statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE payment_id=?");
-        $statement->execute(array($_POST['payment_id']));
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);                            
-        foreach ($result as $row) {
-        	
-        	if($row['payment_method'] == 'PayPal'):
-        		$payment_details = '
-Transaction Id: '.$row['txnid'].'<br>
-        		';
-        	elseif($row['payment_method'] == 'Stripe'):
-				$payment_details = '
-Transaction Id: '.$row['txnid'].'<br>
-Card number: '.$row['card_number'].'<br>
-Card CVV: '.$row['card_cvv'].'<br>
-Card Month: '.$row['card_month'].'<br>
-Card Year: '.$row['card_year'].'<br>
-        		';
-        	elseif($row['payment_method'] == 'Bank Deposit'):
-				$payment_details = '
-Transaction Details: <br>'.$row['bank_transaction_info'];
-        	endif;
-
-            $order_detail .= '
-Customer Name: '.$row['customer_name'].'<br>
-Customer Email: '.$row['customer_email'].'<br>
-Payment Method: '.$row['payment_method'].'<br>
-Payment Date: '.$row['payment_date'].'<br>
-Payment Details: <br>'.$payment_details.'<br>
-Paid Amount: '.$row['paid_amount'].'<br>
-Payment Status: '.$row['payment_status'].'<br>
-Shipping Status: '.$row['shipping_status'].'<br>
-Payment Id: '.$row['payment_id'].'<br>
-            ';
-        }
-
-        $i=0;
-        $statement = $pdo->prepare("SELECT * FROM tbl_order WHERE payment_id=?");
-        $statement->execute(array($_POST['payment_id']));
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);                            
-        foreach ($result as $row) {
-            $i++;
-            $order_detail .= '
-<br><b><u>Product Item '.$i.'</u></b><br>
-Product Name: '.$row['product_name'].'<br>
-Size: '.$row['size'].'<br>
-Color: '.$row['color'].'<br>
-Quantity: '.$row['quantity'].'<br>
-Unit Price: '.$row['unit_price'].'<br>
-            ';
-        }
-
-        $statement = $pdo->prepare("INSERT INTO tbl_customer_message (subject,message,order_detail,cust_id) VALUES (?,?,?,?)");
-        $statement->execute(array($subject_text,$message_text,$order_detail,$_POST['cust_id']));
-
-        // sending email
-        $to_customer = $cust_email;
-        $message = '
-<html><body>
-<h3>Message: </h3>
-'.$message_text.'
-<h3>Order Details: </h3>
-'.$order_detail.'
-</body></html>
-';
-        $headers = 'From: ' . $admin_email . "\r\n" .
-                   'Reply-To: ' . $admin_email . "\r\n" .
-                   'X-Mailer: PHP/' . phpversion() . "\r\n" . 
-                   "MIME-Version: 1.0\r\n" . 
-                   "Content-Type: text/html; charset=ISO-8859-1\r\n";
-
-        // Sending email to admin                  
-        mail($to_customer, $subject_text, $message, $headers);
-        
-        $success_message = 'Your email to customer is sent successfully.';
-
-    }
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
-?>
-<?php
-if($error_message != '') {
-    echo "<script>alert('".$error_message."')</script>";
+
+$response = array(); // Initialize response array
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
+    // Update the record in the database
+    $id = $_POST["id"];
+    $name = $_POST["toolbox_type"];
+    $quantity = $_POST["quantity"];
+
+    $sql = "UPDATE tbl_toolbox SET toolbox_type='$name', quantity='$quantity' WHERE id=$id";
+
+    if ($conn->query($sql) === TRUE) {
+        $response['status'] = 'success';
+        $response['message'] = 'Record updated successfully';
+    } else {
+        $response['status'] = 'error';
+        $response['message'] = 'Error updating record: ' . $conn->error;
+    }
+
+    // Output the JSON response
+    header('Content-Type: application/json');
+    echo json_encode($response);
+    exit(); // Make sure to exit to prevent further output
 }
-if($success_message != '') {
-    echo "<script>alert('".$success_message."')</script>";
+
+// Handle delete request
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete"])) {
+    $id = $_POST["id"];
+    
+    $delete_query = "DELETE FROM tbl_toolbox WHERE id='$id'";
+    $delete_query_run = mysqli_query($conn, $delete_query);
+
+    if ($delete_query_run) {
+        $response['status'] = 'success';
+        $response['message'] = 'Record deleted successfully';
+    } else {
+        $response['status'] = 'error';
+        $response['message'] = 'Error deleting record: ' . $conn->error;
+    }
+
+    // Output the JSON response
+    header('Content-Type: application/json');
+    echo json_encode($response);
+    exit();
 }
+
+// Retrieve data in ascending order by id using MySQLi
+$result = $conn->query("SELECT * FROM tbl_toolbox ORDER BY id ASC");
+
+// Your other existing PHP code
+
+// Close the database connection
+$conn->close();
 ?>
 
-<section class="content-header">
-	<div class="content-header-left">
-		<h3>Toolbox In Stock</h3>
-	</div>
-</section>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toolbox Management</title>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
 
-<section class="content">
+<body>
 
-  <div class="row">
-    <div class="col-md-12">
+    <section class="content">
 
+        <div class="row">
+            <div class="col-md-12">
 
-      <div class="box box-success">
-        
-        <div class="box-body table-responsive">
-          <table id="example1" class="table table-bordered table-hover table-striped">
-			<thead>
-			    <tr>
-			        <th>#</th>
-                    <th>Name</th>
-			        <th>Quantity </th>
-			    </tr>
-			</thead>
-            <tbody>
-            	<?php
-            	$i=0;
-            	$statement = $pdo->prepare("SELECT * FROM tbl_request_toolbox ORDER by id DESC");
-            	$statement->execute();
-            	$result = $statement->fetchAll(PDO::FETCH_ASSOC);							
-            	foreach ($result as $row) {
-            		$i++;
-            		?>
-					<tr >
-	                    <td><?php echo $i; ?></td>
-	                    <td>
-                    Toolbox                        
-                        </td>
-                        <td>
-                    <?php echo $row['quantity']; ?>                      
-                        </td>
-                        
-	                </tr>
-            		<?php
-            	}
-            	?>
-            </tbody>
-          </table>
-        </div>
-      </div>
-  
+                <div class="box box-success">
+                    <div class="box-body table-responsive">
+                        <table id="example1" class="table table-bordered table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Quantity </th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $i = 0;
+                                while ($row = $result->fetch_assoc()) {
+                                    $i++;
+                                ?>
+                                    <tr>
+                                        <td><?php echo $row['id']; ?></td>
+                                        <td>
+                                            <input type="text" id="toolbox_type_<?php echo $row['id']; ?>" value="<?php echo $row['id'] ? $row['toolbox_type'] : ''; ?> " class=form-control no-border>
+                                        </td>
 
-</section>
-
-
-<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Delete Confirmation</h4>
-            </div>
-            <div class="modal-body">
-                Sure you want to delete this item?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-danger btn-ok">Delete</a>
+                                        <td>
+                                            <input type="text" id="quantity_<?php echo $row['id']; ?>" value="<?php echo $row['quantity']; ?>" class=form-control no-border>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-success btn-xs" onclick="editRecord(<?php echo $row['id']; ?>)">Update</button>
+                                            <button class="btn btn-danger btn-xs" onclick="deleteRecord(<?php echo $row['id']; ?>)">Delete</button>
+                                        </td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+
+    </section>
+
+    <script>
+        // Function to handle inline editing
+        function editRecord(id) {
+            // Get the values from the input fields
+            var toolboxType = $('#toolbox_type_' + id).val();
+            var quantity = $('#quantity_' + id).val();
+
+            // Make an AJAX call to update the record
+            $.ajax({
+                type: 'POST',
+                url: 'toolboxEdit.php',
+                data: {
+                    update: true,
+                    id: id,
+                    toolbox_type: toolboxType,
+                    quantity: quantity
+                },
+                success: function(response) {
+                    // Check the response status
+                    if (response.status === 'success') {
+                        // Record updated successfully, display an alert
+                        alert(response.message);
+                        location.reload(); // Reload the page to reflect the changes
+                    } else {
+                        // Error occurred, you can display an alert or handle it accordingly
+                        console.error(response.message);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX Error: ' + textStatus, errorThrown);
+                },
+                dataType: 'json' // Expect JSON response
+            });
+        }
+
+        // Function to handle delete action
+        function deleteRecord(id) {
+            // Prompt the user for confirmation
+            if (confirm("Are you sure you want to delete this record?")) {
+                // Make an AJAX call to delete the record
+                $.ajax({
+                    type: 'POST',
+                    url: 'deleteToolbox.php',
+                    data: {
+                        delete: true,
+                        id: id
+                    },
+                    success: function(response) {
+                        // Check the response status
+                        if (response.status === 'success') {
+                            // Record deleted successfully, display an alert
+                            alert(response.message);
+                            location.reload(); // Reload the page to reflect the changes
+                        } else {
+                            // Error occurred, you can display an alert or handle it accordingly
+                            console.error(response.message);
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('AJAX Error: ' + textStatus, errorThrown);
+                    },
+                    dataType: 'json' // Expect JSON response
+                });
+            }
+        }
+    </script>
 
 
-<?php require_once('footer.php'); ?>
+</body>
+
+</html>

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +36,9 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12"><br>
-                  <center>  <h4 class="page-header"><a href="managebookings.php"><button>Back</button></a></h4></center>
+                    <center>
+                        <h4 class="page-header"><a href="managebookings.php"><button>Back</button></a></h4>
+                    </center>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -46,35 +46,35 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                        
+
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <form role="form" action="#" method="post">
 
-<?php
+                                        <?php
 
-				include 'dbconnect.php';
-                $id = $_POST["id"]; 
-				$sdate = $_POST["sdate"];    
-				$edate = $_POST["edate"];
-                $status = $_POST["status"];
-				//update query
-				$qry = "update tbl_bookings set id='$id', sdate='$sdate', edate='$edate',status='$status' where id='$id'";
-				$result = mysqli_query($conn,$qry); //query executes
+                                        include 'dbconnect.php';
+                                        $id = $_POST["id"];
+                                        $sdate = $_POST["sdate"];
+                                        $edate = $_POST["edate"];
+                                        $status = $_POST["status"];
+                                        //update query
+                                        $qry = "update tbl_bookings set id='$id', sdate='$sdate', edate='$edate',status='$status' where id='$id'";
+                                        $result = mysqli_query($conn, $qry); //query executes
 
-				if(!$result){
-					echo"ERROR". mysqli_error();
-				}else {
-					echo"SCHEDULE DATE SUCCESSFULLY INSERTED";
-				}
+                                        if (!$result) {
+                                            echo "ERROR" . mysqli_error();
+                                        } else {
+                                            echo "SCHEDULE DATE SUCCESSFULLY INSERTED";
+                                        }
 
 
-?>
+                                        ?>
 
-                                  </form>
+                                    </form>
                                 </div>
-                                
+
                             </div>
                             <!-- /.row (nested) -->
                         </div>
@@ -105,23 +105,23 @@
 
 </body>
 
-	
-	<style>
-	footer{
-   background-color: #424558;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 35px;
-    text-align: center;
-    color: #CCC;
-}
 
-footer p {
-    padding: 10.5px;
-    margin: 0px;
-    line-height: 100%;
-}
-	</style>
+<style>
+    footer {
+        background-color: #424558;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 35px;
+        text-align: center;
+        color: #CCC;
+    }
+
+    footer p {
+        padding: 10.5px;
+        margin: 0px;
+        line-height: 100%;
+    }
+</style>
 
 </html>

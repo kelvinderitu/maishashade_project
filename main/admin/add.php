@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -54,30 +52,30 @@
                                 <div class="col-lg-6">
                                     <form role="form" action="#" method="post">
 
-<?php
+                                        <?php
 
-				include 'dbconnect.php';
-                $id = $_POST["id"]; 
-				$cust_name = $_POST["cust_name"];  
-                $charges = $_POST["charges"];    
-				$status = $_POST["status"];
-				$remark = $_POST["remark"];
-				//update query
-				$qry = "update tbl_request set cust_name='$cust_name', charges='$charges', status='$status', remark='$remark' where id='$id'";
-				$result = mysqli_query($conn,$qry); //query executes
+                                        include 'dbconnect.php';
+                                        $id = $_POST["id"];
+                                        $cust_name = $_POST["cust_name"];
+                                        $charges = $_POST["charges"];
+                                        $status = $_POST["status"];
+                                        $remark = $_POST["remark"];
+                                        //update query
+                                        $qry = "update tbl_request set cust_name='$cust_name', charges='$charges', status='$status', remark='$remark' where id='$id'";
+                                        $result = mysqli_query($conn, $qry); //query executes
 
-				if(!$result){
-					echo"ERROR". mysqli_error();
-				}else {
-					echo"Operation was Succesfully";
-				}
+                                        if (!$result) {
+                                            echo "ERROR" . mysqli_error();
+                                        } else {
+                                            echo "Operation was Succesfully";
+                                        }
 
 
-?>
+                                        ?>
 
-                                  </form>
+                                    </form>
                                 </div>
-                                
+
                             </div>
                             <!-- /.row (nested) -->
                         </div>
@@ -109,25 +107,25 @@
 </body>
 
 <footer>
-        <p>&copy; <?php echo date("Y"); ?> Bliss</p>
-    </footer>
-	
-	<style>
-	footer{
-   background-color: #424558;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 35px;
-    text-align: center;
-    color: #CCC;
-}
+    <p>&copy; <?php echo date("Y"); ?> Bliss</p>
+</footer>
 
-footer p {
-    padding: 10.5px;
-    margin: 0px;
-    line-height: 100%;
-}
-	</style>
+<style>
+    footer {
+        background-color: #424558;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 35px;
+        text-align: center;
+        color: #CCC;
+    }
+
+    footer p {
+        padding: 10.5px;
+        margin: 0px;
+        line-height: 100%;
+    }
+</style>
 
 </html>

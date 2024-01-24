@@ -256,11 +256,11 @@ if (!isset($_SESSION['customer'])) {
 		<div class="container">
 
 			<div class="col-md-4 logo">
-				<h3>MAISHA CAR PARKING SHADES AND CARPORTS LIMITED</h3><br>
+				<center><br><img src="assets/uploads/log.png"></center><br>
 				Nairobi, Kenya<br>
 				Office Tel. +254706071232<br>
 				Email: info@maishashades.co.ke
-			</div>
+			
 
 			<?php
 			/* ===================== Pagination Code Starts ================== */

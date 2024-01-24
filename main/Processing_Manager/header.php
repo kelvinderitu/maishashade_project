@@ -130,7 +130,7 @@ if(!isset($_SESSION['user'])) {
                     </li>-->
 					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
                         <a href="register/Request2.php">
-                            <i class="fa fa-sticky-note"></i> <span>Pending Task</span>
+                            <i class="fa fa-sticky-note"></i> <span>Pending  services Task</span>
                         </a>
                     </li>
 					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">

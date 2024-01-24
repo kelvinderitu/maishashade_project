@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +36,9 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                  <center>  <h4 class="page-header"><a href="tendarp.php">Back</h4></center>
+                    <center>
+                        <h4 class="page-header"><a href="tendarp.php">Back</h4>
+                    </center>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -46,70 +46,70 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                        
+
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <form role="form" action="#" method="post">
 
-                                    <?php
-include 'dbconnect.php';
+                                        <?php
+                                        include 'dbconnect.php';
 
-// Check if the form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") 
+                                        // Check if the form is submitted
+                                        if ($_SERVER["REQUEST_METHOD"] == "POST")
 
-    // Sanitize and retrieve form data
-    $charges = mysqli_real_escape_string($conn, $_POST['charges']);
-    $id = $_POST['id'];
+                                            // Sanitize and retrieve form data
+                                            $charges = mysqli_real_escape_string($conn, $_POST['charges']);
+                                        $id = $_POST['id'];
 
-    // Retrieve the product price from the database
-    $qry = "SELECT product_price FROM requestsproduct WHERE id='$id'";
-    $result = mysqli_query($conn, $qry);
+                                        // Retrieve the product price from the database
+                                        $qry = "SELECT product_price FROM requestsproduct WHERE id='$id'";
+                                        $result = mysqli_query($conn, $qry);
 
-    // ...
+                                        // ...
 
-// ..
+                                        // ..
 
-if ($result) {
-    $row = mysqli_fetch_array($result);
-    $productPrice = $row['product_price'];
+                                        if ($result) {
+                                            $row = mysqli_fetch_array($result);
+                                            $productPrice = $row['product_price'];
 
-    // Check if the submitted price is not higher than the product price
-    if ($charges <= $productPrice) {
-        // Your database insert/update query here
+                                            // Check if the submitted price is not higher than the product price
+                                            if ($charges <= $productPrice) {
+                                                // Your database insert/update query here
 
-        // For example, if you want to update the 'price' column in 'requestsproduct' table:
-        $updateQuery = "UPDATE requestsproduct SET charges='$charges' WHERE id='$id'";
-        $updateResult = mysqli_query($conn, $updateQuery);
+                                                // For example, if you want to update the 'price' column in 'requestsproduct' table:
+                                                $updateQuery = "UPDATE requestsproduct SET charges='$charges' WHERE id='$id'";
+                                                $updateResult = mysqli_query($conn, $updateQuery);
 
-        if ($updateResult) {
-            echo "Price updated successfully.";
-            // Redirect back to the previous page or a success page
-            header("Location: tendarp.php");
-            exit();
-        } else {
-            echo "Error updating price: " . mysqli_error($conn);
-            // You might want to redirect back to the form page or handle the error appropriately
-        }
-    } else {
-        // If the submitted price is higher than the product price, display an error message
-        echo "Error: Price cannot be higher than the product price.";
-        // You might want to redirect back to the form page or handle the error appropriately
-    }
-} else {
-    // Handle the case where the product is not found in the database
-    echo "Error: Product not found.";
-    // You might want to redirect back to the form page or handle the error appropriately
-}
+                                                if ($updateResult) {
+                                                    echo "Price updated successfully.";
+                                                    // Redirect back to the previous page or a success page
+                                                    header("Location: tendarp.php");
+                                                    exit();
+                                                } else {
+                                                    echo "Error updating price: " . mysqli_error($conn);
+                                                    // You might want to redirect back to the form page or handle the error appropriately
+                                                }
+                                            } else {
+                                                // If the submitted price is higher than the product price, display an error message
+                                                echo "Error: Price cannot be higher than the product price.";
+                                                // You might want to redirect back to the form page or handle the error appropriately
+                                            }
+                                        } else {
+                                            // Handle the case where the product is not found in the database
+                                            echo "Error: Product not found.";
+                                            // You might want to redirect back to the form page or handle the error appropriately
+                                        }
 
-// ...
+                                        // ...
 
-?>
+                                        ?>
 
 
-                                  </form>
+                                    </form>
                                 </div>
-                                
+
                             </div>
                             <!-- /.row (nested) -->
                         </div>
@@ -141,23 +141,23 @@ if ($result) {
 </body>
 
 
-	
-	<style>
-	footer{
-   background-color: #424558;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 35px;
-    text-align: center;
-    color: #CCC;
-}
 
-footer p {
-    padding: 10.5px;
-    margin: 0px;
-    line-height: 100%;
-}
-	</style>
+<style>
+    footer {
+        background-color: #424558;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 35px;
+        text-align: center;
+        color: #CCC;
+    }
+
+    footer p {
+        padding: 10.5px;
+        margin: 0px;
+        line-height: 100%;
+    }
+</style>
 
 </html>

@@ -11,7 +11,7 @@ $error_message1 = '';
 $success_message1 = '';
 
 // Check if the user is logged in or not
-if(!isset($_SESSION['user'])) {
+if (!isset($_SESSION['user'])) {
 	header('location: login.php');
 	exit;
 }
@@ -19,6 +19,7 @@ if(!isset($_SESSION['user'])) {
 
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -36,7 +37,7 @@ if(!isset($_SESSION['user'])) {
 	<link rel="stylesheet" href="css/jquery.fancybox.css">
 	<link rel="stylesheet" href="css/AdminLTE.min.css">
 	<link rel="stylesheet" href="css/_all-skins.min.css">
-	<link rel="stylesheet" href="css/on-off-switch.css"/>
+	<link rel="stylesheet" href="css/on-off-switch.css" />
 	<link rel="stylesheet" href="css/summernote.css">
 	<link rel="stylesheet" href="style.css">
 
@@ -53,13 +54,13 @@ if(!isset($_SESSION['user'])) {
 			</a>
 
 			<nav class="navbar navbar-static-top" style="background-color:#ADD8E6">
-				
+
 				<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
 					<span class="sr-only">Toggle navigation</span>
 				</a>
 
 				<span style="float:left;line-height:50px;color:#fff;padding-left:15px;font-size:18px;">Technician's Panel</span>
-    <!-- Top Bar ... User Inforamtion .. Login/Log out Area -->
+				<!-- Top Bar ... User Inforamtion .. Login/Log out Area -->
 				<div class="navbar-custom-menu">
 					<ul class="nav navbar-nav">
 						<li class="dropdown user user-menu">
@@ -72,7 +73,7 @@ if(!isset($_SESSION['user'])) {
 										<a href="profile-edit.php" class="btn btn-default btn-flat">Edit Profile</a>
 									</div>
 									<div>
-										<a href="logout.php" class="btn btn-default btn-flat">Log out</a>
+										<a href="../login-staff.php" class="btn btn-default btn-flat">Log out</a>
 									</div>
 								</li>
 							</ul>
@@ -83,45 +84,64 @@ if(!isset($_SESSION['user'])) {
 			</nav>
 		</header>
 
-  		<?php $cur_page = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1); ?>
-<!-- Side Bar to Manage Shop Activities -->
-  		<aside class="main-sidebar">
-    		<section class="sidebar">
-      
-      			<ul class="sidebar-menu">
+		<?php $cur_page = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1); ?>
+		<!-- Side Bar to Manage Shop Activities -->
+		<aside class="main-sidebar">
+			<section class="sidebar">
 
-			        <li class="treeview <?php if($cur_page == 'index.php') {echo 'active';} ?>">
-			          <a href="index.php">
-			            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-			          </a>
-			        </li>
+				<ul class="sidebar-menu">
 
+					<li class="treeview <?php if ($cur_page == 'index.php') {
+											echo 'active';
+										} ?>">
+						<a href="index.php">
+							<i class="fa fa-dashboard"></i> <span>Dashboard</span>
+						</a>
+					</li>
+
+
+					<li class="treeview <?php if (($cur_page == 'product.php') || ($cur_page == 'product-add.php') || ($cur_page == 'product-edit.php')) {
+											echo 'active';
+										} ?>">
+						<a href="myallocation.php">
+							<i class="fa fa-list"></i> <span>Pending Services Allocations</span>
+						</a>
+					</li>
+					<li class="treeview <?php if (($cur_page == 'order.php')) {
+											echo 'active';
+										} ?>">
+						<a href="orderallocations.php">
+							<i class="fa fa-list"></i> <span>Pending Orders Allocations</span>
+						</a>
+					</li>
+					<li class="treeview <?php if (($cur_page == 'order.php')) {
+											echo 'active';
+										} ?>">
+						<a href="completeordersallocations.php">
+							<i class="fa fa-list"></i> <span>Complete Orders Allocations</span>
+						</a>
+					</li>
 					
-                    <li class="treeview <?php if( ($cur_page == 'product.php') || ($cur_page == 'product-add.php') || ($cur_page == 'product-edit.php') ) {echo 'active';} ?>">
-                        <a href="myallocation.php">
-                            <i class="fa fa-list"></i> <span>Pending Task</span>
-                        </a>
-                    </li>
-					<!--<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
-                        <a href="forms/View/View.php">
-                            <i class="fa fa-camera"></i> <span>Client Photos</span>
-                        </a>
-                    </li>-->
-                    <li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
-                        <a href="approvedpayment.php">
-                            <i class="fa fa-list"></i> <span>Completed Task</span>
-                        </a>
-                    </li>
+					<li class="treeview <?php if (($cur_page == 'order.php')) {
+											echo 'active';
+										} ?>">
+						<a href="approvedpayment.php">
+							<i class="fa fa-list"></i> <span>Completed Services Allocations</span>
+						</a>
+					</li>
+					
 
 
-			      			        <li class="treeview <?php if( ($cur_page == 'faq.php') ) {echo 'active';} ?>">
-			          <a href="register/inbox.php">
-			            <i class="fa fa-envelope"></i> <span>Inbox</span>
-			          </a>
-			        </li>
+					<li class="treeview <?php if (($cur_page == 'faq.php')) {
+											echo 'active';
+										} ?>">
+						<a href="register/inbox.php">
+							<i class="fa fa-envelope"></i> <span>Inbox</span>
+						</a>
+					</li>
 
-      			</ul>
-    		</section>
-  		</aside>
+				</ul>
+			</section>
+		</aside>
 
-  		<div class="content-wrapper">
+		<div class="content-wrapper">

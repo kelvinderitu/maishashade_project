@@ -123,33 +123,17 @@ if ($success_message != '') {
 <section class="content-header">
     <div class="content-header-left">
         <center>
-            <h4>ORDER REPORT</h4>
+            <img src="uploads/log.png">
         </center>
+
+
+
     </div>
 </section>
-<div class="container">
-    <button id="printButton" onclick="printPage()">
-        <font color="black"><i class="fa fa-print"></i>&nbsp;Generate report</font>
-    </button>
-    <style>
-        .button-container {
-            display: inline-block;
-            margin-right: 20px;
-            /* Adjust the margin as needed */
-        }
 
-        #printButton {
-            float: right;
-        }
-    </style>
-</div>
-<div class="container">
-    <button class="btn btn-warning">
-        <a href="dashboard.php">
-            <font color="black"><i class="fa fa-arrow-left"></i>&nbsp;Back</font>
-        </a>
-    </button>
-</div>
+<center>
+    <h4>ORDER REPORT</h4>
+</center>
 
 <section class="content">
 
@@ -158,6 +142,7 @@ if ($success_message != '') {
 
 
             <div class="">
+
 
                 <div class="box-body table-responsive">
                     <table id="example1" class="table table-bordered table-hover ">
@@ -251,9 +236,34 @@ if ($success_message != '') {
                             }
                             ?>
                         </tbody>
+                        <div class="container float-right">
+                            <button id="printButton" onclick="printPage()">
+                                <font color="black"><i class="fa fa-print"></i>&nbsp;Generate report</font>
+                            </button>
+                            <style>
+                                .button-container {
+                                    display: inline-block;
+                                    margin-right: 20px;
+                                    /* Adjust the margin as needed */
+                                }
+
+                                #printButton {
+                                    float: right;
+                                }
+                            </style>
+                        </div>
+                        <div class="container float-left">
+                            <button class="btn btn-warning">
+                                <a href="dashboard.php">
+                                    <font color="black"><i class="fa fa-arrow-left "></i>&nbsp;Back</font>
+                                </a>
+                            </button>
+                        </div>
                     </table>
+
                 </div>
             </div>
+
 
 
 </section>

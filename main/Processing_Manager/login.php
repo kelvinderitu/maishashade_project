@@ -32,7 +32,7 @@ if(isset($_POST['form1'])) {
             } else {       
             
 				$_SESSION['user'] = $row;
-                header("location: index.php");
+                header("location: register/index2.php");
             }
         }
     }

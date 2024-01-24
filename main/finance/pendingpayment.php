@@ -190,24 +190,14 @@ if($success_message != '') {
                                             ?>
                                             </td>
                         <td>
-                        	<?php if($row['payment_method'] == 'PayPal'): ?>
-                        		<b>Payment Method:</b> <?php echo '<span style="color:red;"><b>'.$row['payment_method'].'</b></span>'; ?><br>
-                        		<b>Payment Id:</b> <?php echo $row['payment_id']; ?><br>
+                        	
+                        	<?php $row['payment_method'] == 'Bank Deposit' ?>
                         		<b>Date:</b> <?php echo $row['payment_date']; ?><br>
-                        		<b>Transaction Id:</b> <?php echo $row['txnid']; ?><br>
-                        	<?php elseif($row['payment_method'] == 'Stripe'): ?>
-                        		<b>Payment Method:</b> <?php echo '<span style="color:red;"><b>'.$row['payment_method'].'</b></span>'; ?><br>
-                        		<b>Payment Id:</b> <?php echo $row['payment_id']; ?><br>
-								<b>Date:</b> <?php echo $row['payment_date']; ?><br>
-                        		<b>Transaction Id:</b> <?php echo $row['txnid']; ?><br>
-                        		<b>Card Number:</b> <?php echo $row['card_number']; ?><br>
-                        		<b>Card CVV:</b> <?php echo $row['card_cvv']; ?><br>
-                        		<b>Expire Month:</b> <?php echo $row['card_month']; ?><br>
-                        		<b>Expire Year:</b> <?php echo $row['card_year']; ?><br>
-                        	<?php elseif($row['payment_method'] == 'M-Pesa Deposit'): ?>
-                        		<b>Date:</b> <?php echo $row['payment_date']; ?><br>
-                        		<b>Transaction Information:</b> <br><?php echo $row['bank_transaction_info']; ?><br>
-                        	<?php endif; ?>
+                        		<b>Bank Name:</b> <br><?php echo $row['Bank_Name']; ?><br>
+                                <b>Transaction Information:</b> <br><?php echo $row['bank_transaction_info']; ?><br>
+
+                            
+                        	
                         </td>
                         <td>Ksh<?php echo $row['paid_amount']; ?></td>
                         <td>
@@ -224,7 +214,7 @@ if($success_message != '') {
                       
 	                </tr>
             		<?php
-            	}
+                }
             	?>
             </tbody>
           </table>

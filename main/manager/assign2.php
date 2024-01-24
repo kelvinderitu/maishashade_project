@@ -37,7 +37,27 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h3 class="page-header">ASSIGN SUPERVISOR</h3>
-                    <a class="btn btn-info" href="pendingpayment.php">Back</a>
+                    <?php
+
+                    include 'dbconnect.php';
+                    if (isset($_POST['supervisorbtn'])) {
+                        $id = $_POST["id"];
+                        $cust_name = $_POST["cust_name"];
+                        $supervisor = $_POST["supervisor"];
+                        //update query
+                        $qry = "update tbl_bookings set id='$id', cust_name='$cust_name', supervisor='$supervisor' where id='$id'";
+                        $result = mysqli_query($conn, $qry); //query executes
+
+                        if (!$result) {
+                            echo "ERROR: " . mysqli_error($conn);
+                        } else {
+                            echo '<div class="alert alert-success">allocation made successfully!</div>';
+                        }
+                    }
+
+
+                    ?>
+                    <a class="btn btn-info" href="surveyingreport.php">Back</a>
                 </div><br>
                 <!-- /.col-lg-12 -->
             </div><br>
@@ -45,61 +65,60 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                      
-                        
+
+
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6">
-                                
-                                <?php
-include 'dbconnect.php';
-$id=$_GET['id'];
-$qry= "SELECT * FROM tbl_bookings where id='$id'
-"; 
-$result=mysqli_query($conn,$qry);
-while($row=mysqli_fetch_array($result)){
-    
-?>                                    
-                                    <form role="form" action="allocate2.php" method="post">
-                                     
-                                        
+
+                                    <?php
+                                    include 'dbconnect.php';
+                                    $id = $_GET['id'];
+                                    $qry = "SELECT * FROM tbl_bookings where id='$id'
+";
+                                    $result = mysqli_query($conn, $qry);
+                                    while ($row = mysqli_fetch_array($result)) {
+
+                                    ?>
+                                        <form role="form" action="#" method="post">
+
+
                                             <input class="form-control" readonly name="id" type="hidden" value='<?php echo $row['id']; ?>' required>
-                                           
-                                         <input class="form-control" readonly  name="cust_name" type="hidden" value='<?php echo $row['cust_name']; ?>' required>
-                                          
 
-<div class="form-group">
-<div class="font-italic">supervisor<span style="color:red">*</span></div>
+                                            <input class="form-control" readonly name="cust_name" type="hidden" value='<?php echo $row['cust_name']; ?>' required>
 
-<select name="supervisor" onchange="showLoanDetails(this.value)" class="form-control" required>
-<option value="">Select supervisor</option>
-<?php
-$q1=mysqli_query($conn,"SELECT * from tbl_staff  where role='supervisor' and  status='1' ");
-while($r1=mysqli_fetch_assoc($q1))
-{
-echo "<option value='".$r1['full_name']."'>".$r1['full_name']."</option>";
-}
-?>
-</select>
-</div>
 
-                                       
-                       <!-- id hidden grna input type ma "hidden" -->
-                      
-                                     
-    <input type="hidden" name="id" value="<?php echo $row['id'];?>">              
-                                    
-                                
-                                        
-                
-                                    
-                                    <button type="submit" class="btn btn-success">Submit</button>
-                                    </form>
+                                            <div class="form-group">
+                                                <div class="font-italic">supervisor<span style="color:red">*</span></div>
+
+                                                <select name="supervisor" onchange="showLoanDetails(this.value)" class="form-control" required>
+                                                    <option value="">Select supervisor</option>
+                                                    <?php
+                                                    $q1 = mysqli_query($conn, "SELECT * from tbl_staff  where role='supervisor' and  status='1' ");
+                                                    while ($r1 = mysqli_fetch_assoc($q1)) {
+                                                        echo "<option value='" . $r1['full_name'] . "'>" . $r1['full_name'] . "</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+
+
+                                            <!-- id hidden grna input type ma "hidden" -->
+
+
+                                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+
+
+
+
+
+                                            <button type="submit" class="btn btn-success" name="supervisorbtn">Submit</button>
+                                        </form>
                                 </div>
-    <?php
-}
-?>
-                                
+                            <?php
+                                    }
+                            ?>
+
                             </div>
                             <!-- /.row (nested) -->
                         </div>
@@ -130,22 +149,22 @@ echo "<option value='".$r1['full_name']."'>".$r1['full_name']."</option>";
 
 </body>
 
-	<style>
-	footer{
-   background-color: #424558;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 35px;
-    text-align: center;
-    color: #CCC;
-}
+<style>
+    footer {
+        background-color: #424558;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 35px;
+        text-align: center;
+        color: #CCC;
+    }
 
-footer p {
-    padding: 10.5px;
-    margin: 0px;
-    line-height: 100%;
-}
-	</style>
+    footer p {
+        padding: 10.5px;
+        margin: 0px;
+        line-height: 100%;
+    }
+</style>
 
 </html>

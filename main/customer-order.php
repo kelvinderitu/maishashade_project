@@ -167,7 +167,8 @@ if (!isset($_SESSION['customer'])) {
                                             <b>Amount Paid :</b> <?php echo 'Ksh' . $row['paid_amount']; ?><br>
                                             <b>Shipping Fee :</b> <?php echo 'Ksh' . $row['shipping_fee']; ?><br>
                                             <b>Payment Status :</b><?php echo $row['payment_status']; ?><br>
-                                            <b>Payment Method :</b><?php echo $row['payment_method']; ?><br>
+                                            <b>Bank Name :</b><?php echo $row['Bank_Name']; ?><br>
+                                           <!-- <b>Payment Method :</b><?php echo $row['payment_method']; ?><br>-->
                                         <td>
                                             <?php
                                             $statement1 = $pdo->prepare("SELECT * FROM tbl_customer WHERE cust_email=?");

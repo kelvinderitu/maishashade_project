@@ -188,7 +188,7 @@ if($success_message != '') {
                         <td>
                             <b>Amount Paid: </b><?php echo $row['charges']+$row['charges']; ?><br>
                             <b>Date: </b><?php echo $row['pdate']; ?><br>
-                            <b>M-Pesa Code: </b><?php echo $row['transactioncode']; ?><br>
+                            <b>Bank Reference Number: </b><?php echo $row['transactioncode']; ?><br>
                         </td>
                         <td>
                             <?php echo $row['payment_status']; ?>

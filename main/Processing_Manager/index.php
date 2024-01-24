@@ -54,7 +54,7 @@ $messages = $statement->rowCount();
 <div class="row">
       <div class="col-lg-3 col-xs-12">
               <!-- small box -->
-              <div class="small-box bg-secondary"  style="background-color: ; box-shadow: 1px 1px 1px 1px #888888;">
+              <div class="small-box bg-secondary"   box-shadow: 1px 1px 1px 1px #888888;>
                 <div class="inner">
                   <h3><?php echo $pendingdeliveries; ?></h3>
 
@@ -70,7 +70,7 @@ $messages = $statement->rowCount();
             <!-- ./col -->
                   <div class="col-lg-3 col-xs-12">
               <!-- small box -->
-              <div class="small-box bg-secondary"  style="background-color: ; box-shadow: 1px 1px 1px 1px #888888;">
+              <div class="small-box bg-secondary"   box-shadow: 1px 1px 1px 1px #888888;>
                 <div class="inner">
                   <h3><?php echo $completedstatus; ?></h3>
 
@@ -86,7 +86,7 @@ $messages = $statement->rowCount();
             <!-- ./col -->
                   <div class="col-lg-3 col-xs-12">
               <!-- small box -->
-              <div class="small-box bg-secondary"  style="background-color: ; box-shadow: 1px 1px 1px 1px #888888;">
+              <div class="small-box bg-secondary"  box-shadow: 1px 1px 1px 1px #888888;>
                 <div class="inner">
                   <h3><?php echo $driver; ?></h3>
 
@@ -103,7 +103,7 @@ $messages = $statement->rowCount();
  <!-- ./col -->
        <div class="col-lg-3 col-xs-12">
               <!-- small box -->
-              <div class="small-box bg-secondary"  style="background-color: ; box-shadow: 1px 1px 1px 1px #888888;">
+              <div class="small-box bg-secondary"  box-shadow: 1px 1px 1px 1px #888888;>
                 <div class="inner">
                   <h3><?php echo $messages; ?></h3>
 

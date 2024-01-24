@@ -193,7 +193,7 @@ if(!isset($_SESSION['user'])) {
                     </li>
 					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
                         <a href="toolbox.php">
-                            <i class="fa fa-sticky-note"></i> <span>Toolbox Instock</span>
+                            <i class="fa fa-sticky-note"></i> <span>Toolbox Management</span>
                         </a>
                     </li>
 					<!--<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">

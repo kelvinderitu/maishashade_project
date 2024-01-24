@@ -119,13 +119,16 @@ if($error_message != '') {
 if($success_message != '') {
     echo "<script>alert('".$success_message."')</script>";
 }
-?><div class="col-md-4 logo">
-<h3><b>Harrow Lighting East Africa limited</b></h3><br>
-P.O Box 4262, 01002, Parklands, Nairobi County<br>
-Kenya<br>
-Office Tel. 020 8908 6820<br>
-Cellphone: +254733365444<br>
-Email: contact@harrowlighting.com
+?>
+
+<h3><center><b>MAISHA CAR PARKING SHADES AND CARPORTS LIMITED</b></center></h3><br>
+<div class="col-md-4 logo">
+
+<br>
+
+
+Cellphone: +254706071232<br>
+Email: info@maishashades.co.ke
 </div><br>
 
 <section class="content">

@@ -37,7 +37,29 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h3 class="page-header">SCHEDULE SERVICE PERIOD</h3>
-                    <a class="btn btn-info" href="pendingpayment.php">Back</a>
+                    <?php
+
+                    include 'dbconnect.php';
+                    if (isset($_POST['timebtn'])) {
+                        $id = $_POST["id"];
+                        $sdate = $_POST["sdate"];
+                        $edate = $_POST["edate"];
+                        $status = $_POST["status"];
+                        //update query
+                        $qry = "update tbl_bookings set id='$id', sdate='$sdate', edate='$edate',status='$status' where id='$id'";
+                        $result = mysqli_query($conn, $qry); //query executes
+
+                        if (!$result) {
+                            echo "ERROR" . mysqli_error();
+                        } else {
+
+                            echo '<div class="alert alert-success">scheduled date updated successfully!</div>';
+                        }
+                    }
+
+
+                    ?>
+                    <a class="btn btn-info" href="managebookings.php">Back</a>
                 </div><br>
                 <!-- /.col-lg-12 -->
             </div>
@@ -45,57 +67,57 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                      
-                        
+
+
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6">
-                                
-                                <?php
-include 'dbconnect.php';
-$id=$_GET['id'];
-$qry= "SELECT * FROM tbl_bookings where id='$id'
-"; 
-$result=mysqli_query($conn,$qry);
-while($row=mysqli_fetch_array($result)){
-    
-?>                                    
-                                    <form role="form" action="scheduleedit.php" method="post">
-                                     
-                                    <input  readonly name="status" type="hidden" value='Approved' required>
-                                            <input  readonly name="id" type="hidden" value='<?php echo $row['id']; ?>' required>
+
+                                    <?php
+                                    include 'dbconnect.php';
+                                    $id = $_GET['id'];
+                                    $qry = "SELECT * FROM tbl_bookings where id='$id'
+";
+                                    $result = mysqli_query($conn, $qry);
+                                    while ($row = mysqli_fetch_array($result)) {
+
+                                    ?>
+                                        <form role="form" action="#" method="post">
+
+                                            <input readonly name="status" type="hidden" value='Approved' required>
+                                            <input readonly name="id" type="hidden" value='<?php echo $row['id']; ?>' required>
                                             <div class="form-group">
-                                            <label>Booked Duration</label><br>
-                                            <input  readonly  type="text" value='<?php echo $row['duration']; ?>' required>                                         
-                                        </div><br>
-                                        <div class="form-group">
-                                            <label>Start Date</label><br>
-                                            <input type="date" name="sdate"  id="shootdate" required min="<?php echo date('Y-m-d'); ?>"/>                                         
-                                        </div><br>
-                                        <div class="form-group">
-    <label>End Date</label><br>
-    <input type="date" name="edate" id="shootdate" required min="<?php echo date('Y-m-d', strtotime('+7 days')); ?>"/>
-</div>
-<div class="form-group">
+                                                <label>Booked Duration</label><br>
+                                                <input readonly type="text" value='<?php echo $row['duration']; ?>' required>
+                                            </div><br>
+                                            <div class="form-group">
+                                                <label>Start Date</label><br>
+                                                <input type="date" name="sdate" id="shootdate" required min="<?php echo date('Y-m-d'); ?>" />
+                                            </div><br>
+                                            <div class="form-group">
+                                                <label>End Date</label><br>
+                                                <input type="date" name="edate" id="shootdate" required min="<?php echo date('Y-m-d', strtotime('+7 days')); ?>" />
+                                            </div>
+                                            <div class="form-group">
 
 
-                                       
-                       <!-- id hidden grna input type ma "hidden" -->
-                      
-                                     
-    <input type="hidden" name="id" value="<?php echo $row['id'];?>">              
-                                    
-                                
-                                        
-                
-                                    
-                                    <button type="submit" class="btn btn-success">Submit</button>
-                                    </form>
+
+                                                <!-- id hidden grna input type ma "hidden" -->
+
+
+                                                <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+
+
+
+
+
+                                                <button type="submit" class="btn btn-success" name="timebtn">Submit</button>
+                                        </form>
                                 </div>
-    <?php
-}
-?>
-                                
+                            <?php
+                                    }
+                            ?>
+
                             </div>
                             <!-- /.row (nested) -->
                         </div>
@@ -126,22 +148,22 @@ while($row=mysqli_fetch_array($result)){
 
 </body>
 
-	<style>
-	footer{
-   background-color: #424558;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 35px;
-    text-align: center;
-    color: #CCC;
-}
+<style>
+    footer {
+        background-color: #424558;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 35px;
+        text-align: center;
+        color: #CCC;
+    }
 
-footer p {
-    padding: 10.5px;
-    margin: 0px;
-    line-height: 100%;
-}
-	</style>
+    footer p {
+        padding: 10.5px;
+        margin: 0px;
+        line-height: 100%;
+    }
+</style>
 
 </html>

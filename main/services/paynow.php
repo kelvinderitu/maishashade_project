@@ -1,3 +1,7 @@
+<?php
+include("../admin/inc/config.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,9 +41,20 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h5 class="page-header">Payment Section</h5>
+                    <i><h6><div class="col-md-12 form-group">
+                        <label for=""><?php echo "choose any bank of your choice*"; ?></span></label><br>
+                        <?php
+                        $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
+                        $statement->execute();
+                        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($result as $row) {
+                            echo nl2br($row['bank_detail']);
+                        }
+                        ?>
+                    </div></h6></i>
 
-                    <h5 class="page-header">EQUITY ACCOUNT NUMBER</h5>
-                    <h5 class="page-header">0650181029646</h5>
+
+
                 </div><br>
                 <!-- /.col-lg-12 -->
             </div>
@@ -65,6 +80,7 @@
                                         }
                                         $id = $_POST["id"];
                                         $total = $_POST["total"];
+                                        $Bank_Name=$_POST['BankName'];
                                         $transactioncode = test_input($_POST['transactioncode']);
                                         $per = 'M1OPQRST6U8V2X3ABCDEFG45NYZ7W9HIJ0KL';
                                         $newS = substr(str_shuffle($per), 0, 8);
@@ -76,7 +92,7 @@
                                             header("Refresh:0.05; url=../bookin_pay_error.php");
                                         } else {
                                             //update query
-                                            $qry = "update tbl_bookings set transactioncode='$transactioncode',total='$total' where id='$id'";
+                                            $qry = "update tbl_bookings set transactioncode='$transactioncode',total='$total', Bank_Name='$Bank_Name' where id='$id'";
                                             $result = mysqli_query($conn, $qry); //query executes
 
                                             if (!$result) {
@@ -102,6 +118,10 @@
                                                 <label>Total Amount</label>
                                                 <input class="form-control" type="text" readonly name="total" value="<?php echo $row['charges'] + $row['fee']; ?>" required>
                                             </div>
+                                            <div class="form-group">
+                                                <label>Bank Name</label>
+                                                <input class="form-control" type="text"  name="BankName" required>
+                                            </div>
 
                                             <div class="form-group">
                                                 <label>Transaction Code</label>
@@ -125,7 +145,9 @@
 
 
                                         </form>
+
                                 </div>
+
                             <?php
                                     }
                             ?>

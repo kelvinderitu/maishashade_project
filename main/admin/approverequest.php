@@ -47,64 +47,64 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                         </div>
-                        
+
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6">
-                                
-                                <?php
-include 'dbconnect.php';
-$id=$_GET['id'];
-$qry= "SELECT * FROM tbl_request WHERE id='$id'
-"; 
-$result=mysqli_query($conn,$qry);
-while($row=mysqli_fetch_array($result)){
-    
-?>                                    
-                                    <form role="form" action="add.php" method="post">
-                                     
-                                        
-                                        <div class="form-group">
-                                            <label>Customer Name</label>
-                                            <input class="form-control" type="text" readonly name="cust_name" value='<?php echo $row['cust_name']; ?>' required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label> Status</label>
-                                            <select name="status" required>
-                                                <option>Add Status</option>
-                                                <option value="Approved">Approved</option>
-                                                <option value="Rejected">Rejected</option>
-</select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Charges</label>
-                                            <input class="form-control" type="number" name="charges" value='<?php echo $row['charges']; ?>' required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Add Comment</label>
-                                            <textarea name="remark" class="form-control" rows="5" cols="10"  required></textarea>
-                                        </div>
 
-                                        
+                                    <?php
+                                    include 'dbconnect.php';
+                                    $id = $_GET['id'];
+                                    $qry = "SELECT * FROM tbl_request WHERE id='$id'
+";
+                                    $result = mysqli_query($conn, $qry);
+                                    while ($row = mysqli_fetch_array($result)) {
 
-                                       
-                                       
-                       <!-- id hidden grna input type ma "hidden" -->
-                      
-                                     
-    <input type="hidden" name="id" value="<?php echo $row['id'];?>">              
-                                    
-                                
-                                        
-                
-                                    
-                                    <button type="submit" class="btn btn-success">Submit</button>
-                                    </form>
+                                    ?>
+                                        <form role="form" action="add.php" method="post">
+
+
+                                            <div class="form-group">
+                                                <label>Customer Name</label>
+                                                <input class="form-control" type="text" readonly name="cust_name" value='<?php echo $row['cust_name']; ?>' required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label> Status</label>
+                                                <select name="status" required>
+                                                    <option>Add Status</option>
+                                                    <option value="Approved">Approved</option>
+                                                    <option value="Rejected">Rejected</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Charges</label>
+                                                <input class="form-control" type="number" name="charges" value='<?php echo $row['charges']; ?>' required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Add Comment</label>
+                                                <textarea name="remark" class="form-control" rows="5" cols="10" required></textarea>
+                                            </div>
+
+
+
+
+
+                                            <!-- id hidden grna input type ma "hidden" -->
+
+
+                                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+
+
+
+
+
+                                            <button type="submit" class="btn btn-success">Submit</button>
+                                        </form>
                                 </div>
-    <?php
-}
-?>
-                                
+                            <?php
+                                    }
+                            ?>
+
                             </div>
                             <!-- /.row (nested) -->
                         </div>
@@ -136,25 +136,25 @@ while($row=mysqli_fetch_array($result)){
 </body>
 
 <footer>
-        <p>&copy; <?php echo date("Y"); ?>: Bliss</p>
-    </footer>
-	
-	<style>
-	footer{
-   background-color: #424558;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 35px;
-    text-align: center;
-    color: #CCC;
-}
+    <p>&copy; <?php echo date("Y"); ?>: Bliss</p>
+</footer>
 
-footer p {
-    padding: 10.5px;
-    margin: 0px;
-    line-height: 100%;
-}
-	</style>
+<style>
+    footer {
+        background-color: #424558;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 35px;
+        text-align: center;
+        color: #CCC;
+    }
+
+    footer p {
+        padding: 10.5px;
+        margin: 0px;
+        line-height: 100%;
+    }
+</style>
 
 </html>
