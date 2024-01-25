@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2023 at 04:24 PM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.12
+-- Generation Time: Dec 30, 2023 at 06:17 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,7 +34,7 @@ CREATE TABLE `admin` (
   `email` varchar(100) NOT NULL,
   `phone` varchar(100) NOT NULL,
   `password` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `admin`
@@ -55,7 +55,7 @@ CREATE TABLE `materials` (
   `pricing` int(10) NOT NULL,
   `supplier` varchar(100) NOT NULL,
   `status` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `materials`
@@ -80,7 +80,7 @@ CREATE TABLE `messages` (
   `message` longtext DEFAULT NULL,
   `PostingDate` timestamp NOT NULL DEFAULT current_timestamp(),
   `status` int(11) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -98,7 +98,7 @@ CREATE TABLE `notice` (
   `message` varchar(500) NOT NULL,
   `postingdate` timestamp NOT NULL DEFAULT current_timestamp(),
   `status` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `notice`
@@ -130,7 +130,7 @@ CREATE TABLE `requestsproduct` (
   `Ref` varchar(200) NOT NULL,
   `product_price` int(20) NOT NULL,
   `comment` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `requestsproduct`
@@ -138,7 +138,8 @@ CREATE TABLE `requestsproduct` (
 
 INSERT INTO `requestsproduct` (`id`, `p_name`, `quantity`, `supplier`, `status`, `charges`, `specs`, `reason`, `DueDate`, `inventoryStatus`, `payDate`, `date_created`, `payStatus`, `Ref`, `product_price`, `comment`) VALUES
 (40, 'Light bulbs', 2, 'job@gmail.com', 'Updated', 40, 'Light bulbs are the core light-emitting components used in various lighting fixtures. They can come ', '', '2023-10-20 00:00:00', 'Received', '2023-11-22 17:18:13', '2023-10-19 11:51:24', 'Received', 'RTJ4WHT84K', 0, 'quality products received'),
-(41, 'Lampshades', 2, 'mwendwa@gmail.com', 'Updated', 2500, 'Lampshades are primarily used for decorative purposes. They cover and diffuse the light emitted by t', '', '2023-10-19 00:00:00', 'Received', '2023-11-22 17:19:21', '2023-10-19 16:41:37', 'Received', 'RTJ4WHg67D', 0, 'supplied');
+(41, 'Lampshades', 2, 'mwendwa@gmail.com', 'Updated', 2500, 'Lampshades are primarily used for decorative purposes. They cover and diffuse the light emitted by t', '', '2023-10-19 00:00:00', 'Received', '2023-11-22 17:19:21', '2023-10-19 16:41:37', 'Received', 'RTJ4WHg67D', 0, 'supplied'),
+(46, 'screws', 5000, 'job@gmail.com', 'Active', 0, 'round ', '', '2024-02-20 00:00:00', 'Pending', '2023-12-21 09:01:58', '2023-12-21 12:01:58', 'Not Yet Paid', '', 222, '');
 
 -- --------------------------------------------------------
 
@@ -166,7 +167,7 @@ CREATE TABLE `requests_material` (
   `Ref` varchar(200) NOT NULL,
   `servedBy` varchar(200) NOT NULL,
   `prodstats` varchar(100) NOT NULL DEFAULT 'In Progress'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `requests_material`
@@ -191,7 +192,7 @@ CREATE TABLE `store` (
   `qty` int(200) NOT NULL,
   `status` varchar(20) NOT NULL,
   `imge` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `store`
@@ -216,7 +217,7 @@ CREATE TABLE `tblcontactusquery` (
   `Message` longtext DEFAULT NULL,
   `PostingDate` timestamp NOT NULL DEFAULT current_timestamp(),
   `status` int(11) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tblcontactusquery`
@@ -278,18 +279,25 @@ CREATE TABLE `tbl_bookings` (
   `duration` varchar(100) NOT NULL,
   `sdate` varchar(100) NOT NULL DEFAULT 'Not Yet Scheduled',
   `edate` varchar(100) NOT NULL DEFAULT 'Not Yet Scheduled',
-  `cert` varchar(100) NOT NULL DEFAULT 'Not Yet Issued'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `cert` varchar(100) NOT NULL DEFAULT 'Not Yet Issued',
+  `toolbox_type` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tbl_bookings`
 --
 
-INSERT INTO `tbl_bookings` (`id`, `cust_id`, `cust_name`, `cust_lname`, `email`, `phone`, `address`, `service`, `feedback`, `charges`, `fee`, `transactioncode`, `eventdate`, `location`, `county`, `technician`, `supervisor`, `phone_number`, `engineer`, `technician_return`, `technician_request`, `status`, `payment_status`, `rating`, `technician_status`, `supervisor_status`, `bdate`, `cust_remark`, `toolbox_name`, `style`, `floors`, `permit`, `materialcost`, `labourcost`, `repstats`, `reg`, `lndsize`, `slope`, `depth`, `pdate`, `total`, `duration`, `sdate`, `edate`, `cert`) VALUES
-(174, 58, 'Joseph ', 'Musyoka', 'josephmusyoka@gmail.com', '0723456789', '', 'Lighting design', '', 7500, 1500, 'RJJFT365TD', '2023-11-09', ' Kilindini', 'Mombasa', 'Peter Kimanthi', 'Dennis Nyairo', 0, 'Not Assigned', 'confirmed', 'submitted', 'Approved', 'Approved', '', 'Complete', 'Complete', '2023-11-09 21:14:31', 'The service was well done', 'Toolbox', '', 0, 0, 0, 0, 'Pending', '', 0, '', 0, '2023-11-30 00:30:33', 9000, 'One Week', '2023-11-09', '2023-11-16', 'Not Yet Issued'),
-(175, 62, 'David', 'Kaje', 'kaje@gmail.com', '0729333444', '', 'Commercial lighting', '', 8500, 1300, 'RDFF45FHFF', '2023-11-15', ' Town', 'Marsabit', 'Ben Ndolo', 'Simba Musyoka', 0, 'Not Assigned', 'confirmed', 'submitted', 'Approved', 'Approved', '', 'Complete', 'Complete', '2023-11-10 15:57:24', 'Done', 'Toolbox', '', 0, 0, 0, 0, 'Pending', '', 0, '', 0, '2023-11-30 07:42:35', 9800, 'One Week', '2023-11-15', '2023-11-22', 'Not Yet Issued'),
-(181, 61, 'Ken ', 'Muteria', 'muteria@gmail.com', '0723906715', '', 'Decorative lighting', '', 9500, 900, 'RTHGF456M', '2023-11-30', ' Kithini market', 'Machakos', 'Jacob musembi', 'Dennis Nyairo', 0, 'Not Assigned', 'confirmed', 'submitted', 'Approved', 'Approved', '', 'Complete', 'Complete', '2023-11-30 07:44:48', 'well done', 'Toolbox', '', 0, 0, 0, 0, 'Pending', '', 0, '', 0, '2023-11-30 08:12:56', 10400, 'Two Weeks', '2023-11-30', '2023-12-14', 'Not Yet Issued'),
-(182, 62, 'David', 'Kaje', 'kaje@gmail.com', '0729333444', '', 'Commercial lighting', '', 8500, 1000, '', '2023-11-30', ' town ', 'Tharaka-Nithi', 'Not Assigned', 'Not Assigned', 0, 'Not Assigned', 'Not Confirmed', 'Not Approved', 'Pending', 'Pending', '', 'Pending', 'Pending', '2023-11-30 15:36:10', '', 'Toolbox', '', 0, 0, 0, 0, 'Pending', '', 0, '', 0, '2023-11-30 15:36:10', 0, 'One Week', 'Not Yet Scheduled', 'Not Yet Scheduled', 'Not Yet Issued');
+INSERT INTO `tbl_bookings` (`id`, `cust_id`, `cust_name`, `cust_lname`, `email`, `phone`, `address`, `service`, `feedback`, `charges`, `fee`, `transactioncode`, `eventdate`, `location`, `county`, `technician`, `supervisor`, `phone_number`, `engineer`, `technician_return`, `technician_request`, `status`, `payment_status`, `rating`, `technician_status`, `supervisor_status`, `bdate`, `cust_remark`, `toolbox_name`, `style`, `floors`, `permit`, `materialcost`, `labourcost`, `repstats`, `reg`, `lndsize`, `slope`, `depth`, `pdate`, `total`, `duration`, `sdate`, `edate`, `cert`, `toolbox_type`) VALUES
+(174, 58, 'Joseph ', 'Musyoka', 'josephmusyoka@gmail.com', '0723456789', '', 'Lighting design', '', 7500, 1500, 'RJJFT365TD', '2023-11-09', ' Kilindini', 'Mombasa', 'Peter Kimanthi', 'Dennis Nyairo', 0, 'Not Assigned', 'confirmed', 'submitted', 'Approved', 'Approved', '', 'Complete', 'Complete', '2023-11-09 21:14:31', 'The service was well done', 'Toolbox', '', 0, 0, 0, 0, 'Pending', '', 0, '', 0, '2023-11-30 00:30:33', 9000, 'One Week', '2023-11-09', '2023-11-16', 'Not Yet Issued', ''),
+(175, 62, 'David', 'Kaje', 'kaje@gmail.com', '0729333444', '', 'Commercial lighting', '', 8500, 1300, 'RDFF45FHFF', '2023-11-15', ' Town', 'Marsabit', 'Ben Ndolo', 'Simba Musyoka', 0, 'Not Assigned', 'confirmed', 'submitted', 'Approved', 'Approved', '', 'Complete', 'Complete', '2023-11-10 15:57:24', 'Done', 'Toolbox', '', 0, 0, 0, 0, 'Pending', '', 0, '', 0, '2023-11-30 07:42:35', 9800, 'One Week', '2023-11-15', '2023-11-22', 'Not Yet Issued', ''),
+(181, 61, 'Ken ', 'Muteria', 'muteria@gmail.com', '0723906715', '', 'Decorative lighting', '', 9500, 900, 'RTHGF456M', '2023-11-30', ' Kithini market', 'Machakos', 'Jacob musembi', 'Dennis Nyairo', 0, 'Not Assigned', 'confirmed', 'submitted', 'Approved', 'Approved', '', 'Complete', 'Complete', '2023-11-30 07:44:48', 'well done', 'Toolbox', '', 0, 0, 0, 0, 'Pending', '', 0, '', 0, '2023-11-30 08:12:56', 10400, 'Two Weeks', '2023-11-30', '2023-12-14', 'Not Yet Issued', ''),
+(182, 62, 'David', 'Kaje', 'kaje@gmail.com', '0729333444', '', 'Commercial lighting', '', 8500, 1000, '54GHYETYR3', '2023-11-30', ' town ', 'Tharaka-Nithi', 'Not Assigned', 'Not Assigned', 0, 'Not Assigned', 'Not Confirmed', 'Not Approved', 'Pending', 'Pending', '', 'Pending', 'Pending', '2023-11-30 15:36:10', '', 'Toolbox', '', 0, 0, 0, 0, 'Pending', '', 0, '', 0, '2023-12-27 20:45:27', 9500, 'One Week', 'Not Yet Scheduled', 'Not Yet Scheduled', 'Not Yet Issued', ''),
+(183, 62, 'David', 'Kaje', 'kaje@gmail.com', '0729333444', '', 'Residential lighting', '', 5000, 1000, '54GHYETYR3', '2023-12-22', ' nkubu opposite shell petrol station', 'Meru', 'Ben Ndolo', 'Simba Musyoka', 0, 'Not Assigned', 'Not Confirmed', 'Not Approved', 'Approved', 'Approved', '', 'Complete', 'Pending', '2023-12-22 10:10:26', '', 'Toolbox', '', 0, 0, 0, 0, 'Pending', '', 0, '', 0, '2023-12-28 10:53:59', 6000, 'One Week', '2023-12-25', '2023-12-29', 'Not Yet Issued', ''),
+(184, 62, 'Davi', 'Kaje', 'kaje@gmail.com', '0729333444', '', 'Residential lighting', '', 5000, 1100, '54GHYETYR3', '2024-01-02', ' kwale town', 'Kwale', 'Not Assigned', 'Not Assigned', 0, 'Not Assigned', 'Not Confirmed', 'Not Approved', 'Pending', 'Pending', '', 'Pending', 'Pending', '2023-12-27 20:45:07', '', 'Toolbox', '', 0, 0, 0, 0, 'Pending', '', 0, '', 0, '2023-12-27 20:57:09', 6100, 'One Week', 'Not Yet Scheduled', 'Not Yet Scheduled', 'Not Yet Issued', ''),
+(185, 62, 'Davi', 'Kaje', 'kaje@gmail.com', '0729333444', '', 'Residential lighting', '', 5000, 1200, 'TYEI65TYB3', '2024-04-02', ' town', 'Wajir', 'Not Assigned', 'Not Assigned', 0, 'Not Assigned', 'Not Confirmed', 'Not Approved', 'Pending', 'Pending', '', 'Pending', 'Pending', '2023-12-27 21:09:30', '', 'Toolbox', '', 0, 0, 0, 0, 'Pending', '', 0, '', 0, '2023-12-27 21:10:15', 6200, 'One Week', 'Not Yet Scheduled', 'Not Yet Scheduled', 'Not Yet Issued', ''),
+(186, 62, 'Davi', 'Kaje', 'kaje@gmail.com', '0729333444', '', 'shade replacement', '', 50000, 800, 'ZZZZZ873HE', '2024-03-02', ' town', 'Nyeri', 'Not Assigned', 'Not Assigned', 0, 'Not Assigned', 'Not Confirmed', 'Not Approved', 'Pending', 'Pending', '', 'Pending', 'Pending', '2023-12-27 21:24:42', '', 'Toolbox', '', 0, 0, 0, 0, 'Pending', '', 0, '', 0, '2023-12-27 21:25:20', 50800, 'One Week', 'Not Yet Scheduled', 'Not Yet Scheduled', 'Not Yet Issued', ''),
+(187, 0, '', '', '', '', '', 'car parking shades repairment', '', 10000, 1500, '', '2024-02-20', ' mombasa town', 'Mombasa', 'Not Assigned', 'Not Assigned', 0, 'Not Assigned', 'Not Confirmed', 'Not Approved', 'Pending', 'Pending', '', 'Pending', 'Pending', '2023-12-30 20:11:28', '', 'Toolbox', '', 0, 0, 0, 0, 'Pending', '', 0, '', 0, '2023-12-30 20:11:28', 0, 'Below One Week', 'Not Yet Scheduled', 'Not Yet Scheduled', 'Not Yet Issued', ''),
+(188, 0, '', '', '', '', '', 'shades replacement', '', 25000, 1500, '', '2024-02-20', ' mombasa town', 'Mombasa', 'Not Assigned', 'Not Assigned', 0, 'Not Assigned', 'Not Confirmed', 'Not Approved', 'Pending', 'Pending', '', 'Pending', 'Pending', '2023-12-30 20:14:18', '', 'Toolbox', '', 0, 0, 0, 0, 'Pending', '', 0, '', 0, '2023-12-30 20:14:18', 0, 'One Week', 'Not Yet Scheduled', 'Not Yet Scheduled', 'Not Yet Issued', '');
 
 -- --------------------------------------------------------
 
@@ -301,14 +309,20 @@ CREATE TABLE `tbl_color` (
   `color_id` int(11) NOT NULL,
   `color_name` varchar(255) NOT NULL,
   `age` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_color`
 --
 
 INSERT INTO `tbl_color` (`color_id`, `color_name`, `age`) VALUES
-(1, 'Red', '');
+(1, 'Red', ''),
+(32, 'yellow', ''),
+(33, 'blue', ''),
+(34, 'black', ''),
+(35, 'biege', ''),
+(36, 'transparent', ''),
+(37, 'gray', '');
 
 -- --------------------------------------------------------
 
@@ -323,7 +337,7 @@ CREATE TABLE `tbl_completed_baskets` (
   `date` datetime NOT NULL DEFAULT current_timestamp(),
   `description` varchar(500) NOT NULL,
   `status` varchar(50) NOT NULL DEFAULT 'Pending'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tbl_completed_baskets`
@@ -343,7 +357,7 @@ CREATE TABLE `tbl_country` (
   `country_name` varchar(100) NOT NULL DEFAULT '',
   `cost` float NOT NULL,
   `servicecost` float NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `tbl_country`
@@ -437,7 +451,7 @@ CREATE TABLE `tbl_customer` (
   `cust_datetime` varchar(100) NOT NULL,
   `cust_timestamp` varchar(100) NOT NULL,
   `cust_status` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_customer`
@@ -450,7 +464,7 @@ INSERT INTO `tbl_customer` (`cust_id`, `cust_name`, `cust_lname`, `cust_cname`, 
 (58, 'Joseph ', 'Musyoka ', 'Male', 'josephmusyoka@gmail.com', '0723456789', '37', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', 0, 'Opposite Sigalagala polytechnic', '', '', '', '1234', '392e3c2b39cdc72ffc232a6b1d0fd7d8', '2023-06-03 04:04:11', '1685790251', 1),
 (60, 'Victor', 'Munyao', 'Male', 'victor@gmail.com', '0796325874', '28', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', 0, 'Elgeiyo Marakwet town', '', '', '', '1234', 'f04d829dbd83310387ea2886b0094c05', '2023-08-01 08:09:32', '1690902572', 1),
 (61, 'Ken ', 'Muteria', 'Male', 'muteria@gmail.com', '0723906715', '12', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', 0, 'Runogone', '', '', '', '1234', '0a39b9e0a77e23f5d98cbf4a0adfc858', '2023-09-28 12:40:36', '1695886836', 1),
-(62, 'David', 'Kaje', 'Male', 'kaje@gmail.com', '0729333444', '36', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', 0, 'Town', '', '', '', '1234', '032b5b2a40eb972b0453a9072c4326ad', '2023-11-10 04:32:10', '1699619530', 1);
+(62, 'Davi', 'Kaje', 'Male', 'kaje@gmail.com', '0729333444', '36', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', 0, 'Town', '', '', '', '123456', '032b5b2a40eb972b0453a9072c4326ad', '2023-11-10 04:32:10', '1699619530', 1);
 
 -- --------------------------------------------------------
 
@@ -464,7 +478,7 @@ CREATE TABLE `tbl_customer_message` (
   `message` text NOT NULL,
   `order_detail` text NOT NULL,
   `cust_id` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -476,25 +490,17 @@ CREATE TABLE `tbl_end_category` (
   `ecat_id` int(11) NOT NULL,
   `ecat_name` varchar(255) NOT NULL,
   `mcat_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_end_category`
 --
 
 INSERT INTO `tbl_end_category` (`ecat_id`, `ecat_name`, `mcat_id`) VALUES
-(92, 'Large', 30),
-(93, 'Large', 31),
-(94, 'Medium', 30),
-(95, 'Medium', 31),
-(96, 'Small', 31),
-(97, 'Small', 30),
-(98, 'Extra-large', 30),
-(99, 'Extra-large', 31),
-(100, 'Large', 32),
-(101, 'Medium', 32),
-(102, 'Small', 32),
-(103, 'Extra-large', 32);
+(104, 'residential', 37),
+(105, 'corporate', 37),
+(106, 'residential', 34),
+(107, 'corporate', 34);
 
 -- --------------------------------------------------------
 
@@ -506,15 +512,15 @@ CREATE TABLE `tbl_faq` (
   `faq_id` int(11) NOT NULL,
   `faq_title` varchar(255) NOT NULL,
   `faq_content` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_faq`
 --
 
 INSERT INTO `tbl_faq` (`faq_id`, `faq_title`, `faq_content`) VALUES
-(1, 'How to find a product?', '<h3 class=\"checkout-complete-box font-bold txt16\" style=\"box-sizing: inherit; text-rendering: optimizeLegibility; margin: 0.2rem 0px 0.5rem; padding: 0px; line-height: 1.4; background-color: rgb(250, 250, 250);\"><br></h3><h3 class=\"checkout-complete-box font-bold txt16\" style=\"box-sizing: inherit; text-rendering: optimizeLegibility; margin: 0.2rem 0px 0.5rem; padding: 0px; line-height: 1.4; background-color: rgb(250, 250, 250);\"><span style=\"font-size: 15.7143px; color: rgb(34, 34, 34); font-family: opensans, \" helvetica=\"\" neue\",=\"\" helvetica,=\"\" arial,=\"\" sans-serif;\"=\"\">If you\'re looking for a specific product, use the search box located at the top of the App. Simply type what you are looking for, and you\'ll be amazed.</span></h3><h3 class=\"checkout-complete-box font-bold txt16\" style=\"box-sizing: inherit; text-rendering: optimizeLegibility; margin: 0.2rem 0px 0.5rem; padding: 0px; line-height: 1.4; background-color: rgb(250, 250, 250);\"><br></h3>\r\n'),
-(2, 'What is your return/refund policy?', '<font color=\"#0a0a0a\">Incase yu receive different amount of product requested, that is when we will deliver the right product.</font>'),
+(1, 'How to order for a design and a product', '<h3 class=\"checkout-complete-box font-bold txt16\" style=\"box-sizing: inherit; text-rendering: optimizeLegibility; margin: 0.2rem 0px 0.5rem; padding: 0px; line-height: 1.4; background-color: rgb(250, 250, 250);\"><br></h3><h3 class=\"checkout-complete-box font-bold txt16\" style=\"box-sizing: inherit; text-rendering: optimizeLegibility; margin: 0.2rem 0px 0.5rem; padding: 0px; line-height: 1.4; background-color: rgb(250, 250, 250);\"><span style=\"font-size: 15.7143px; color: rgb(34, 34, 34); font-family: opensans, \" helvetica=\"\" neue\",=\"\" helvetica,=\"\" arial,=\"\" sans-serif;\"=\"\">firstly create an account with us then login using the crediatials you used in creating the account and login in the app. search for the design by typing on the search bar or scrolling sideways to check our designs. then click add to cart . on top you will see my order click the button to proceed with the ordering process. proceed with payment and we will be available under the time you specified</span></h3><h3 class=\"checkout-complete-box font-bold txt16\" style=\"box-sizing: inherit; text-rendering: optimizeLegibility; margin: 0.2rem 0px 0.5rem; padding: 0px; line-height: 1.4; background-color: rgb(250, 250, 250);\"><br></h3>\n'),
+(2, 'What is your return/refund policy?', '<font color=\"#0a0a0a\">Incase the design or product installed has been wrongfully installed will respond after the next 24/hrs and you will be refunded a token for apologies and will rapair the fault.</font>'),
 (3, 'Can I register more than one account?', '<p>No!</p><p>You can only register one account per person and owning several accounts is prohibited and can lead to blocking of both.</p>');
 
 -- --------------------------------------------------------
@@ -527,7 +533,7 @@ CREATE TABLE `tbl_language` (
   `lang_id` int(11) NOT NULL,
   `lang_name` varchar(255) NOT NULL,
   `lang_value` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_language`
@@ -709,7 +715,7 @@ CREATE TABLE `tbl_materials` (
   `name` varchar(100) NOT NULL,
   `quantity` int(10) NOT NULL,
   `status` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tbl_materials`
@@ -729,16 +735,15 @@ CREATE TABLE `tbl_mid_category` (
   `mcat_id` int(11) NOT NULL,
   `mcat_name` varchar(255) NOT NULL,
   `tcat_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_mid_category`
 --
 
 INSERT INTO `tbl_mid_category` (`mcat_id`, `mcat_name`, `tcat_id`) VALUES
-(30, 'Task Lighting', 11),
-(31, 'Accent Lighting', 11),
-(32, 'Decorative Lighting', 11);
+(34, 'fences', 11),
+(37, 'car shades', 12);
 
 -- --------------------------------------------------------
 
@@ -755,23 +760,7 @@ CREATE TABLE `tbl_order` (
   `quantity` varchar(50) NOT NULL,
   `unit_price` varchar(50) NOT NULL,
   `payment_id` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_order`
---
-
-INSERT INTO `tbl_order` (`id`, `product_id`, `product_name`, `size`, `color`, `quantity`, `unit_price`, `payment_id`) VALUES
-(80, 135, 'Light bulbs', '', '', '1', '60', '1696840963'),
-(81, 141, 'Desk lamps', '', '', '1', '1499', '1698056922'),
-(82, 137, 'Halogen lamps', '', '', '1', '950', '1698252420'),
-(83, 139, 'Spot lights', '', '', '1', '2250', '1699357621'),
-(84, 135, 'Light bulbs', '', '', '4', '60', '1699550926'),
-(85, 142, 'Track lights', '', '', '8', '1500', '1699620063'),
-(86, 140, 'LED tubes', 'Default Size', 'Default Color', '1', '1899', '1699966355'),
-(87, 142, 'Track lights', 'Default Size', 'Default Color', '1', '1500', '1699966418'),
-(88, 141, 'Desk lamps', '', '', '1', '1499', '1699966965'),
-(89, 142, 'Track lights', '', '', '1', '1500', '1700853103');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -812,14 +801,14 @@ CREATE TABLE `tbl_page` (
   `vgallery_meta_title` varchar(255) NOT NULL,
   `vgallery_meta_keyword` text NOT NULL,
   `vgallery_meta_description` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_page`
 --
 
 INSERT INTO `tbl_page` (`id`, `about_title`, `about_content`, `about_banner`, `about_meta_title`, `about_meta_keyword`, `about_meta_description`, `faq_title`, `faq_banner`, `faq_meta_title`, `faq_meta_keyword`, `faq_meta_description`, `blog_title`, `blog_banner`, `blog_meta_title`, `blog_meta_keyword`, `blog_meta_description`, `contact_title`, `contact_banner`, `contact_meta_title`, `contact_meta_keyword`, `contact_meta_description`, `pgallery_title`, `pgallery_banner`, `pgallery_meta_title`, `pgallery_meta_keyword`, `pgallery_meta_description`, `vgallery_title`, `vgallery_banner`, `vgallery_meta_title`, `vgallery_meta_keyword`, `vgallery_meta_description`) VALUES
-(1, 'About Us', 'Harrow lighting East Africa limited is a family owned business. It started selling lightbulbs in 1984 and have evolved into what we see today. It is located in Meru-Nairobi highway opposite Dr.Riberio parklands boys high school,Nairobi,Kenya.\r\nThey offer the lighting products such as the halogen lights, LED lights, lampshades, desk lamps, light bulbs, lamps, table lamps and many others.\r\nThe services offered are the commercial lighting, residential lighting, lighting design, security lighting, garden lighting decorative lighting and bespoke lighting.\r\n\r\n', 'about-banner.jpg', 'Harrow lighting- About Us', 'about, about us, about our products, about Harrow lighting', 'Our goal has always been to get the best for you .', 'FAQ', 'faq-banner.jpg', 'Fashionys.com - FAQ', '', '', 'Blog', 'blog-banner.jpg', 'Ecommerce - Blog', '', '', 'Contact Us', 'contact-banner.jpg', 'Harrow lighting', '', '', 'Photo Gallery', 'pgallery-banner.jpg', 'Ecommerce - Photo Gallery', '', '', 'Video Gallery', 'vgallery-banner.jpg', 'Ecommerce - Video Gallery', '', '');
+(1, 'About Us', 'Maisha shades is one of the leading modern car parking shades companies in Nairobi Kenya. What drives us is quality & professionalism. Our fabric material; imported from Europe / Asia and assembled in South Africa; is of highest quality and comes with 15 years warranty. We only use 100% waterproof/ heatproof material.\n\nWe offer the most competitive car park shades prices / cost for all our Carports and offer creative car shade designs with very strong structure.\n\nWe also operate in Mombasa, Kisumu, Nakuru, Eldoret, Thika, Kiambu and Garissa. Give us a call today for the best car port in Kenya.', 'about-banner.jpg', 'Maisha shades- About Us', 'about, about us, about our products, about maisha shades and carports limited', 'Our goal has always been to get the best for you .', 'FAQ', 'faq-banner.jpg', 'Fashionys.com - FAQ', '', '', 'Blog', 'blog-banner.jpg', 'maisha shades', '', '', 'Contact Us', 'contact-banner.jpg', 'maisha shades and car parking ports', '', '', 'Photo Gallery', 'pgallery-banner.jpg', 'Ecommerce - Photo Gallery', '', '', 'Video Gallery', 'vgallery-banner.jpg', 'Ecommerce - Video Gallery', '', '');
 
 -- --------------------------------------------------------
 
@@ -853,15 +842,7 @@ CREATE TABLE `tbl_payment` (
   `driver` varchar(50) NOT NULL,
   `location_detail` varchar(300) NOT NULL,
   `delivery_county` varchar(100) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_payment`
---
-
-INSERT INTO `tbl_payment` (`id`, `customer_id`, `customer_name`, `customer_email`, `customer_phone`, `payment_date`, `txnid`, `paid_amount`, `shipping_fee`, `order_status`, `card_number`, `card_cvv`, `card_month`, `card_year`, `bank_transaction_info`, `payment_method`, `payment_status`, `shipping_status`, `payment_id`, `full_name`, `cust_remark`, `cust_comment`, `driver`, `location_detail`, `delivery_county`) VALUES
-(134, 61, 'Ken ', 'muteria@gmail.com', '0723906715', '2023-10-23 03:28:42', '', 6499, 5000, 'Order Completed', '', '', '', '', 'RJJKLR23GT', 'M-Pesa Deposit', 'Completed', 'Goods Delivered', '1698056922', '', 'Accepted', 'delivered', 'Houstone Ochieng', '', ''),
-(140, 62, 'David', 'kaje@gmail.com', '0729333444', '2023-11-10 04:41:03', '', 13000, 1000, 'Order Completed', '', '', '', '', 'RDDFG345RY', 'M-Pesa Deposit', 'Completed', 'Goods Delivered', '1699620063', '', 'Accepted', 'Well delivered', 'Brian Kimani', '', '');
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -873,7 +854,7 @@ CREATE TABLE `tbl_photo` (
   `id` int(11) NOT NULL,
   `caption` varchar(255) NOT NULL,
   `photo` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_photo`
@@ -905,7 +886,7 @@ CREATE TABLE `tbl_post` (
   `meta_title` varchar(255) NOT NULL,
   `meta_keyword` text NOT NULL,
   `meta_description` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_post`
@@ -947,22 +928,22 @@ CREATE TABLE `tbl_product` (
   `p_is_featured` int(1) NOT NULL,
   `p_is_active` int(1) NOT NULL,
   `ecat_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_product`
 --
 
 INSERT INTO `tbl_product` (`p_id`, `p_name`, `p_old_price`, `p_current_price`, `p_qty`, `p_weight`, `p_featured_photo`, `p_description`, `p_short_description`, `p_feature`, `p_condition`, `p_return_policy`, `p_total_view`, `p_is_featured`, `p_is_active`, `ecat_id`) VALUES
-(135, 'Light bulbs', '80', '60', 60, 0, 'product-featured-135.jpg', '<font color=\"#333333\"><b>Light bulbs are the core light-emitting components used in various lighting fixtures. They can come in different types, including incandescent, fluorescent, LED, and halogen, among others.</b></font><br>', 'None', 'None', 'None', 'None', 6, 1, 1, 97),
-(136, 'Lampshades', '3500', '3200', 45, 0, 'product-featured-136.jpg', '<p>Lampshades are primarily used for decorative purposes. They cover and diffuse the light emitted by the light source (such as a bulb) within a lamp, enhancing the aesthetics of the lighting fixture.<br></p>', 'None', 'None', 'None', 'None', 3, 1, 1, 101),
-(137, 'Halogen lamps', '1050', '950', 50, 0, 'product-featured-137.jpg', '<p>Halogen lamps typically refer to bulbs that use halogen gas to enhance the performance of incandescent bulbs. They can be used in various lighting fixtures, such as track lights or pendant lights, depending on the specific design.<br></p>', 'None', 'None', 'None', 'None', 5, 1, 1, 92),
-(138, 'pendant lights', '2950', '2500', 46, 0, 'product-featured-138.jpg', '<p>Pendant lights are often used for both decorative purposes and task lighting. They hang from the ceiling and can provide focused illumination over a dining table or kitchen island, making them suitable for task-oriented lighting as well as adding a decorative touch.<br></p>', 'None', 'None', 'None', 'None', 4, 1, 1, 100),
-(139, 'Spot lights', '2499', '2250', 39, 0, 'product-featured-139.jpg', '<p>Spotlights are primarily used for accent lighting to highlight specific objects, artwork, or architectural features in a space. They are designed to direct light precisely onto the chosen focal points.<br></p>', 'None', 'None', 'None', 'None', 10, 1, 1, 95),
-(140, 'LED tubes', '1999', '1899', 36, 0, 'product-featured-140.jpg', '<p>LED tube lights are designed as retrofit replacements for fluorescent tube lights. They offer improved energy efficiency, longer lifespan, and better light quality, making them suitable for both residential and commercial lighting.<br></p>', 'None', 'None', 'None', 'None', 14, 1, 1, 102),
-(141, 'Desk lamps', '1750', '1499', 35, 0, 'product-featured-141.jpg', '<p>Desk lamps are designed to provide focused lighting for tasks such as reading, working, or studying at a desk. They are a type of task lighting.<br></p>', 'None', 'None', 'None', 'None', 15, 1, 1, 97),
-(142, 'Track lights', '1800', '1500', 35, 0, 'product-featured-142.jpeg', '<p>&nbsp;Track lights are versatile fixtures that can be used for both task lighting, such as illuminating workspaces, and accent lighting, to highlight specific areas or objects along a track-mounted system.<br></p>', 'None', 'None', 'None', 'None', 21, 1, 1, 95),
-(143, 'toolbox', '', '', 0, 0, '', 'there are all tools there.', '', '', '', '', 0, 0, 0, 0);
+(143, 'toolbox', '', '', 0, 0, '', 'there are all tools there.', '', '', '', '', 0, 0, 0, 0),
+(144, 'bricked cantilever car shades', '80000', '75000', 6, 0, 'product-featured-144.jpeg', '<p><span style=\"font-family: &quot;Times New Roman&quot;;\" segoe=\"\" ui\",=\"\" roboto,=\"\" ubuntu,=\"\" cantarell,=\"\" \"noto=\"\" sans\",=\"\" sans-serif,=\"\" \"helvetica=\"\" neue\",=\"\" arial,=\"\" \"apple=\"\" color=\"\" emoji\",=\"\" \"segoe=\"\" ui=\"\" symbol\",=\"\" emoji\";=\"\" font-size:=\"\" 16px;=\"\" white-space-collapse:=\"\" preserve;=\"\" background-color:=\"\" rgb(255,=\"\" 255,=\"\" 255);\"=\"\">A cantilever design, meaning that it utilizes an extended beam or arm anchored at one end, allowing for a column-free space beneath the structure. This design enables unobstructed parking spaces without the need for supporting columns in the middle.</span></p><p><span style=\"font-family: Söhne, ui-sans-serif, system-ui, -apple-system, \" segoe=\"\" ui\",=\"\" roboto,=\"\" ubuntu,=\"\" cantarell,=\"\" \"noto=\"\" sans\",=\"\" sans-serif,=\"\" \"helvetica=\"\" neue\",=\"\" arial,=\"\" \"apple=\"\" color=\"\" emoji\",=\"\" \"segoe=\"\" ui=\"\" symbol\",=\"\" emoji\";=\"\" font-size:=\"\" 16px;=\"\" white-space-collapse:=\"\" preserve;=\"\" background-color:=\"\" rgb(255,=\"\" 255,=\"\" 255);\"=\"\"><br></span><br></p>', 'None', 'None', 'None', 'None', 0, 1, 1, 104),
+(145, 'bricked cantilever car shades', '100000', '80000', 10, 0, 'product-featured-145.jpg', '<p><span style=\"font-family: &quot;Times New Roman&quot;;\" segoe=\"\" ui\",=\"\" roboto,=\"\" ubuntu,=\"\" cantarell,=\"\" \"noto=\"\" sans\",=\"\" sans-serif,=\"\" \"helvetica=\"\" neue\",=\"\" arial,=\"\" \"apple=\"\" color=\"\" emoji\",=\"\" \"segoe=\"\" ui=\"\" symbol\",=\"\" emoji\";=\"\" font-size:=\"\" 16px;=\"\" white-space-collapse:=\"\" preserve;=\"\" background-color:=\"\" rgb(247,=\"\" 247,=\"\" 247);\"=\"\">a cantilever design, meaning that it utilizes an extended beam or arm anchored at one end, allowing for a column-free space beneath the structure. This design enables unobstructed parking spaces without the need for supporting columns in the middle. brick represent the color of the design of the shade</span><br></p>', 'None', 'None', 'None', 'None', 0, 1, 1, 105),
+(146, 'Beige cantilever car shade', '80000', '75000', 6, 0, 'product-featured-146.jpg', '<p>It is a cantilever design that can be installed near the doorway of the house and is beige in color</p>', 'None', 'None', 'None', 'None', 0, 1, 1, 104),
+(147, 'green cantilever car parking shades', '80000', '75000', 6, 0, 'product-featured-147.jpg', '<p><span style=\"font-family: Söhne, ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, Ubuntu, Cantarell, &quot;Noto Sans&quot;, sans-serif, &quot;Helvetica Neue&quot;, Arial, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 16px; white-space-collapse: preserve; background-color: rgb(255, 255, 255);\">Is a green cantilever design, meaning that it utilizes an extended beam or arm anchored at one end, allowing for a column-free space beneath the structure. This design enables unobstructed parking spaces without the need for supporting columns in the middle.</span><br></p>', 'None', 'None', 'None', 'None', 0, 1, 1, 104),
+(148, 'dome degign car parking shade', '100000', '80000', 10, 0, 'product-featured-148.jpg', '<p>is a domed shaped car parking shades that can be designed into any car spaces recommended by the customer. it can came with different colors&nbsp;</p>', 'None', 'None', 'None', 'None', 0, 1, 1, 105),
+(149, 'sexy lady car parking shades', '95000', '90000', 10, 0, 'product-featured-149.jpg', '<p>it a curved top shade car parking shade. the shade can be installed any where to the specification of the customer. the design comes with different colors.</p><p><br></p>', 'None', 'None', 'None', 'None', 0, 1, 1, 104),
+(150, 'gazeboz', '45000', '42000', 1000, 0, 'product-featured-150.jpeg', '<p>the design mostly is constructed in residential houses but also can be installed in a corporate institution and act as resting place for the workers.</p>', 'None', 'None', 'None', 'None', 4, 1, 1, 104),
+(151, 'pergolas', '20000', '15000', 46, 0, 'product-featured-151.jpg', '<p>is installed on top of the residential houses or even on the bulcony of the house </p>', 'None', 'None', 'None', 'None', 3, 1, 1, 104);
 
 -- --------------------------------------------------------
 
@@ -974,7 +955,7 @@ CREATE TABLE `tbl_product_color` (
   `id` int(11) NOT NULL,
   `color_id` int(11) NOT NULL,
   `p_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_product_color`
@@ -1039,7 +1020,16 @@ CREATE TABLE `tbl_product_photo` (
   `pp_id` int(11) NOT NULL,
   `photo` varchar(255) NOT NULL,
   `p_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `tbl_product_photo`
+--
+
+INSERT INTO `tbl_product_photo` (`pp_id`, `photo`, `p_id`) VALUES
+(139, '139.jpg', 146),
+(140, '140.jpg', 147),
+(141, '141.jpg', 151);
 
 -- --------------------------------------------------------
 
@@ -1051,7 +1041,7 @@ CREATE TABLE `tbl_product_size` (
   `id` int(11) NOT NULL,
   `size_id` int(11) NOT NULL,
   `p_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_product_size`
@@ -1073,7 +1063,7 @@ CREATE TABLE `tbl_rating` (
   `cust_id` int(11) NOT NULL,
   `comment` text NOT NULL,
   `rating` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1098,7 +1088,7 @@ CREATE TABLE `tbl_request` (
   `completion_status` varchar(50) NOT NULL DEFAULT 'Pending',
   `remark` varchar(500) NOT NULL,
   `date` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1120,7 +1110,7 @@ CREATE TABLE `tbl_request_material` (
   `supplier` varchar(20) NOT NULL,
   `status` varchar(50) NOT NULL DEFAULT 'Pending',
   `payment_status` varchar(20) NOT NULL DEFAULT 'Pending'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1132,14 +1122,15 @@ CREATE TABLE `tbl_request_toolbox` (
   `id` int(10) NOT NULL,
   `toolbox_name` varchar(100) NOT NULL,
   `quantity` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tbl_request_toolbox`
 --
 
 INSERT INTO `tbl_request_toolbox` (`id`, `toolbox_name`, `quantity`) VALUES
-(1, 'toolbox', 12);
+(1, 'toolbox', 12),
+(3, 'yellow', 4);
 
 -- --------------------------------------------------------
 
@@ -1152,7 +1143,7 @@ CREATE TABLE `tbl_service` (
   `title` varchar(255) NOT NULL,
   `content` text NOT NULL,
   `photo` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_service`
@@ -1181,20 +1172,16 @@ CREATE TABLE `tbl_services` (
   `category` varchar(50) DEFAULT NULL,
   `status` varchar(20) DEFAULT NULL,
   `date` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_services`
 --
 
 INSERT INTO `tbl_services` (`serviceid`, `servicename`, `pricing`, `description`, `duration`, `category`, `status`, `date`) VALUES
-(41, 'Residential lighting', 5000, 'Refers to the illumination solutions designed for homes and living spaces. It encompasses a wide range of fixtures and designs that cater to the specific lighting needs of various rooms within a house.', 'One Week', NULL, 'Active', '2023-11-27 16:28:07'),
-(47, 'Commercial lighting', 8500, 'It focuses on providing effective and efficient lighting solutions for businesses and other non-residential spaces. This includes offices, retail stores, restaurants, and public buildings. .', 'One Week', NULL, 'Active', '2023-11-27 16:11:03'),
-(48, 'Bespoke lighting', 10000, 'Bespoke lighting involves custom-made lighting solutions tailored to meet the unique requirements and preferences of individual clients. ', 'Three Weeks', NULL, 'Active', '2023-11-27 16:24:26'),
-(49, 'Lighting design', 8800, 'Lighting design is an approach to planning and implementing lighting solutions in various environments. It involves considering factors such as the purpose of the space, the desired ambiance, energy efficiency, and the integration of natural light.', 'Three Weeks', NULL, 'Active', '2023-11-27 16:24:56'),
-(50, 'Decorative lighting', 9500, 'Decorative lighting serves the dual purpose of providing illumination and enhancing the aesthetic appeal of a space. This category includes a wide range of visually striking fixtures, such as chandeliers and pendant lights.', 'Two Weeks', NULL, 'Active', '2023-11-27 16:25:11'),
-(51, 'Interior lighting', 7800, 'Interior lighting focuses on illuminating the interiors of buildings, including homes, offices, and commercial spaces. It encompasses a variety of fixtures, such as chandeliers, pendant lights,', 'One Week', NULL, 'Active', '2023-11-27 16:16:52'),
-(52, 'Garden lightiing', 7800, 'Garden lighting is specifically designed to illuminate outdoor spaces, including gardens, pathways, and outdoor living areas. It enhances the beauty of the landscape, provides safety and security.', 'Two Weeks', NULL, 'Active', '2023-11-27 16:26:31');
+(41, 'shades replacement', 25000, ' when change the car parking shades with our quality car parking shades. it comes with different car spaces ', 'One Week', NULL, 'Active', '2023-12-29 13:24:43'),
+(47, 'car parking shades repairment', 10000, 'we do repairing of car shades from broken support beam to fixing the torn car parking shades', 'Below One Week', NULL, 'Active', '2023-12-30 19:17:41'),
+(48, 'car parking shades installation', 10000, 'we install car parking shades if the customer has his own material for installation of the shade. we offer  best installation services without customer regrets', 'Below One Week', NULL, 'Active', '2023-12-30 19:18:50');
 
 -- --------------------------------------------------------
 
@@ -1244,7 +1231,7 @@ CREATE TABLE `tbl_services_requested` (
   `sdate` varchar(100) NOT NULL DEFAULT 'Not Yet Scheduled',
   `edate` varchar(100) NOT NULL DEFAULT 'Not Yet Scheduled',
   `cert` varchar(100) NOT NULL DEFAULT 'Not Yet Issued'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1324,14 +1311,14 @@ CREATE TABLE `tbl_settings` (
   `ads_above_popular_product_on_off` int(1) NOT NULL,
   `ads_above_testimonial_on_off` int(1) NOT NULL,
   `ads_category_sidebar_on_off` int(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=COMPRESSED;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci ROW_FORMAT=COMPRESSED;
 
 --
 -- Dumping data for table `tbl_settings`
 --
 
 INSERT INTO `tbl_settings` (`id`, `logo`, `favicon`, `footer_about`, `footer_copyright`, `contact_address`, `contact_email`, `contact_phone`, `contact_fax`, `contact_map_iframe`, `receive_email`, `receive_email_subject`, `receive_email_thank_you_message`, `forget_password_message`, `total_recent_post_footer`, `total_popular_post_footer`, `total_recent_post_sidebar`, `total_popular_post_sidebar`, `total_featured_product_home`, `total_latest_product_home`, `total_popular_product_home`, `meta_title_home`, `meta_keyword_home`, `meta_description_home`, `banner_login`, `banner_registration`, `banner_forget_password`, `banner_reset_password`, `banner_search`, `banner_cart`, `banner_checkout`, `banner_product_category`, `banner_blog`, `cta_title`, `cta_content`, `cta_read_more_text`, `cta_read_more_url`, `cta_photo`, `featured_product_title`, `featured_product_subtitle`, `latest_product_title`, `latest_product_subtitle`, `popular_product_title`, `popular_product_subtitle`, `testimonial_title`, `testimonial_subtitle`, `testimonial_photo`, `blog_title`, `blog_subtitle`, `newsletter_text`, `paypal_email`, `stripe_public_key`, `stripe_secret_key`, `bank_detail`, `before_head`, `after_body`, `before_body`, `home_service_on_off`, `home_welcome_on_off`, `home_featured_product_on_off`, `home_latest_product_on_off`, `home_popular_product_on_off`, `home_testimonial_on_off`, `home_blog_on_off`, `newsletter_on_off`, `ads_above_welcome_on_off`, `ads_above_featured_product_on_off`, `ads_above_latest_product_on_off`, `ads_above_popular_product_on_off`, `ads_above_testimonial_on_off`, `ads_category_sidebar_on_off`) VALUES
-(1, 'logo.png', 'favicon.png', '<p>Lorem ipsum dolor sit amet, omnis signiferumque in mei, mei ex enim concludaturque. Senserit salutandi euripidis no per, modus maiestatis scribentur est an.Â Ea suas pertinax has.</p>\r\n', 'Copyright Â© 2022 -  ', 'Sukari Ranch Nairobi/ Rd, 236-00232 Ruiru, Thika, Kenya', 'nyabondobricks@.com', '+254 020 2011805', '', '', 'kenyaclayproducts@gmail.com.com', '', 'Thank you for sending email. We will contact you shortly.', 'A confirmation link is sent to your email address. You will get the password reset information in there.', 4, 4, 5, 5, 20, 20, 20, 'Ecommerce PHP', 'online fashion store, garments shop, online garments', 'ecommerce php project with mysql database', 'banner_login.jpg', 'banner_registration.jpg', 'banner_forget_password.jpg', 'banner_reset_password.jpg', 'banner_search.jpg', 'banner_cart.jpg', 'banner_checkout.jpg', 'banner_product_category.jpg', 'banner_blog.jpg', 'Welcome To Our Ecommerce Website', 'Lorem ipsum dolor sit amet, an labores explicari qui, eu nostrum copiosae argumentum has. Latine propriae quo no, unum ridens expetenda id sit, \r\nat usu eius eligendi singulis. Sea ocurreret principes ne. At nonumy aperiri pri, nam quodsi copiosae intellegebat et, ex deserunt euripidis usu. ', 'Read More', '#', 'cta.jpg', 'Featured Products', 'Our list on Top Featured Products', 'Latest Products', 'Our list of recently added products', 'Popular Products', 'Popular products based on customer\'s choice', 'Testimonials', 'See what our clients tell about us', 'testimonial.jpg', 'Latest Blog', 'See all our latest articles and news from below', 'Sign-up to our newsletter for latest promotions and discounts.', '', 'pk_test_0SwMWadgu8DwmEcPdUPRsZ7b', 'sk_test_TFcsLJ7xxUtpALbDo1L5c1PN', 'Payment method: M-PESA\r\nTill Number: 2615488', '', '<div id=\"fb-root\"></div>\r\n<script>(function(d, s, id) {\r\n  var js, fjs = d.getElementsByTagName(s)[0];\r\n  if (d.getElementById(id)) return;\r\n  js = d.createElement(s); js.id = id;\r\n  js.src = \"//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=323620764400430\";\r\n  fjs.parentNode.insertBefore(js, fjs);\r\n}(document, \'script\', \'facebook-jssdk\'));</script>', '<!--Start of Tawk.to Script-->\r\n<script type=\"text/javascript\">\r\nvar Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();\r\n(function(){\r\nvar s1=document.createElement(\"script\"),s0=document.getElementsByTagName(\"script\")[0];\r\ns1.async=true;\r\ns1.src=\'https://embed.tawk.to/5ae370d7227d3d7edc24cb96/default\';\r\ns1.charset=\'UTF-8\';\r\ns1.setAttribute(\'crossorigin\',\'*\');\r\ns0.parentNode.insertBefore(s1,s0);\r\n})();\r\n</script>\r\n<!--End of Tawk.to Script-->', 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+(1, 'logo.png', 'favicon.png', '<p>Lorem ipsum dolor sit amet, omnis signiferumque in mei, mei ex enim concludaturque. Senserit salutandi euripidis no per, modus maiestatis scribentur est an.Â Ea suas pertinax has.</p>\r\n', 'Copyright Â© 2022 -  ', 'Kimathi House Nairobi CBD', 'info@maishashades.co.ke', '+254706071232', '', '', 'info@maishashades.co.ke', '', 'Thank you for sending email. We will contact you shortly.', 'A confirmation link is sent to your email address. You will get the password reset information in there.', 4, 4, 5, 5, 20, 20, 20, 'maisha shades', 'online fashion store, garments shop, online garments', 'ecommerce php project with mysql database', 'banner_login.jpg', 'banner_registration.jpg', 'banner_forget_password.jpg', 'banner_reset_password.jpg', 'banner_search.jpg', 'banner_cart.jpg', 'banner_checkout.jpg', 'banner_product_category.jpg', 'banner_blog.jpg', 'Welcome To Our Ecommerce Website', 'Lorem ipsum dolor sit amet, an labores explicari qui, eu nostrum copiosae argumentum has. Latine propriae quo no, unum ridens expetenda id sit, \r\nat usu eius eligendi singulis. Sea ocurreret principes ne. At nonumy aperiri pri, nam quodsi copiosae intellegebat et, ex deserunt euripidis usu. ', 'Read More', '#', 'cta.jpg', 'Featured Products', 'Our list on Top Featured Products', 'Latest Products', 'Our list of recently added products', 'Popular Products', 'Popular products based on customer\'s choice', 'Testimonials', 'See what our clients tell about us', 'testimonial.jpg', 'Latest Blog', 'See all our latest articles and news from below', 'Sign-up to our newsletter for latest promotions and discounts.', '', 'pk_test_0SwMWadgu8DwmEcPdUPRsZ7b', 'sk_test_TFcsLJ7xxUtpALbDo1L5c1PN', 'Payment method: \nEQUITY ACCOUNTNumber: 0650181029646', '', '<div id=\"fb-root\"></div>\r\n<script>(function(d, s, id) {\r\n  var js, fjs = d.getElementsByTagName(s)[0];\r\n  if (d.getElementById(id)) return;\r\n  js = d.createElement(s); js.id = id;\r\n  js.src = \"//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=323620764400430\";\r\n  fjs.parentNode.insertBefore(js, fjs);\r\n}(document, \'script\', \'facebook-jssdk\'));</script>', '<!--Start of Tawk.to Script-->\r\n<script type=\"text/javascript\">\r\nvar Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();\r\n(function(){\r\nvar s1=document.createElement(\"script\"),s0=document.getElementsByTagName(\"script\")[0];\r\ns1.async=true;\r\ns1.src=\'https://embed.tawk.to/5ae370d7227d3d7edc24cb96/default\';\r\ns1.charset=\'UTF-8\';\r\ns1.setAttribute(\'crossorigin\',\'*\');\r\ns0.parentNode.insertBefore(s1,s0);\r\n})();\r\n</script>\r\n<!--End of Tawk.to Script-->', 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1343,23 +1330,23 @@ CREATE TABLE `tbl_shipping_cost` (
   `shipping_cost_id` int(11) NOT NULL,
   `country_id` int(11) NOT NULL,
   `amount` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_shipping_cost`
 --
 
 INSERT INTO `tbl_shipping_cost` (`shipping_cost_id`, `country_id`, `amount`) VALUES
-(1, 30, '3500'),
+(1, 30, '1000'),
 (2, 36, '1000'),
 (3, 39, '2800'),
-(4, 40, '3200'),
-(5, 28, '4700'),
-(6, 14, '4900'),
-(7, 7, '15000'),
+(4, 40, '2000'),
+(5, 28, '2500'),
+(6, 14, '1000'),
+(7, 7, '2500'),
 (8, 43, '1800'),
-(9, 11, '8200'),
-(10, 34, '4300'),
+(9, 11, '1800'),
+(10, 34, '1500'),
 (11, 37, '2600'),
 (12, 35, '800'),
 (13, 22, '2900'),
@@ -1391,7 +1378,12 @@ INSERT INTO `tbl_shipping_cost` (`shipping_cost_id`, `country_id`, `amount`) VAL
 (39, 6, '3500'),
 (40, 4, '4700'),
 (41, 23, '11000'),
-(42, 24, '11500');
+(42, 24, '11500'),
+(43, 18, '1000'),
+(44, 13, '1000'),
+(45, 26, '1500'),
+(46, 27, '1800'),
+(47, 38, '1800');
 
 -- --------------------------------------------------------
 
@@ -1402,7 +1394,7 @@ INSERT INTO `tbl_shipping_cost` (`shipping_cost_id`, `country_id`, `amount`) VAL
 CREATE TABLE `tbl_shipping_cost_all` (
   `sca_id` int(11) NOT NULL,
   `amount` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_shipping_cost_all`
@@ -1420,15 +1412,19 @@ INSERT INTO `tbl_shipping_cost_all` (`sca_id`, `amount`) VALUES
 CREATE TABLE `tbl_size` (
   `size_id` int(11) NOT NULL,
   `size_name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_size`
 --
 
 INSERT INTO `tbl_size` (`size_id`, `size_name`) VALUES
-(1, 'Standard'),
-(2, 'Big');
+(1, '1 car space'),
+(2, '2 car space'),
+(3, '3 car spaces'),
+(4, '4 car space'),
+(5, '5 car spaces '),
+(6, '6 car spaces');
 
 -- --------------------------------------------------------
 
@@ -1444,7 +1440,7 @@ CREATE TABLE `tbl_slider` (
   `button_text` varchar(255) NOT NULL,
   `button_url` varchar(255) NOT NULL,
   `position` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_slider`
@@ -1466,7 +1462,7 @@ CREATE TABLE `tbl_social` (
   `social_name` varchar(30) NOT NULL,
   `social_url` varchar(255) NOT NULL,
   `social_icon` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_social`
@@ -1505,15 +1501,15 @@ CREATE TABLE `tbl_staff` (
   `photo` varchar(255) NOT NULL,
   `role` varchar(30) NOT NULL,
   `status` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_staff`
 --
 
 INSERT INTO `tbl_staff` (`id`, `full_name`, `email`, `phone`, `password`, `photo`, `role`, `status`) VALUES
-(1, 'Charles Kimani', 'inventory@gmail.com', '0759296007', '12345', 'user-1.', 'Inventory Manager', '1'),
-(16, 'Kevin Odhiambo', 'finance@gmail.com', '079885866', '12345', '', 'finance', '1'),
+(1, 'Charles Kimani', 'inventory@gmail.com', '0759296009', '123456', '1703617200.jpg', 'Inventory Manager', '1'),
+(16, 'Kevin Odhiambo', 'finance@gmail.com', '079885866', '12345', '1703617162.png', 'finance', '1'),
 (17, 'Brian Kimani', 'kimani@gmail.com', '0745678345', '12345', '', 'driver', '1'),
 (18, 'Houstone Ochieng', 'ochieng@gmail.com', '07534242424', '12345', '', 'driver', '1'),
 (20, 'Job Johns', 'job@gmail.com', '074351562662', '12345', '', 'supplier', '1'),
@@ -1539,7 +1535,7 @@ CREATE TABLE `tbl_subscriber` (
   `subs_date_time` varchar(100) NOT NULL,
   `subs_hash` varchar(255) NOT NULL,
   `subs_active` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_subscriber`
@@ -1574,7 +1570,7 @@ CREATE TABLE `tbl_supervisor_request` (
   `status` varchar(50) NOT NULL DEFAULT 'Pending',
   `payment_status` varchar(20) NOT NULL DEFAULT 'Pending',
   `comment` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tbl_supervisor_request`
@@ -1605,7 +1601,7 @@ CREATE TABLE `tbl_tender` (
   `supplier` varchar(20) NOT NULL,
   `status` varchar(50) NOT NULL DEFAULT 'Available',
   `payment_status` varchar(20) NOT NULL DEFAULT 'Pending'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tbl_tender`
@@ -1635,7 +1631,7 @@ CREATE TABLE `tbl_tender_application` (
   `comment` varchar(200) NOT NULL,
   `payment_status` varchar(20) NOT NULL DEFAULT 'Pending',
   `date` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_tender_application`
@@ -1647,6 +1643,27 @@ INSERT INTO `tbl_tender_application` (`id`, `subject`, `message`, `cust_id`, `pr
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_toolbox`
+--
+
+CREATE TABLE `tbl_toolbox` (
+  `id` int(11) NOT NULL,
+  `toolbox_type` varchar(150) NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_toolbox`
+--
+
+INSERT INTO `tbl_toolbox` (`id`, `toolbox_type`, `quantity`) VALUES
+(1, ' reu', 9),
+(2, ' yellow', 15),
+(3, 'green  ', 8);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_top_category`
 --
 
@@ -1654,14 +1671,15 @@ CREATE TABLE `tbl_top_category` (
   `tcat_id` int(11) NOT NULL,
   `tcat_name` varchar(255) NOT NULL,
   `show_on_menu` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_top_category`
 --
 
 INSERT INTO `tbl_top_category` (`tcat_id`, `tcat_name`, `show_on_menu`) VALUES
-(11, ' Products', 1);
+(11, ' Products', 1),
+(12, 'Designs', 1);
 
 -- --------------------------------------------------------
 
@@ -1673,7 +1691,7 @@ CREATE TABLE `tbl_video` (
   `id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `iframe_code` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_video`
@@ -1702,7 +1720,7 @@ CREATE TABLE `tbmessages` (
   `user_type` varchar(50) NOT NULL,
   `fname` varchar(100) NOT NULL,
   `lname` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbmessages`
@@ -1714,7 +1732,8 @@ INSERT INTO `tbmessages` (`id`, `user_id`, `message`, `sender`, `recepient`, `ca
 (96, 62, 'service complete', '', '25', NULL, '2023-11-15 10:32:59', NULL, '', 'David', ''),
 (98, 61, 'service well done', '', '38', NULL, '2023-11-15 11:10:49', NULL, '', 'Ken ', ''),
 (101, 61, 'I appreciate', '', '18', NULL, '2023-11-24 21:39:00', NULL, '', 'Ken ', ''),
-(115, 62, 'hello', '', '1', NULL, '2023-11-22 08:24:31', NULL, '', 'David', '');
+(115, 62, 'hello', '', '1', NULL, '2023-11-22 08:24:31', NULL, '', 'David', ''),
+(133, 62, 'excellent job', '', '1', NULL, '2023-12-27 20:29:48', NULL, '', 'Davi', '');
 
 -- --------------------------------------------------------
 
@@ -1730,7 +1749,7 @@ CREATE TABLE `upload` (
   `size` int(11) NOT NULL,
   `content` longblob NOT NULL,
   `status` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `upload`
@@ -2036,6 +2055,12 @@ ALTER TABLE `tbl_tender_application`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tbl_toolbox`
+--
+ALTER TABLE `tbl_toolbox`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbl_top_category`
 --
 ALTER TABLE `tbl_top_category`
@@ -2091,7 +2116,7 @@ ALTER TABLE `notice`
 -- AUTO_INCREMENT for table `requestsproduct`
 --
 ALTER TABLE `requestsproduct`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `requests_material`
@@ -2115,13 +2140,13 @@ ALTER TABLE `tblcontactusquery`
 -- AUTO_INCREMENT for table `tbl_bookings`
 --
 ALTER TABLE `tbl_bookings`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=183;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=189;
 
 --
 -- AUTO_INCREMENT for table `tbl_color`
 --
 ALTER TABLE `tbl_color`
-  MODIFY `color_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `color_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `tbl_completed_baskets`
@@ -2151,7 +2176,7 @@ ALTER TABLE `tbl_customer_message`
 -- AUTO_INCREMENT for table `tbl_end_category`
 --
 ALTER TABLE `tbl_end_category`
-  MODIFY `ecat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+  MODIFY `ecat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 
 --
 -- AUTO_INCREMENT for table `tbl_faq`
@@ -2175,13 +2200,13 @@ ALTER TABLE `tbl_materials`
 -- AUTO_INCREMENT for table `tbl_mid_category`
 --
 ALTER TABLE `tbl_mid_category`
-  MODIFY `mcat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `mcat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `tbl_order`
 --
 ALTER TABLE `tbl_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT for table `tbl_page`
@@ -2193,7 +2218,7 @@ ALTER TABLE `tbl_page`
 -- AUTO_INCREMENT for table `tbl_payment`
 --
 ALTER TABLE `tbl_payment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154;
 
 --
 -- AUTO_INCREMENT for table `tbl_photo`
@@ -2211,7 +2236,7 @@ ALTER TABLE `tbl_post`
 -- AUTO_INCREMENT for table `tbl_product`
 --
 ALTER TABLE `tbl_product`
-  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=144;
+  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
 
 --
 -- AUTO_INCREMENT for table `tbl_product_color`
@@ -2223,7 +2248,7 @@ ALTER TABLE `tbl_product_color`
 -- AUTO_INCREMENT for table `tbl_product_photo`
 --
 ALTER TABLE `tbl_product_photo`
-  MODIFY `pp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
+  MODIFY `pp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
 
 --
 -- AUTO_INCREMENT for table `tbl_product_size`
@@ -2235,7 +2260,7 @@ ALTER TABLE `tbl_product_size`
 -- AUTO_INCREMENT for table `tbl_services`
 --
 ALTER TABLE `tbl_services`
-  MODIFY `serviceid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `serviceid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `tbl_services_requested`
@@ -2247,7 +2272,7 @@ ALTER TABLE `tbl_services_requested`
 -- AUTO_INCREMENT for table `tbl_shipping_cost`
 --
 ALTER TABLE `tbl_shipping_cost`
-  MODIFY `shipping_cost_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `shipping_cost_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `tbl_staff`
@@ -2268,10 +2293,22 @@ ALTER TABLE `tbl_tender_application`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
+-- AUTO_INCREMENT for table `tbl_toolbox`
+--
+ALTER TABLE `tbl_toolbox`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tbl_top_category`
+--
+ALTER TABLE `tbl_top_category`
+  MODIFY `tcat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
 -- AUTO_INCREMENT for table `tbmessages`
 --
 ALTER TABLE `tbmessages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
