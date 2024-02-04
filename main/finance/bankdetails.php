@@ -1,6 +1,43 @@
 <?php require_once('header.php'); ?>
 
 <?php
+// Your database connection details
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "nyabondobricks";
+
+// Create connection
+$con = new mysqli($servername, $username, $password, $database);
+
+// Check connection
+if ($con->connect_error) {
+    die("Connection failed: " . $con->connect_error);
+}
+
+// Check if the delete button is clicked
+if (isset($_POST['delete_button'])) {
+    // Get the ID of the row to be deleted
+    $idToDelete = $_POST['row_id'];
+
+    // SQL to delete a row with a specific ID
+    $sql = "DELETE FROM tbl_bank WHERE id = $idToDelete";
+
+    if ($con->query($sql) === TRUE) {
+        echo '<div class="alert alert-success">deleted successfully!</div>';
+        echo '<script>
+                setTimeout(function(){
+                    document.getElementById("success-message").style.display = "none";
+                }, 3000);
+             </script>';
+       
+    } else {
+        echo "Error deleting record: " . $con->error;
+    }
+}
+
+// Fetch data from the table for display
+$result = $con->query("SELECT * FROM your_table");
 $error_message = '';
 if (isset($_POST['form1'])) {
     $valid = 1;
@@ -34,7 +71,7 @@ if (isset($_POST['form1'])) {
         }
 
         $order_detail = '';
-        $statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE payment_id=? AND payment_status='Pending'");
+        $statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE payment_id=? AND payment_status='Completed'");
         $statement->execute(array($_POST['payment_id']));
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         foreach ($result as $row) {
@@ -118,119 +155,62 @@ if ($error_message != '') {
 if ($success_message != '') {
     echo "<script>alert('" . $success_message . "')</script>";
 }
+
+
+
 ?>
+
+
+
 
 <section class="content-header">
     <div class="content-header-left">
-        <h3>Completed Orders Allocations</h3>
+        <h3>Bank Details</h3>
+    </div>
+
+    <div class="content-header-right">
+        <a href="AddBank.php" class="btn btn-success btn-xs">Add Bank</a>
     </div>
 </section>
 
-
 <section class="content">
-
     <div class="row">
         <div class="col-md-12">
-
-
-            <div class="box box-info">
-
+            <div class="box box-success">
                 <div class="box-body table-responsive">
                     <table id="example1" class="table table-bordered table-hover table-striped">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Customer</th>
-                                <th>Orders</th>
-                                <th>Designer</th>
-                                <th>Location Details</th>
-                                <th>Completion Status</th>
-                                <th>Toolbox Type</th>                                
-                                <th>Toolbox Return</th>
+                                <th>Bank Name</th>
+                                <th>Bank Account Number</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $i = 0;
-                            $statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE  technician_status='Complete'AND technician='" . $_SESSION['user']['full_name'] . "'");
+                            $statement = $pdo->prepare("SELECT * FROM tbl_bank WHERE BankName != '' ORDER BY id DESC");
                             $statement->execute();
                             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                             foreach ($result as $row) {
                                 $i++;
                             ?>
-                                <tr class="<?php if ($row['payment_status'] == 'Pending') {
-                                                echo 'bg-r';
-                                            } else {
-                                                echo 'bg-g';
-                                            } ?>">
+                                <tr data-id="<?php echo $row['id']; ?>">
                                     <td><?php echo $i; ?></td>
-                                    <td>
-                                    <?php
-                                        $statement1 = $pdo->prepare("SELECT * FROM tbl_customer WHERE cust_id=?");
-                                        $statement1->execute(array($row['customer_id']));
-                                        $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
-                                        foreach ($result1 as $row1) {
-                                            echo '<b>Name:</b> ' . $row1['cust_name'] . $row1['cust_lname'];
-                                            echo '<br><b>Phone:</b> ' . $row1['cust_phone'];
-                                            echo '<br><b>email:</b> ' . $row1['cust_email'];
-                                            echo '<br><br>';
-                                        }
-                                        ?>
-                                    </td>
 
-                                    <td>
-                                    <?php
-                                        $statement1 = $pdo->prepare("SELECT * FROM tbl_order WHERE payment_id=?");
-                                        $statement1->execute(array($row['payment_id']));
-                                        $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
-                                        foreach ($result1 as $row1) {
-                                            echo '<b>Product:</b> ' . $row1['product_name'];
-                                            echo '<br><b>Quantity:</b> ' . $row1['quantity'] . 'Pcs';
-                                            echo '<br><b>Unit Price:</b> Ksh ' . $row1['unit_price'] . '';
-                                            echo '<br><br>';
-                                        }
-                                        ?>
-                                    </td>
-                                    <td>
-                                        <?php
 
-                                        $statement1 = $pdo->prepare("SELECT * FROM tbl_staff WHERE full_name=?");
-                                        $statement1->execute(array($row['technician']));
-                                        $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
-                                        foreach ($result1 as $row1) {
-                                            echo '<b>Name:</b> ' . $row1['full_name'];
-                                            echo '<br><b>Phone:</b> ' . $row1['phone'];
-                                            echo '<br><br>';
-                                        }
-                                        ?>
-                                    </td>
+                                    <td><?php echo $row['BankName']; ?></td>
+                                    <td><?php echo $row['BankAccountNumber']; ?></td>
                                     <td>
+                                        <a href="updatebank.php?id=<?php echo $row['id']; ?>" class="btn btn-warning btn-xs">Update</a><br>
+                                        <form method='post'>
+                                            <input type='hidden' name='row_id' value=<?php echo $row['id']?>>
+                                            <button type='submit' name='delete_button' style="background-color: red; color: white; border:0cap">Delete</button>
+                                        </form>
                                         
-                                        <b>Location Details :</b><?php echo $row['location_detail']; ?>
                                     </td>
-                                    <td>
-                                        <?php echo $row['technician_status']; ?>
-                                        <br><br>
-                                        <?php
-                                        if ($row['technician_status'] == 'Pending') {
-                                        ?>
-                                            <a href="delivery-change-status.php?id=<?php echo $row['id']; ?>&task=Complete" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Service Delivered</a>
-                                        <?php
-                                        }
-                                        ?>
-                                    </td>
-                                    <td> <?php echo $row['toolbox_type']; ?></td>
-                                  
-                                    <td>
-                                        <?php
-                                        if ($row['technician_return'] == 'Not Confirmed') {
-                                        ?>
-                                            <a href="orderreturnstatus.php?id=<?php echo $row['id']; ?>&task=returned" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Return</a>
-                                        <?php
-                                        }
-                                        ?><br><br>
-                                        <?php echo $row['technician_return']; ?>
-                                    </td>
+                                    
                                 </tr>
                             <?php
                             }
@@ -239,10 +219,9 @@ if ($success_message != '') {
                     </table>
                 </div>
             </div>
-
-
+        </div>
+    </div>
 </section>
-
 
 <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -256,11 +235,12 @@ if ($success_message != '') {
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-danger btn-ok">Delete</a>
+                <button type="button" class="btn btn-danger btn-ok" id="delete-btn">Delete</button>
             </div>
         </div>
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<?php require_once('footer.php'); ?>

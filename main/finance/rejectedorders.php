@@ -123,7 +123,7 @@ if($success_message != '') {
 
 <section class="content-header">
 	<div class="content-header-left">
-		<h3>Completed Payment</h3>
+		<h3>Rejected Orders</h3>
 	</div>
 </section>
 
@@ -152,7 +152,7 @@ if($success_message != '') {
             <tbody>
             	<?php
             	$i=0;
-            	$statement = $pdo->prepare("SELECT * FROM tbl_payment where payment_status='Approved' ORDER by id DESC");
+            	$statement = $pdo->prepare("SELECT * FROM tbl_payment where payment_status='Rejected' ORDER by id DESC");
             	$statement->execute();
             	$result = $statement->fetchAll(PDO::FETCH_ASSOC);							
             	foreach ($result as $row) {

@@ -179,7 +179,7 @@ if($success_message != '') {
                            $statement1->execute(array($row['payment_id']));
                            $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
                            foreach ($result1 as $row1) {
-                                echo ''.$row1['id'];
+                                echo ''.$row1['product_name'];
                            }
                            ?>
                         </td>
@@ -213,7 +213,7 @@ if($success_message != '') {
                         </td>
                         <td>
                         <?php
-                            if($row['shipping_status']=='Goods On transit,It will delivered to your destination within short period of time.Thank You') {
+                            if($row['shipping_status']=='Pending') {
                                     ?>
                                     <a href="delivery-change-status.php?id=<?php echo $row['id']; ?>&task=Goods Delivered" class="btn btn-primary btn-md" >Delivered</a>
                                     <?php

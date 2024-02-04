@@ -139,12 +139,13 @@ if ($success_message != '') {
                     <table id="example1" class="table table-bordered table-hover table-striped">
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th>id</th>
                                 <th>Customer</th>
                                 <th>Order </th>
-                                <th>Booked On </th>                                
-                                <th>Technician</th>                                
+                                <th>Booked On </th>
+                                <th>Designer</th>
                                 <th>toolbox type</th>
+                                <th>Materials</th>
                                 <th>Completion Status</th>
                             </tr>
                         </thead>
@@ -162,9 +163,9 @@ if ($success_message != '') {
                                             } else {
                                                 echo 'bg-g';
                                             } ?>">
-                                    <td><?php echo $i; ?></td>
+                                    <td><?php echo $row['id']; ?></td>
                                     <td>
-                                    <?php
+                                        <?php
                                         $statement1 = $pdo->prepare("SELECT * FROM tbl_customer WHERE cust_id=?");
                                         $statement1->execute(array($row['customer_id']));
                                         $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
@@ -178,7 +179,7 @@ if ($success_message != '') {
                                     </td>
 
                                     <td>
-                                    <?php
+                                        <?php
                                         $statement1 = $pdo->prepare("SELECT * FROM tbl_order WHERE payment_id=?");
                                         $statement1->execute(array($row['payment_id']));
                                         $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
@@ -189,12 +190,12 @@ if ($success_message != '') {
                                             echo '<br><br>';
                                         }
                                         ?>
-                                        
+
                                     </td>
                                     <td>
                                         <?php echo ($row['payment_date']); ?><br>
                                     </td>
-                                    
+
                                     <td>
                                         <?php
                                         $statement1 = $pdo->prepare("SELECT * FROM tbl_staff WHERE full_name=?");
@@ -207,9 +208,11 @@ if ($success_message != '') {
                                         }
                                         ?>
                                     </td>
-                                    
+
                                     <td><?php echo $row['toolbox_type']; ?></td>
-                            
+                                    <td><?php echo $row['materials']; ?></td>
+
+
                                     <td>
                                         <?php echo $row['technician_status']; ?>
                                         <br><br>
@@ -259,6 +262,14 @@ if ($success_message != '') {
                                         <?php
                                         }
                                         ?>
+                                        <?php
+                                        if ($row['materials'] == '') {
+                                        ?>
+                                            <a href="requestmaterial.php?id=<?php echo $row['id']; ?>" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Request Materials</a>
+                                        <?php
+                                        }
+                                        ?>
+
                                     </td>
                                 </tr>
                             <?php

@@ -1,8 +1,8 @@
 <?php
-	$conn = new mysqli('localhost', 'root', '', 'maishashades');
+	$con = new mysqli('localhost', 'root', '', 'nyabondobricks');
 
-	if ($conn->connect_error) {
-	    die("Connection failed: " . $conn->connect_error);
+	if ($con->connect_error) {
+	    die("Connection failed: " . $con->connect_error);
 	}
 	
 ?>

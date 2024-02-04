@@ -99,7 +99,13 @@ if(!isset($_SESSION['user'])) {
 					
                     <li class="treeview <?php if( ($cur_page == 'product.php') || ($cur_page == 'product-add.php') || ($cur_page == 'product-edit.php') ) {echo 'active';} ?>">
                         <a href="myallocation.php">
-                            <i class="fa fa-truck"></i> <span>My Deliveries</span>
+                            <i class="fa fa-truck"></i> <span>Pending Deliveries Allocations</span>
+                        </a>
+                    </li>
+					
+                    <li class="treeview <?php if( ($cur_page == 'product.php') || ($cur_page == 'product-add.php') || ($cur_page == 'product-edit.php') ) {echo 'active';} ?>">
+                        <a href="myserviceallocation.php">
+                            <i class="fa fa-truck"></i> <span>Pending Services Allocations</span>
                         </a>
                     </li>
 
@@ -107,6 +113,11 @@ if(!isset($_SESSION['user'])) {
                     <li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
                         <a href="approvedpayment.php">
                             <i class="fa fa-truck"></i> <span>Completed Deliveries</span>
+                        </a>
+                    </li>
+					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
+                        <a href="approvedservices.php">
+                            <i class="fa fa-truck"></i> <span>Completed  Services Allocations</span>
                         </a>
                     </li>
 					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">

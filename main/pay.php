@@ -33,7 +33,7 @@ if (!isset($_SESSION['cart_p_id'])) {
                     </p>
                 <?php else : ?>
                     <center>
-                        <h3>Checkout </h3>
+                        <h3>Payment Section</h3>
                     </center>
                     <h4 class="special"><?php echo LANG_VALUE_26; ?></h4>
                     <div class="cart">
@@ -55,29 +55,6 @@ if (!isset($_SESSION['cart_p_id'])) {
                                 $arr_cart_p_id[$i] = $value;
                             }
 
-                            $i = 0;
-                            foreach ($_SESSION['cart_size_id'] as $key => $value) {
-                                $i++;
-                                $arr_cart_size_id[$i] = $value;
-                            }
-
-                            $i = 0;
-                            foreach ($_SESSION['cart_size_name'] as $key => $value) {
-                                $i++;
-                                $arr_cart_size_name[$i] = $value;
-                            }
-
-                            $i = 0;
-                            foreach ($_SESSION['cart_color_id'] as $key => $value) {
-                                $i++;
-                                $arr_cart_color_id[$i] = $value;
-                            }
-
-                            $i = 0;
-                            foreach ($_SESSION['cart_color_name'] as $key => $value) {
-                                $i++;
-                                $arr_cart_color_name[$i] = $value;
-                            }
 
                             $i = 0;
                             foreach ($_SESSION['cart_p_qty'] as $key => $value) {
@@ -162,101 +139,129 @@ if (!isset($_SESSION['cart_p_id'])) {
 
 
 
-
-                    <div class="">
+                    <div class="container ">
                         <ul>
-                            <a href="del-address.php" class="btn btn-primary btn-sm">Shipping Address</a>
-                            <a href="pay.php" class="btn btn-success btn-sm">Proceed to Payment</a>
+                            <a href="cart.php" class="btn btn-primary pull-right"><?php echo LANG_VALUE_21; ?></a>
                         </ul>
                     </div>
 
-                    <div class="clear"></div>
-                    <div class="row">
 
-                        <?php
-                        $checkout_access = 1;
-                        if (
-                            ($_SESSION['customer']['cust_phone'] == '') ||
-                            ($_SESSION['customer']['cust_country'] == '') ||
-                            ($_SESSION['customer']['cust_s_address'] == '')
-                        ) {
-                            $checkout_access = 0;
-                        }
-                        ?>
-                        <?php if ($checkout_access == 0) : ?>
-                            <div class="col-md-12">
-                                <div style="color:red;font-size:22px;margin-bottom:50px;">
-                                    Add Shipping Information First<a href="customer-billing-shipping-update.php" style="color:red;text-decoration:underline;"></a>.
-                                </div>
+
+                    <?php
+                    $checkout_access = 1;
+                    if (
+                        ($_SESSION['customer']['cust_phone'] == '') ||
+                        ($_SESSION['customer']['cust_country'] == '') ||
+                        ($_SESSION['customer']['cust_s_address'] == '')
+                    ) {
+                        $checkout_access = 0;
+                    }
+                    ?>
+                    <?php if ($checkout_access == 0) : ?>
+                        <div class="col-md-12">
+                            <div style="color:red;font-size:22px;margin-bottom:50px;">
+                                Please Update The Shipping Information First<a href="customer-billing-shipping-update.php" style="color:red;text-decoration:underline;"></a>.
                             </div>
-                        <?php else : ?>
-                            <div class="col-md-4">
+                        </div>
+                    <?php else : ?>
+                        <div class="col-md-4">
 
-                                <div class="row">
+                            <div class="row">
+
+
+                                <div class="col-md-12 form-group">
+                                    <label for=""><?php echo LANG_VALUE_34; ?> *</label>
+                                    <select name="payment_method" class="form-control select2" id="advFieldsStatus">
+                                        <option value=""><?php echo "PROCEED WITH PAYMENT" ?></option>                                       
+                                        <option value="Bank Deposit">BANK PAYMENT</option>
+                                       
+
+                                    </select><br>
+
+                                    <br><br>
+
+                                    
+                                    
 
 
 
-                                    <br>
-                                    <hr>
-                                    <div class="container">
-                                        <a href="cart.php" class="btn btn-default btn-sm"><?php echo LANG_VALUE_21; ?></a>
+                                        <form action="payment/bank/init.php" method="post" id="bank_form">
+
+                                            <div class="container"><b>Total Amount</b><br>
+                                                <input type="text" readonly name="amount" value="<?php echo $final_total; ?>">
+                                            </div><br>
+                                            <div class="container"><b>Shipping Cost</b><br>
+                                                <input type="text" readonly name="shipping_fee" value="<?php echo $shipping_cost; ?>">
+                                            </div><br>
+
+
+
+                                            <label for=""><?php echo "BANK " ?> *</label>
+                                            <select name="Bank_List" class="form-control select2" id="advFieldsStatus">
+                                                <option value=""><?php echo "choose any bank" ?></option>
+
+                                                <?php
+                                                // Fetch data from tbl_bank
+                                                $statementBank = $pdo->prepare("SELECT * FROM tbl_bank");
+                                                $statementBank->execute();
+                                                $resultBank = $statementBank->fetchAll(PDO::FETCH_ASSOC);
+
+                                                // Display options based on the fetched data
+                                                foreach ($resultBank as $bank) {
+                                                    $optionValue = $bank['BankName'] . ' - ' . $bank['BankAccountNumber'];
+                                                    echo '<option value="' . $optionValue . '">' . $optionValue . '</option>';
+                                            
+                                                    
+                                                }
+                                                ?>
+                                            </select>
+
+
+
+                                            <label for=""><?php echo "BANK NAME " ?> *</label>
+                                            <select name="Bank" class="form-control select2" id="advFieldsStatus">
+                                                <option value=""><?php echo "SELECT" ?></option>
+
+                                                <?php
+                                                // Fetch data from tbl_bank
+                                                $statementBank = $pdo->prepare("SELECT * FROM tbl_bank");
+                                                $statementBank->execute();
+                                                $resultBank = $statementBank->fetchAll(PDO::FETCH_ASSOC);
+
+                                                // Display options based on the fetched data
+                                                foreach ($resultBank as $bank) {
+                                                    echo '<option value="' . $bank['BankName'] . '">' . $bank['BankName'] . '</option>';
+                                                }
+                                                ?>
+                                            </select>
                                     </div>
-                                    <!-- <form class="paypal" action="<?php echo BASE_URL; ?>payment/paypal/payment_process.php" method="post" id="paypal_form" target="_blank">
-                                        <input type="hidden" name="cmd" value="_xclick" />
-                                        <input type="hidden" name="no_note" value="1" />
-                                        <input type="hidden" name="lc" value="UK" />
-                                        <input type="hidden" name="currency_code" value="USD" />
-                                        <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynow_LG.gif:NonHostedGuest" />
-
-                                        <input type="hidden" name="final_total" value="<?php echo $final_total; ?>">
+                                    <div class="col-md-12 form-group">
+                                        <label for="">Transaction Id <br><span style="font-size:12px;font-weight:normal;">(Input the Transaction Id Correctly)</span></label>
+                                        <textarea name="transaction_info" minlength="10" maxlength="10" required class="form-control" cols="30" rows="2"></textarea>
+                                    </div>
+                                
                                         <div class="col-md-12 form-group">
-                                            <input type="submit" class="btn btn-primary" value="<?php echo LANG_VALUE_46; ?>" name="form1">
-                                        </div>
-                                    </form>
-                        -->
+                                            <input type="submit" class="btn btn-primary" value="Submit" name="form3">
+                                          </div>
 
-
-                                    <form action="payment/bank/init.php" method="post" id="bank_form">
-                                        <div class="container"><b>Total Amount</b><br>
-                                            <input type="text" readonly name="amount" value="<?php echo $final_total; ?>">
-                                        </div><br>
-                                        <div class="container"><b>Shipping Cost</b><br>
-                                            <input type="text" readonly name="shipping_fee" value="<?php echo $shipping_cost; ?>">
-                                        </div><br>
-                                        <div class="col-md-12 form-group">
-                                            <label for=""><?php echo LANG_VALUE_43; ?></span></label><br>
-                                            <?php
-                                            $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
-                                            $statement->execute();
-                                            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                                            foreach ($result as $row) {
-                                                echo nl2br($row['bank_detail']);
-                                            }
-                                            ?>
-                                        </div>
-                                        <div class="col-md-12 form-group">
-                                            <label for="">Transaction Id <br><span style="font-size:12px;font-weight:normal;">(Input the Transaction Id Correctly)</span></label>
-                                            <textarea name="transaction_info" minlength="10" maxlength="10" required class="form-control" cols="30" rows="2"></textarea>
-                                        </div>
-                                        <div class="col-md-12 form-group">
-                                            <input type="submit" class="btn btn-primary" value="<?php echo LANG_VALUE_46; ?>" name="form3">
-                                        </div>
-                                    </form>
-
-                                </div>
-
-
+                                </form>
+                            
                             </div>
-                        <?php endif; ?>
 
-                    </div>
+                        </div>
 
-
-                <?php endif; ?>
 
             </div>
+        <?php endif; ?>
+
         </div>
+
+
+    <?php endif; ?>
+
     </div>
+</div>
+</div>
 </div>
 
 

@@ -144,7 +144,7 @@ if ($success_message != '') {
                                 <th>Product Details</th>
                                 <th>Driver Assigned</th>
                                 <th>Supervisor Assigned</th>
-                                <th>Technician Assigned</th>
+                                <th>Designer Assigned</th>
                                 <th>Payment Status</th>
                                 <th>Destination Details</th>
                                 <th>Shipping Status</th>
@@ -231,7 +231,7 @@ if ($success_message != '') {
                                         $statement1->execute(array($row['technician']));
                                         $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
                                         foreach ($result1 as $row1) {
-                                            echo '<b>Technician Name: </b>' . $row1['full_name'];
+                                            echo '<b>Designer Name: </b>' . $row1['full_name'];
                                             echo '<br><b>Email: </b>' . $row1['email'];
                                             echo '<br><b>Phone Num: </b>' . $row1['phone'];
                                             echo '<br><br>';
@@ -264,23 +264,9 @@ if ($success_message != '') {
                                         <a href="editform.php?id=<?php echo $row['id']; ?>" class="btn btn-info btn-xs">Assign Driver</a><br>
                                         <?php endif; ?>
 
-
-
-                                        <?php if ($row['supervisor'] == '' ) : ?>
-                                            <a href="supervisorallocation.php?id=<?php echo $row['id']; ?>" class="btn btn-info btn-xs">Assign Supervisor</a><br>
-                                        <?php endif; ?>
-
-
-                                        <!-- Third Row: Assign Technician -->
-
-                                        <?php if ($row['technician'] == '' ) : ?>
-                                            <a href="technicianallocation.php?id=<?php echo $row['id']; ?>" class="btn btn-info btn-xs">Assign Technician</a><br>
-                                        <?php endif; ?>
-
-
                                         <!-- Additional Dispatch Goods Button -->
 
-                                        <?php if ($row['technician'] != '' && $row['driver'] != '' && $row['supervisor'] != '' && $row['shipping_status'] == 'Pending' && $row['order_status'] == 'Goods On Transit' && $row['payment_status'] == 'Completed') : ?>
+                                        <?php if ($row['driver'] != '' && $row['shipping_status'] == 'Pending' && $row['order_status'] == 'Goods On Transit' && $row['payment_status'] == 'Completed') : ?>
                                             <a href="shipping-change-status.php?id=<?php echo $row['id']; ?>&task=Goods On transit,It will be delivered to your destination within a short period of time. Thank You"  class="btn btn-warning btn-xs">Dispatch Goods</a>
                                         <?php endif; ?>
                                     </td>

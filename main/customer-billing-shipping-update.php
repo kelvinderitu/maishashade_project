@@ -37,6 +37,7 @@ if (isset($_POST['form1'])) {
 
     $_SESSION['customer']['cust_country'] = strip_tags($_POST['cust_country']);
     $_SESSION['customer']['cust_s_address'] = strip_tags($_POST['cust_s_address']);
+    header("location:makepayment.php");
 }
 ?>
 
@@ -92,18 +93,22 @@ if (isset($_POST['form1'])) {
                                     </< /label>
                                     <textarea name="cust_s_address" class="form-control" cols="30" rows="10" style="height:100px;"><?php echo $_SESSION['customer']['cust_s_address']; ?></textarea>
                             </div>
+                            <div style="float: right;">
+                                <input type="submit" class="btn btn-success" value="<?php echo LANG_VALUE_5; ?>" name="form1">
+                            </div>
+                            <div class="container">
+                                <a href="cart.php" class="btn btn-default"><?php echo LANG_VALUE_21; ?></a>
+                            </div>
 
                         </div>
                 </div>
-                <div class="container">
-                    <input type="submit" class="btn btn-success" value="<?php echo LANG_VALUE_5; ?>" name="form1">
-                </div>
+
+
+
                 </form>
             </div>
             <hr>
-            <div class="container">
-                <a href="cart.php" class="btn btn-default"><?php echo LANG_VALUE_21; ?></a>
-            </div>
+
         </div>
     </div>
 </div>

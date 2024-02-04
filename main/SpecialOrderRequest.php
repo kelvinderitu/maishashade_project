@@ -1,6 +1,6 @@
-<?php
+<?php 
 require_once('header.php');
-?>
+ ?>
 
 <?php
 // Check if the customer is logged in or not
@@ -32,10 +32,10 @@ if (!isset($_SESSION['customer'])) {
                 <div class="user-content">
                     <center>
                         <h3>
-                            <font color="black">MY ORDER HISTORY</font>
+                            <font color="black">MY SPECIAL ORDER REQUEST</font>
                         </h3>
                     </center>
-
+                   
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover">
                             <thead>
@@ -168,7 +168,7 @@ if (!isset($_SESSION['customer'])) {
                                             <b>Shipping Fee :</b> <?php echo 'Ksh' . $row['shipping_fee']; ?><br>
                                             <b>Payment Status :</b><?php echo $row['payment_status']; ?><br>
                                             <b>Bank Name :</b><?php echo $row['Bank_Name']; ?><br>
-                                            <!-- <b>Payment Method :</b><?php echo $row['payment_method']; ?><br>-->
+                                           <!-- <b>Payment Method :</b><?php echo $row['payment_method']; ?><br>-->
                                         <td>
                                             <?php
                                             $statement1 = $pdo->prepare("SELECT * FROM tbl_customer WHERE cust_email=?");
@@ -202,25 +202,12 @@ if (!isset($_SESSION['customer'])) {
 
                                         </td>
                                         <td>
+                                            <a href="SpecialOrderReceipt.php?id=<?php echo $row['id']; ?>" class="btn btn-warning btn-md">Receipt</a> <br><br>
                                             <?php
-                                            if ($row['payment_status'] != 'Rejected') {
-
-
-                                            ?>
-                                                <a href="customer-receipt.php?id=<?php echo $row['id']; ?>" class="btn btn-warning btn-md">Receipt</a> <br><br>
-                                            <?php
-                                            }
-
-
-                                            ?>
-
-
-                                            <?php
-                                            if ($row['cust_remark'] == '' && $row['payment_status'] != 'Rejected') {
+                                            if ($row['cust_remark'] == '') {
                                                 if ($row['shipping_status'] == 'Goods Delivered') {
                                             ?>
                                                     <a href="editform.php?id=<?php echo $row['id']; ?>" class="btn btn-warning btn-md">Add Remark</a>
-
                                             <?php
                                                 }
                                             }

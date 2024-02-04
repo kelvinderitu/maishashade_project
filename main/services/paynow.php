@@ -41,17 +41,10 @@ include("../admin/inc/config.php");
             <div class="row">
                 <div class="col-lg-12">
                     <h5 class="page-header">Payment Section</h5>
-                    <i><h6><div class="col-md-12 form-group">
-                        <label for=""><?php echo "choose any bank of your choice*"; ?></span></label><br>
-                        <?php
-                        $statement = $pdo->prepare("SELECT * FROM tbl_settings WHERE id=1");
-                        $statement->execute();
-                        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                        foreach ($result as $row) {
-                            echo nl2br($row['bank_detail']);
-                        }
-                        ?>
-                    </div></h6></i>
+                    <h6><div class="col-md-12 form-group">
+                       
+                          
+                    </div></h6>
 
 
 
@@ -80,7 +73,11 @@ include("../admin/inc/config.php");
                                         }
                                         $id = $_POST["id"];
                                         $total = $_POST["total"];
-                                        $Bank_Name=$_POST['BankName'];
+                                        $Bank=$_POST['Bank'];
+
+                                        $Bank_Name=$_POST['Bank_List'];
+                                       
+
                                         $transactioncode = test_input($_POST['transactioncode']);
                                         $per = 'M1OPQRST6U8V2X3ABCDEFG45NYZ7W9HIJ0KL';
                                         $newS = substr(str_shuffle($per), 0, 8);
@@ -92,7 +89,7 @@ include("../admin/inc/config.php");
                                             header("Refresh:0.05; url=../bookin_pay_error.php");
                                         } else {
                                             //update query
-                                            $qry = "update tbl_bookings set transactioncode='$transactioncode',total='$total', Bank_Name='$Bank_Name' where id='$id'";
+                                            $qry = "update tbl_bookings set transactioncode='$transactioncode',total='$total', Bank_Name='$Bank', Bank_List='$Bank_Name' where id='$id'";
                                             $result = mysqli_query($conn, $qry); //query executes
 
                                             if (!$result) {
@@ -102,6 +99,7 @@ include("../admin/inc/config.php");
                                                 echo '<div class="alert alert-success">Payment made successfully!</div>';
                                             }
                                         }
+                                        header('Location:mybookings.php?dashboard');
                                     }
                                     ?>
 
@@ -118,9 +116,43 @@ include("../admin/inc/config.php");
                                                 <label>Total Amount</label>
                                                 <input class="form-control" type="text" readonly name="total" value="<?php echo $row['charges'] + $row['fee']; ?>" required>
                                             </div>
+                                            <label for=""><?php echo "BANK " ?> *</label>
+                                            <select name="Bank_List" class="form-control select2" id="advFieldsStatus">
+                                                <option value=""><?php echo "choose any bank" ?></option>
+
+                                                <?php
+                                                // Fetch data from tbl_bank
+                                                $statementBank = $pdo->prepare("SELECT * FROM tbl_bank");
+                                                $statementBank->execute();
+                                                $resultBank = $statementBank->fetchAll(PDO::FETCH_ASSOC);
+
+                                                // Display options based on the fetched data
+                                                foreach ($resultBank as $bank) {
+                                                    $optionValue = $bank['BankName'] . ' - ' . $bank['BankAccountNumber'];
+                                                    echo '<option value="' . $optionValue . '">' . $optionValue . '</option>';
+                                            
+                                                    
+                                                }
+                                                ?>
+                                            </select><BR>
+                                            
                                             <div class="form-group">
-                                                <label>Bank Name</label>
-                                                <input class="form-control" type="text"  name="BankName" required>
+                                            <label for=""><?php echo "SELECT THE BANK YOU SELECTED ABOVE " ?> *</label>
+                                                <select name="Bank" class="form-control select2" id="advFieldsStatus">
+                                                <option value=""><?php echo "SELECT" ?></option>
+
+                                                <?php
+                                                // Fetch data from tbl_bank
+                                                $statementBank = $pdo->prepare("SELECT * FROM tbl_bank");
+                                                $statementBank->execute();
+                                                $resultBank = $statementBank->fetchAll(PDO::FETCH_ASSOC);
+
+                                                // Display options based on the fetched data
+                                                foreach ($resultBank as $bank) {
+                                                    echo '<option value="' . $bank['BankName'] . '">' . $bank['BankName'] . '</option>';
+                                                }
+                                                ?>
+                                            </select>
                                             </div>
 
                                             <div class="form-group">

@@ -185,7 +185,7 @@ if ($success_message != '') {
                                         <b>Date: </b><?php echo $row['pdate']; ?><br>
                                         <b>Bank Name: </b><?php echo $row['Bank_Name']; ?><br>
 
-                                        <b>Bank Transcation Id: </b><?php echo $row['transactioncode']; ?><br>
+                                        <b>Bank Transaction Id: </b><?php echo $row['transactioncode']; ?><br>
                                     </td>
                                     <td>
                                         <?php echo $row['payment_status']; ?>
@@ -195,6 +195,13 @@ if ($success_message != '') {
                                             if ($row['transactioncode'] !== '') {
                                         ?>
                                                 <a href="booking-change-status.php?id=<?php echo $row['id']; ?>&task=Approved" class="btn btn-warning btn-md">Approve</a>
+                                            <?php
+                                            }
+                                            if ($row['status'] == 'Pending') {
+                                            ?>
+
+                                                <a href="booking-change-status-rejected.php?id=<?php echo $row['id']; ?>&task=Rejected&task2=Rejected" class="btn btn-md" style="background-color: red; color: white;">Reject</a>
+
                                         <?php
                                             }
                                         }

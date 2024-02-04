@@ -23,7 +23,7 @@ if (!isset($_SESSION['user'])) {
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Technician Panel</title>
+	<title>Designer Panel</title>
 
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -59,7 +59,7 @@ if (!isset($_SESSION['user'])) {
 					<span class="sr-only">Toggle navigation</span>
 				</a>
 
-				<span style="float:left;line-height:50px;color:#fff;padding-left:15px;font-size:18px;">Technician's Panel</span>
+				<span style="float:left;line-height:50px;color:#fff;padding-left:15px;font-size:18px;">Designer Panel</span>
 				<!-- Top Bar ... User Inforamtion .. Login/Log out Area -->
 				<div class="navbar-custom-menu">
 					<ul class="nav navbar-nav">

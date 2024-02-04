@@ -66,7 +66,7 @@ if(isset($_POST['form1'])) {
 
 <div class="login-box">
 	<div class="login-logo">
-		<b>Technician Login</b>
+		<b>Designer Login</b>
 	</div>
   	<div class="login-box-body">
     	<p class="login-box-msg"></p>

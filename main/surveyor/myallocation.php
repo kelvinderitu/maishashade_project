@@ -144,7 +144,7 @@ if ($success_message != '') {
                                 <th>Service </th>
                                 <th>Booked On </th>
                                 <th>Service Period </th>
-                                <th>Technician</th>
+                                <th>Designer</th>
                                 <th>Location Details</th>
                                 <th>toolbox type</th>
                                 <th>Completion Status</th>

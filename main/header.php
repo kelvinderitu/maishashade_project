@@ -328,7 +328,9 @@ foreach ($result as $row) {
 									$vgallery_title = $row['vgallery_title'];
 								}
 								?>
-								<li><a href="services/services.php">Our Services</a></li>
+								<li><a href="services/index.php">Our Services</a></li>
+								<!--<li><a href="services/services2.php">SpecialOrders</a></li>*/-->
+								
 								<li><a href="about.php">
 										<?php echo $about_title; ?>
 									</a></li>
@@ -373,6 +375,11 @@ foreach ($result as $row) {
 													<h6>My Bookings</h6>
 												</font>
 											</button></a>
+											<!--<a href="SpecialOrderRequest.php"><button class="btn btn-sm btn-secondary">
+												<font color="black"><i class="fa fa-clipboard"></i>
+													<h6>Special Orders</h6>
+												</font>
+											</button></a>-->
 										<a href="register/inbox.php"><button class="btn btn-sm btn-secondary">
 												<font color="black"><i class="fa fa-envelope"></i>
 													<h6>Feedback</h6>

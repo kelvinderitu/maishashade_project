@@ -108,10 +108,22 @@ if(!isset($_SESSION['user'])) {
                         <a href="managebookings.php">
                             <i class="fa fa-list"></i> <span>Pending Bookings</span>
                         </a>
+
+                    </li>
+					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
+                        <a href="pendingorders.php">
+                            <i class="fa fa-list"></i> <span>Pending Orders Allocations</span>
+                        </a>
+						
                     </li>
 					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
                         <a href="approvedbookings.php">
                             <i class="fa fa-list"></i> <span>Approved Bookings</span>
+                        </a>
+                    </li>
+					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
+                        <a href="completedorders.php">
+                            <i class="fa fa-list"></i> <span>Completed Order Allocations </span>
                         </a>
                     </li>
 

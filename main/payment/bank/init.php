@@ -55,12 +55,13 @@ if( !isset($_REQUEST['msg']) ) {
 	                            card_month,
 	                            card_year,
 	                            bank_transaction_info,
-								Bank_Name,
+								Bank_List,
+								Bank_Name,																
 	                            payment_method,
 	                            payment_status,
 	                            shipping_status,
 	                            payment_id
-	                        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+	                        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 	    $statement->execute(array(
 	                            $_SESSION['customer']['cust_id'],
 	                            $_SESSION['customer']['cust_name'],
@@ -76,8 +77,10 @@ if( !isset($_REQUEST['msg']) ) {
 	                            '', 
 	                            '',
 	                            $_POST['transaction_info'],
-								$_POST['BankName'],
-	                            'Bank Deposit',
+								$_POST['Bank'],
+								$_POST['Bank_List'],
+																
+	                            'Bank Deposit',								
 	                            'Pending',
 	                            'Pending',
 	                            $payment_id

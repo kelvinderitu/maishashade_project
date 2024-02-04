@@ -142,7 +142,7 @@ if ($success_message != '') {
                                 <th>#</th>
                                 <th>Customer</th>
                                 <th>Service </th>
-                                <th>Technician</th>
+                                <th>Designer</th>
                                 <th>Location Details</th>
                                 <th>Completion Status</th>
                                 

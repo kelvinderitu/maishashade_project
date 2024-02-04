@@ -257,9 +257,9 @@ if (!isset($_SESSION['customer'])) {
 
 			<div class="col-md-4 logo">
 				<center><br><img src="assets/uploads/log.png"></center><br>
-				Nairobi, Kenya<br>
+				<center>Nairobi, Kenya<br>
 				Office Tel. +254706071232<br>
-				Email: info@maishashades.co.ke
+				Email: info@maishashades.co.ke</center>
 			
 
 			<?php

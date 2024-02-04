@@ -150,7 +150,8 @@ if($success_message != '') {
                     <th>Order Status</th>
                     <th>Payment Status</th>
                     <th>Destiantion Details</th>
-                    <th>Customer Remarks</th>
+                    <th>Materials Needed</th>
+                    <th>Designer Assigned</th>
                     <th>Shipping Status</th>
 			    </tr>
 			</thead>
@@ -166,7 +167,7 @@ if($success_message != '') {
 					<tr class="<?php if($row['payment_status']=='Pending'){echo 'bg';}else{echo 'bg';} ?>">
 	                    <td><?php echo $i; ?></td>
 	                    <td>
-                            <b>Id:</b> <?php echo $row['customer_id']; ?><br>
+                           
                             <b>Name:</b><br> <?php echo $row['customer_name']; ?><br>
                             <b>Email:</b><br> <?php echo $row['customer_email']; ?><br><br>
                            
@@ -238,10 +239,9 @@ if($success_message != '') {
                            }
                            ?>
                         </td>
-                        <td>
-                            <b>Status :</b><?php echo $row['cust_remark']; ?>
-                            <br><b>Comment :</b><?php echo $row['cust_comment']; ?>
-                        </td>
+                        <td><?php echo $row['materials']; ?></td>
+                        <td><?php echo $row['technician']; ?></td>
+                        
                         <td>
                             <?php echo $row['shipping_status']; ?>
                             <br><br>

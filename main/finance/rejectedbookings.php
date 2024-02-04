@@ -123,7 +123,7 @@ if($success_message != '') {
 
 <section class="content-header">
 	<div class="content-header-left">
-		<h3>Completed Payment</h3>
+		<h3>Rejected Booking Payments</h3>
 	</div>
 </section>
 
@@ -142,17 +142,17 @@ if($success_message != '') {
 			    <tr>
 			        <th>#</th>
                     <th>Customer</th>
+			        <th>Product Details</th>
                     <th>
                     	Payment Information
                     </th>
-                    <th>Paid Amount</th>
                     <th>Payment Status</th>
 			    </tr>
 			</thead>
             <tbody>
             	<?php
             	$i=0;
-            	$statement = $pdo->prepare("SELECT * FROM tbl_payment where payment_status='Approved' ORDER by id DESC");
+            	$statement = $pdo->prepare("SELECT * FROM tbl_bookings where payment_status='Rejected' ORDER by id DESC");
             	$statement->execute();
             	$result = $statement->fetchAll(PDO::FETCH_ASSOC);							
             	foreach ($result as $row) {
@@ -163,7 +163,7 @@ if($success_message != '') {
 	                    <td>
                         <?php
                            $statement1 = $pdo->prepare("SELECT * FROM tbl_customer WHERE cust_id=?");
-                           $statement1->execute(array($row['customer_id']));
+                           $statement1->execute(array($row['cust_id']));
                            $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
                            foreach ($result1 as $row1) {
                                 echo '<b>Name:</b> '.$row1['cust_name'];
@@ -174,21 +174,29 @@ if($success_message != '') {
                           
                         </td>
                         <td>
-                        	
-                        	<?php $row['payment_method'] == 'Bank Deposit' ?>
-                        		<b>Date:</b> <?php echo $row['payment_date']; ?><br>
-                        		<b>Bank Name:</b> <br><?php echo $row['Bank_Name']; ?><br>
-                                <b>Transaction Information:</b> <br><?php echo $row['bank_transaction_info']; ?>
-                        	
+                           <?php
+                           $statement1 = $pdo->prepare("SELECT * FROM tbl_services WHERE servicename=?");
+                           $statement1->execute(array($row['service']));
+                           $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
+                           foreach ($result1 as $row1) {
+                                echo '<b>Service:</b> '.$row1['servicename'];
+                                echo '<br><b>Charges:</b> Ksh ' . ($row1['pricing'] + $row['fee']);
+                                echo '<br><br>';
+                           }
+                           ?>
                         </td>
-                        <td>Ksh<?php echo $row['paid_amount']; ?></td>
+                        <td>
+                            <b>Amount Paid: </b><?php echo $row['charges']+$row['charges']; ?><br>
+                            <b>Date: </b><?php echo $row['pdate']; ?><br>
+                            <b>Bank Reference Number: </b><?php echo $row['transactioncode']; ?><br>
+                        </td>
                         <td>
                             <?php echo $row['payment_status']; ?>
                             <br><br>
                             <?php
                                 if($row['payment_status']=='Pending'){
                                     ?>
-                                    <a href="order-change-status.php?id=<?php echo $row['id']; ?>&task=Completed" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Mark Complete</a>
+                                    <a href="booking-change-status.php?id=<?php echo $row['id']; ?>&task=Approved" class="btn btn-warning btn-xs" style="width:100%;margin-bottom:4px;">Approve</a>
                                     <?php
                                 }
                             ?>

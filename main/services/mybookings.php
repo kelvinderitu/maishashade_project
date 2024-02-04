@@ -142,7 +142,7 @@ l<?php
                                                             <?php } else { ?>
 
                                                             <?php } ?><br><br>
-                                                            <?php if ($result->transactioncode !== '') { ?>
+                                                            <?php if ($result->transactioncode !== '' && $result->payment_status !=='Rejected') { ?>
                                                                 <a href="receiptb.php?id=<?php echo htmlentities($result->id); ?>"> <button class="btn btn-info btn-sm"> Receipt</button>
                                                                 <?php } else { ?>
 
@@ -154,12 +154,7 @@ l<?php
                                                                     <?php } else { ?>
 
                                                                     <?php } ?><br><br>
-                                                                    <?php if ($result->cert == 'Issued')
-                                                                        if ($result->supervior_status == 'Complete') { ?>
-                                                                        <a href="certificate.php?id=<?php echo htmlentities($result->id); ?>"> <button class="btn btn-danger btn-sm"> Certificate</button>
-                                                                        <?php } else { ?>
-
-                                                                        <?php } ?>
+                                                                   
 
                                                     </td>
                                                 </tr>

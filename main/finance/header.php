@@ -108,6 +108,21 @@ if(!isset($_SESSION['user'])) {
                             <i class="fa fa-shopping-bag"></i> <span> Pending Booking Payment</span>
                         </a>
                     </li>
+					<!--<li class="treeview <?php if( ($cur_page == 'product.php') || ($cur_page == 'product-add.php') || ($cur_page == 'product-edit.php') ) {echo 'active';} ?>">
+                        <a href="specialorder.php">
+                            <i class="fa fa-shopping-bag"></i> <span> SpecialOrders</span>
+                        </a>
+                    </li>
+					<li class="treeview <?php if( ($cur_page == 'product.php') || ($cur_page == 'product-add.php') || ($cur_page == 'product-edit.php') ) {echo 'active';} ?>">
+                        <a href="pendingspecialorder.php">
+                            <i class="fa fa-shopping-bag"></i> <span> Pending SpecialOrder Payment</span>
+                        </a>
+                    </li>
+					<li class="treeview <?php if( ($cur_page == 'product.php') || ($cur_page == 'product-add.php') || ($cur_page == 'product-edit.php') ) {echo 'active';} ?>">
+                        <a href="CompleteSpecialOrder.php">
+                            <i class="fa fa-shopping-bag"></i> <span> Completed SpecialOrder Payment</span>-->
+                        </a>
+                    </li>
 
                     <li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
                         <a href="approvedpayment.php">
@@ -119,10 +134,25 @@ if(!isset($_SESSION['user'])) {
                             <i class="fa fa-sticky-note"></i> <span>Completed Booking Payment</span>
                         </a>
                     </li>
+					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
+                        <a href="rejectedorders.php">
+                            <i class="fa fa-sticky-note"></i> <span>Rejected Orders</span>
+                        </a>
+                    </li>
+					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
+                        <a href="rejectedbookings.php">
+                            <i class="fa fa-sticky-note"></i> <span>Rejected Bookings</span>
+                        </a>
+                    </li>
 					
                     <li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
                         <a href="productpayment.php">
                             <i class="fa fa-sticky-note"></i> <span>Tender Payment</span>
+                        </a>
+                    </li>
+					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
+                        <a href="bankdetails.php">
+                            <i class="fa fa-sticky-note"></i> <span>Bank Details</span>
                         </a>
                     </li>
 

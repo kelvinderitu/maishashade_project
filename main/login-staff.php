@@ -37,7 +37,7 @@ foreach ($result as $row) {
                             </a></br>
                             <br>
                             <font color="black"> <i class="fa fa-sign-in"></i>&nbsp;<a href="surveyor/index.php">
-                                    <font color="black">Technician</font>
+                                    <font color="black">Designer</font>
                                 </a></br>
                                 <br>
                                 <font color="black"> <i class="fa fa-sign-in"></i>&nbsp;<a href="supplier/index.php">
