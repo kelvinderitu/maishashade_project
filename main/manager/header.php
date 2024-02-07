@@ -117,6 +117,12 @@ if(!isset($_SESSION['user'])) {
 						
                     </li>
 					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
+                        <a href="pendingspecialorders.php">
+                            <i class="fa fa-list"></i> <span>Pending Special Orders Allocations</span>
+                        </a>
+						
+                    </li>
+					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
                         <a href="approvedbookings.php">
                             <i class="fa fa-list"></i> <span>Approved Bookings</span>
                         </a>
@@ -124,6 +130,11 @@ if(!isset($_SESSION['user'])) {
 					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
                         <a href="completedorders.php">
                             <i class="fa fa-list"></i> <span>Completed Order Allocations </span>
+                        </a>
+                    </li>
+					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
+                        <a href="completedspecialorders.php">
+                            <i class="fa fa-list"></i> <span>Completed Special Order Allocations </span>
                         </a>
                     </li>
 

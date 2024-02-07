@@ -108,6 +108,11 @@ if(!isset($_SESSION['user'])) {
                             <i class="fa fa-truck"></i> <span>Pending Services Allocations</span>
                         </a>
                     </li>
+					<li class="treeview <?php if( ($cur_page == 'product.php') || ($cur_page == 'product-add.php') || ($cur_page == 'product-edit.php') ) {echo 'active';} ?>">
+                        <a href="specialorderallocation.php">
+                            <i class="fa fa-truck"></i> <span>Pending Special Orders Allocations</span>
+                        </a>
+                    </li>
 
 
                     <li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
@@ -118,6 +123,11 @@ if(!isset($_SESSION['user'])) {
 					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
                         <a href="approvedservices.php">
                             <i class="fa fa-truck"></i> <span>Completed  Services Allocations</span>
+                        </a>
+                    </li>
+					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
+                        <a href="completedspecialorders.php">
+                            <i class="fa fa-truck"></i> <span>Completed  Special orders Allocations</span>
                         </a>
                     </li>
 					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">

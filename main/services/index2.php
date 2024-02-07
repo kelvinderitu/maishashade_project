@@ -1,4 +1,5 @@
-<?php require_once('header.php');
+<?php
+require_once('header.php');
 $con = new mysqli('localhost', 'root', '', 'nyabondobricks');
 
 if ($con->connect_error) {
@@ -14,6 +15,31 @@ if ($con->connect_error) {
 </section>
 
 <?php
+ini_set('error_reporting', E_ALL);
+
+// Setting up the time zone
+date_default_timezone_set('America/Los_Angeles');
+
+// Host Name
+$dbhost = 'localhost';
+
+// Database Name
+$dbname = 'nyabondobricks';
+
+// Database Username
+$dbuser = 'root';
+
+// Database Password
+$dbpass = '';
+
+
+
+try {
+    $pdo = new PDO("mysql:host={$dbhost};dbname={$dbname}", $dbuser, $dbpass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $exception) {
+    echo "Connection error :" . $exception->getMessage();
+}
 $statement = $pdo->prepare("SELECT * FROM tbl_top_category");
 $statement->execute();
 $total_top_category = $statement->rowCount();
@@ -57,10 +83,9 @@ $completedpayment = $statement->rowCount();
 $statement = $pdo->prepare("SELECT * FROM tbl_customer_message");
 $statement->execute();
 $messages = $statement->rowCount();
+
 if (isset($_POST['add_product_btn'])) {
-    $cust_name = $_POST['cust_name'];
-    $cust_email = $_POST['cust_email'];
-    $cust_phone = $_POST['cust_phone'];
+
     $county = $_POST['county'];
     $detail_location = $_POST['location'];
     $carspaces = $_POST['carspaces'];
@@ -71,24 +96,35 @@ if (isset($_POST['add_product_btn'])) {
     $image_ext = pathinfo($image, PATHINFO_EXTENSION);
     $filename = time() . '.' . $image_ext;
 
-    if (!$con) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
+    // Assuming $_SESSION['customer']['cust_lname'] is the correct key
+    $full_name = $_SESSION['customer']['cust_name'] . ' ' . $_SESSION['customer']['cust_lname'];
 
-    $sql = "INSERT INTO tbl_specialorders(customer_fullName,customer_email,customer_phone,county,detail_location,carspaces, description, image)
-            VALUES ('$cust_name','$cust_email','$cust_phone','$county','$detail_location','$carspaces','$description', '$filename')";
+    $statement = $pdo->prepare("INSERT INTO tbl_specialorders( 
+        customer_id,
+        customer_fullName,
+        customer_email,
+        customer_phone,
+        county,
+        detail_location,
+        carspaces,
+        description, 
+        image
+    ) VALUES (?,?,?,?,?,?,?,?,?)");
+    $statement->execute(array(
+        $_SESSION['customer']['cust_id'],
+        $full_name,
+        $_SESSION['customer']['cust_email'],
+        $_SESSION['customer']['cust_phone'],
+        $county,
+        $detail_location,
+        $carspaces,
+        $description,
+        $filename
+    ));
 
-    if (mysqli_query($con, $sql)) {
-        move_uploaded_file($_FILES['image']['tmp_name'], $path . '/' . $filename);
-        header("Location: ../index.php");
-        echo "added successfully";
-    } else {
-
-        
-        echo "something went wrong";
-    }
-
-    mysqli_close($con);
+    move_uploaded_file($_FILES['image']['tmp_name'], $path . '/' . $filename);
+    header("Location: ../index.php");
+    exit();
 }
 ?>
 
@@ -100,22 +136,24 @@ if (isset($_POST['add_product_btn'])) {
                 <div class="card-body">
                     <form action="" method="POST" enctype="multipart/form-data">
                         <div class="row">
-                            <div class="col-md-12">
-                                <label class="mb-0"> Customer full Name</label>
-                                <input type="text" required name="cust_name" placeholder="Enter Number of CarSpaces you May want" class="form-control mb-2">
-                            </div>
-                            <div class="col-md-12">
-                                <label class="mb-0"> Customer email</label>
-                                <input type="text" required name="cust_email" placeholder="Enter Your Email" class="form-control mb-2">
-                            </div>
-                            <div class="col-md-12">
-                                <label class="mb-0"> Customer phone number</label>
-                                <input type="text" required name="cust_phone" placeholder="Enter  Your Phone Number" class="form-control mb-2">
-                            </div>
-                            <div class="col-md-12">
-                                <label class="mb-0"> County</label>
-                                <input type="text" required name="county" placeholder="Enter Your County" class="form-control mb-2">
-                            </div>
+                            <label for=""> COUNTY OF DELIVERY*</label>
+                            <select name="county" class="form-control select2">
+                                <option value=""><?php echo "SELECT YOUR COUNTY" ?></option>
+
+                                <?php
+                                // Fetch data from tbl_bank
+                                $statementBank = $pdo->prepare("SELECT * FROM tbl_country");
+                                $statementBank->execute();
+                                $resultBank = $statementBank->fetchAll(PDO::FETCH_ASSOC);
+
+                                // Display options based on the fetched data
+                                foreach ($resultBank as $bank) {
+                                    echo '<option value="' . $bank['country_name'] . '">' . $bank['country_name'] . '</option>';
+                                }
+                                ?>
+                            </select>
+
+
                             <div class="col-md-12">
                                 <label forclass="mb-0"> Specific Detailed Location</label>
                                 <textarea rows="3" columns="4" required name="location" placeholder="Enter  Specific Location Of the Installation Of the Material Requested" class="form-control mb-2"></textarea>
@@ -130,18 +168,11 @@ if (isset($_POST['add_product_btn'])) {
                                 <textarea rows="3" columns="4" required name="description" placeholder="Enter  Features of the shade i.e color" class="form-control mb-2"></textarea>
                             </div>
 
-
-
                             <div class="col-md-12">
                                 <label class="mb-0">Upload Image</label>
                                 <input type="file" required name="image" class="form-control mb-2"><br><br>
                             </div>
                             <br><br>
-
-
-
-
-
 
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-primary" name="add_product_btn">Save</button>
@@ -154,3 +185,4 @@ if (isset($_POST['add_product_btn'])) {
         </div>
     </div>
 </div>
+<?php require_once('footer.php'); ?>

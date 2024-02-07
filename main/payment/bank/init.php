@@ -78,8 +78,7 @@ if( !isset($_REQUEST['msg']) ) {
 	                            '',
 	                            $_POST['transaction_info'],
 								$_POST['Bank'],
-								$_POST['Bank_List'],
-																
+								$_POST['Bank_List'],																
 	                            'Bank Deposit',								
 	                            'Pending',
 	                            'Pending',

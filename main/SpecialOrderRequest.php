@@ -1,6 +1,6 @@
-<?php 
-require_once('header.php');
- ?>
+<?php
+require_once('header2.php');
+?>
 
 <?php
 // Check if the customer is logged in or not
@@ -17,6 +17,8 @@ if (!isset($_SESSION['customer'])) {
         exit;
     }
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,21 +37,21 @@ if (!isset($_SESSION['customer'])) {
                             <font color="black">MY SPECIAL ORDER REQUEST</font>
                         </h3>
                     </center>
-                   
+
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th>id</th>
-                                    <th><?php echo LANG_VALUE_48; ?></th>
-                                    <th>Payment Details</th>
-                                    </th>
-                                    <th>Location Details</th>
-                                    </th>
+                                    <th>Customer Details</th>
+                                    <th>Order Details</th>
                                     <th>Order Status</th>
                                     <th>Shipping Status</th>
+                                    <th>Total Payment To Be Made</th>
+                                    <th>Payment Details</th>
+                                    <th>Supervisor Details</th>
+                                    <th>Designer Details</th>
                                     <th>Driver Details</th>
-                                    <th>Customer Comments/Remarks</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -60,7 +62,7 @@ if (!isset($_SESSION['customer'])) {
                                 /* ===================== Pagination Code Starts ================== */
                                 $adjacents = 5;
 
-                                $statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE customer_email=? ORDER BY id DESC");
+                                $statement = $pdo->prepare("SELECT * FROM tbl_specialorders WHERE customer_email=? ORDER BY id DESC");
                                 $statement->execute(array($_SESSION['customer']['cust_email']));
                                 $total_pages = $statement->rowCount();
 
@@ -73,7 +75,7 @@ if (!isset($_SESSION['customer'])) {
                                     $start = 0;
 
 
-                                $statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE customer_email=? ORDER BY id DESC LIMIT $start, $limit");
+                                $statement = $pdo->prepare("SELECT * FROM tbl_specialorders WHERE customer_email=? ORDER BY id DESC LIMIT $start, $limit");
                                 $statement->execute(array($_SESSION['customer']['cust_email']));
                                 $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
@@ -150,65 +152,52 @@ if (!isset($_SESSION['customer'])) {
                                     <tr>
                                         <td><?php echo $tip; ?></td>
                                         <td>
-                                            <?php
-                                            $statement1 = $pdo->prepare("SELECT * FROM tbl_order WHERE payment_id=?");
-                                            $statement1->execute(array($row['payment_id']));
-                                            $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
-                                            foreach ($result1 as $row1) {
-                                                echo '<b>Product Name: </b>' . $row1['product_name'];
-                                                echo '<br><b>Quantity: </b>' . $row1['quantity'];
-                                                echo '<br><b>Unit Price: Ksh</b>' . $row1['unit_price'];
-                                                echo '<br><br>';
-                                            }
-                                            ?>
+
+                                            <b>Customer Full Name :</b><?php echo $row['customer_fullName']; ?><br>
+                                            <b>Customer Phone :</b> <?php echo  $row['customer_phone']; ?><br>
+                                            <b>Customer Email :</b> <?php echo  $row['customer_email']; ?><br>
+                                            <b>Customer county :</b><?php echo $row['county']; ?><br>
+                                            <b>Customer Detailed Location:</b><?php echo $row['detail_location']; ?><br>
+
                                         </td>
-                                        <td><b>Date :</b><?php echo $row['payment_date']; ?><br>
-                                            <b>Transaction id :</b><?php echo $row['bank_transaction_info']; ?><br>
-                                            <b>Amount Paid :</b> <?php echo 'Ksh' . $row['paid_amount']; ?><br>
-                                            <b>Shipping Fee :</b> <?php echo 'Ksh' . $row['shipping_fee']; ?><br>
-                                            <b>Payment Status :</b><?php echo $row['payment_status']; ?><br>
-                                            <b>Bank Name :</b><?php echo $row['Bank_Name']; ?><br>
-                                           <!-- <b>Payment Method :</b><?php echo $row['payment_method']; ?><br>-->
-                                        <td>
-                                            <?php
-                                            $statement1 = $pdo->prepare("SELECT * FROM tbl_customer WHERE cust_email=?");
-                                            $statement1->execute(array($row['customer_email']));
-                                            $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
-                                            foreach ($result1 as $row1) {
-                                                echo '<b>Details: </b>' . $row1['cust_s_address'];
-                                                echo '<br><br>';
-                                            }
-                                            ?>
-                                        </td>
+                                        <td><!-- Change this line -->
+                                            <!-- Updated line to display Product Image -->
+                                            <b>Product Image:</b><img src="services/uploads/<?php echo $row['image']; ?>" alt="" style="max-width: 100px;"><br>
+
+
+                                            <b>Product :</b><?php echo $row['product details']; ?><br>
+
                                         <td><?php echo $row['order_status']; ?></td>
                                         <td><?php echo $row['shipping_status']; ?></td>
+                                        <td><?php echo $row['paymenttobemade']; ?></td>
                                         <td>
-                                            <?php
-                                            $statement1 = $pdo->prepare("SELECT * FROM tbl_staff WHERE full_name=?");
-                                            $statement1->execute(array($row['driver']));
-                                            $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
-                                            foreach ($result1 as $row1) {
-                                                echo '<b>Driver Name: </b>' . $row1['full_name'];
-                                                echo '<br><b>Email: </b>' . $row1['email'];
-                                                echo '<br><b>Phone Num: </b>' . $row1['phone'];
-                                                echo '<br><br>';
-                                            }
-                                            ?>
+                                            <b>Transaction Id:</b><?php echo $row['transaction_info']; ?><br><br>
+                                            <b> Bank Name:</b><?php echo $row['Bank_Name']; ?><br>
+                                            <b> Payment Made:</b><?php echo $row['paid_amount']; ?><br>
+                                            <b> Date of Payment:</b><?php echo $row['payment_date']; ?><br>
                                         </td>
                                         <td>
-                                            <b>Goods :</b><?php echo $row['cust_remark']; ?><br>
-                                            <b>Comment :</b><?php echo $row['cust_comment']; ?>
-                                            <br>
+                                            <?php echo $row['supervisor']; ?><br>
+
+
 
                                         </td>
                                         <td>
+                                            <?php echo $row['Designer']; ?></td>
+                                        <td>
+                                            <?php echo $row['driver']; ?></td>
+                                        <td>
                                             <a href="SpecialOrderReceipt.php?id=<?php echo $row['id']; ?>" class="btn btn-warning btn-md">Receipt</a> <br><br>
                                             <?php
-                                            if ($row['cust_remark'] == '') {
-                                                if ($row['shipping_status'] == 'Goods Delivered') {
+
+                                            if ($row['paymenttobemade'] > '0') {
+                                                if ($row['paid_amount'] == '0') {
+
+
                                             ?>
-                                                    <a href="editform.php?id=<?php echo $row['id']; ?>" class="btn btn-warning btn-md">Add Remark</a>
+                                                    <a href="paymentnot.php?id=<?php echo $row['id']; ?>&task=In Process" class="btn btn-primary btn-md">Pay Now</a>
                                             <?php
+
                                                 }
                                             }
                                             ?>

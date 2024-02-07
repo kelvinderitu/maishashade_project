@@ -38,17 +38,16 @@ $id = isset($_GET['id']) ? $_GET['id'] : null;
                                 <th>Product Image</th>
                                 <th>Location</th>
                                 <th>Payment Details</th>
-                                <th>Shipping Fee</th>
-                                <th>Product Fee</th>
-                                <th>Service Fee</th>
-                                <th>Customer Payment Status</th>
+                                <th>Supervisor </th>
+                                <th>Designer </th>
+                                <th>order Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $i = 0;
-                            $statement = $pdo->prepare("SELECT * FROM tbl_specialorders WHERE  paymenttobemade='0'");
+                            $statement = $pdo->prepare("SELECT * FROM tbl_specialorders WHERE  payment_status != 'Rejected' and paid_amount !='0'");
                             $statement->execute();
                             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                             foreach ($result as $row) {
@@ -69,39 +68,26 @@ $id = isset($_GET['id']) ? $_GET['id'] : null;
                                         <b>Specific Location: </b><?php echo $row['detail_location']; ?><br>
                                     </td>
                                     <td>
-                                    <?php
-                                        $sql = "SELECT SUM(shipping_fee + productfee + servicefee) AS total_sum FROM tbl_specialorders WHERE id = ?";
-                                        $statement = $pdo->prepare($sql);
-                                        $statement->execute([$row['id']]);
-                                        $result = $statement->fetch(PDO::FETCH_ASSOC);
+                                        <?php echo $row['paid_amount']; ?>
 
-                                        // Output the sum
-                                        $totalSum = $result['total_sum'];
-                                        echo "ksh." . $totalSum;
 
-                                        // Update the table with the total sum in paymenttobemade column
-                                        $updateSql = "UPDATE tbl_specialorders SET paymenttobemade = ? WHERE id = ?";
-                                        $updateStatement = $pdo->prepare($updateSql);
-                                        $updateStatement->execute([$totalSum, $row['id']]);
-                                        ?>
 
                                     </td>
 
-                                    <td><?php echo $row['shipping_fee']; ?></td>
-                                    <td><?php echo $row['productfee']; ?></td>
-                                    <td><?php echo $row['servicefee']; ?></td>
-                                    <td><?php echo $row['payment_status']; ?></td>
+                                    <td><?php echo $row['supervisor']; ?></td>
+                                    <td><?php echo $row['Designer']; ?></td>
+                                    <td><?php echo $row['order_status']; ?></td>
+
                                     <td>
-                                        <br><br>
+                                        <?php if ($row['supervisor'] == '') : ?>
+                                            <a href="supervisorallocation2.php?id=<?php echo $row['id']; ?>" class="btn btn-info btn-xs">Assign Supervisor</a><br>
+                                        <?php endif; ?>
 
-                                        <?php
-                                        if ($row['paymenttobemade'] == '0') {
-                                        ?>
-                                            <a href="updatepayment.php?id=<?php echo $row['id']; ?>&task=Please Proceed with payment" class="btn btn-success btn-xs">Update Payment</a>
 
-                                        <?php
-                                        }
-                                        ?>
+
+                                        <?php if ($row['Designer'] == '') : ?>
+                                            <a href="technicianallocation2.php?id=<?php echo $row['id']; ?>" class="btn btn-info btn-xs">Assign Designer</a><br>
+                                        <?php endif; ?>
 
                                     </td>
 

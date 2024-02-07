@@ -142,7 +142,7 @@ if($success_message != '') {
 			    <tr>
 			        <th>#</th>
                     <th>Customer</th>
-			        <th>Order Num</th>  
+			        <th>Order detail</th>  
                     <th>Driver Details</th>                
                     <th>Location Details</th>
                     <th>Delivery Status</th>

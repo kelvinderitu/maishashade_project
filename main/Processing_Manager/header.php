@@ -138,11 +138,11 @@ if(!isset($_SESSION['user'])) {
                             <i class="fa fa-sticky-note"></i> <span>completed Task</span>
                         </a>
                     </li>
-					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
+					<!--<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
                         <a href="register\finished.php">
                             <i class="fa fa-sticky-note"></i> <span>All Tasks</span>
                         </a>
-                    </li>
+                    </li>-->
 			      			        <li class="treeview <?php if( ($cur_page == 'faq.php') ) {echo 'active';} ?>">
 			          <a href="register/inbox.php">
 			            <i class="fa fa-envelope"></i> <span>Inbox</span>
