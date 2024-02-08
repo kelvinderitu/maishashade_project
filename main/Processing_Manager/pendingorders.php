@@ -141,19 +141,17 @@ if ($success_message != '') {
                             <tr>
                                 <th>#</th>
                                 <th>Customer</th>
-                                <th>Service </th>
+                                <th>Orders </th>
                                 <th>Booked On </th>
-                                <th>Service Period </th>
-                                <th>Designer</th>
-                                <th>Location Details</th>
-                                <th>toolbox type</th>
+                                <th>Supervisor</th>
                                 <th>Completion Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $i = 0;
-                            $statement = $pdo->prepare("SELECT * FROM tbl_bookings WHERE  technician_status='Pending' and technician='" . $_SESSION['user']['full_name'] . "'");
+                            $statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE supervisor_status='pending' AND supervisor='" . $_SESSION['user']['full_name'] . "' ORDER BY id DESC");
+
                             $statement->execute();
                             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                             foreach ($result as $row) {
@@ -166,33 +164,41 @@ if ($success_message != '') {
                                             } ?>">
                                     <td><?php echo $i; ?></td>
                                     <td>
-                                        <b>Name:</b><br> <?php echo $row['cust_name'] . ' ' . $row['cust_lname']; ?><br>
-                                        <b>Email:</b><br> <?php echo $row['email']; ?><br><br>
+
+                                        <?php
+                                        $statement1 = $pdo->prepare("SELECT * FROM tbl_customer WHERE cust_id=?");
+                                        $statement1->execute(array($row['customer_id']));
+                                        $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
+                                        foreach ($result1 as $row1) {
+                                            echo '<b>Name:</b> ' . $row1['cust_name'] . $row1['cust_lname'];
+                                            echo '<br><b>Phone:</b> ' . $row1['cust_phone'];
+                                            echo '<br><b>email:</b> ' . $row1['cust_email'];
+                                            echo '<br><br>';
+                                        }
+                                        ?>
                                     </td>
 
                                     <td>
                                         <?php
-                                        $statement1 = $pdo->prepare("SELECT * FROM tbl_services WHERE servicename=?");
-                                        $statement1->execute(array($row['service']));
+                                        $statement1 = $pdo->prepare("SELECT * FROM tbl_order WHERE payment_id=?");
+                                        $statement1->execute(array($row['payment_id']));
                                         $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
                                         foreach ($result1 as $row1) {
-                                            echo '<b>Name:</b> ' . $row1['servicename'];
-                                            echo '<br>';
+                                            echo '<b>Product:</b> ' . $row1['product_name'];
+                                            echo '<br><b>Quantity:</b> ' . $row1['quantity'] . 'Pcs';
+                                            echo '<br><b>Unit Price:</b> Ksh ' . $row1['unit_price'] . '';
+                                            echo '<br><br>';
                                         }
                                         ?>
-                                        <b>Duration :</b> <?php echo ($row['duration']); ?><br>
                                     </td>
                                     <td>
-                                        <?php echo ($row['bdate']); ?><br>
+                                        <?php echo ($row['payment_date']); ?><br>
                                     </td>
-                                    <td>
-                                        <b>Start Date :</b> <?php echo ($row['sdate']); ?><br>
-                                        <b>End Date :</b><?php echo ($row['edate']); ?><br>
-                                    </td>
+
                                     <td>
                                         <?php
                                         $statement1 = $pdo->prepare("SELECT * FROM tbl_staff WHERE full_name=?");
-                                        $statement1->execute(array($row['technician']));
+                                        $statement1->execute(array($row['supervisor']));
                                         $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
                                         foreach ($result1 as $row1) {
                                             echo '<b>Name:</b> ' . $row1['full_name'];
@@ -202,13 +208,7 @@ if ($success_message != '') {
                                         ?>
                                     </td>
                                     <td>
-                                        <b>County :</b><?php echo $row['county']; ?><br>
-                                        <b>Location Details :</b><?php echo $row['location']; ?>
-                                    </td>
-                                    <td><?php echo $row['toolbox_type']; ?></td>
-                            
-                                    <td>
-                                        <?php echo $row['technician_status']; ?>
+                                        <?php echo $row['supervisor_status']; ?>
                                         <br><br>
                                         <!DOCTYPE html>
                                         <html>
@@ -243,16 +243,9 @@ if ($success_message != '') {
                                             }
                                     ?>-->
                                         <?php
-                                        if ($row['technician_status'] == 'Pending') {
+                                        if ($row['supervisor_status'] == 'pending') {
                                         ?>
-                                            <a href="delivery-change-status.php?id=<?php echo $row['id']; ?>&task=Complete" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Service Complete</a>
-                                        <?php
-                                        }
-                                        ?>
-                                        <?php
-                                        if ($row['technician_request'] == 'Not Approved') {
-                                        ?>
-                                            <a href="request-status.php?id=<?php echo $row['id']; ?>&task=Requested" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Request Toolbox</a>
+                                            <a href="orderdeliverystatus.php?id=<?php echo $row['id']; ?>&task=Complete" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Service Complete</a>
                                         <?php
                                         }
                                         ?>
@@ -270,23 +263,7 @@ if ($success_message != '') {
 </section>
 
 
-<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Delete Confirmation</h4>
-            </div>
-            <div class="modal-body">
-                Sure you want to delete this item?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-danger btn-ok">Delete</a>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 
 <?php require_once('footer.php'); ?>

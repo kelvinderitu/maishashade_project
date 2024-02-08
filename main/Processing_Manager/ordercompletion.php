@@ -1,4 +1,4 @@
-<?php require_once('header2.php'); ?>
+<?php require_once('header.php'); ?>
 
 <?php
 $error_message = '';
@@ -122,7 +122,7 @@ if ($success_message != '') {
 
 <section class="content-header">
     <div class="content-header-left">
-        <h3>My Pending Task</h3>
+        <h3>Completed order tasks</h3>
     </div>
 </section>
 
@@ -133,7 +133,7 @@ if ($success_message != '') {
         <div class="col-md-12">
 
 
-            <div class="box box-info">
+            <div class="box box-success">
 
                 <div class="box-body table-responsive">
                     <table id="example1" class="table table-bordered table-hover table-striped">
@@ -141,18 +141,17 @@ if ($success_message != '') {
                             <tr>
                                 <th>#</th>
                                 <th>Customer</th>
-                                <th>Service </th>
-                                <th>Booked On </th>
-                                <th>Service Period </th>
+                                <th>Order Task </th>
                                 <th>Supervisor</th>
                                 <th>Location Details</th>
                                 <th>Completion Status</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $i = 0;
-                            $statement = $pdo->prepare("SELECT * FROM tbl_bookings WHERE  supervisor_status='pending' and supervisor='" . $_SESSION['user']['full_name'] . "'");
+                            $statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE  supervisor_status='Complete' and supervisor='" . $_SESSION['user']['full_name'] . "'");
                             $statement->execute();
                             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                             foreach ($result as $row) {
@@ -165,28 +164,32 @@ if ($success_message != '') {
                                             } ?>">
                                     <td><?php echo $i; ?></td>
                                     <td>
-                                        <b>Name:</b><br> <?php echo $row['cust_name'] . ' ' . $row['cust_lname']; ?><br>
-                                        <b>Email:</b><br> <?php echo $row['email']; ?><br><br>
+                                        
+                                        <?php
+                                        $statement1 = $pdo->prepare("SELECT * FROM tbl_customer WHERE cust_id=?");
+                                        $statement1->execute(array($row['customer_id']));
+                                        $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
+                                        foreach ($result1 as $row1) {
+                                            echo '<b>name:</b> ' . $row1['cust_name'] .$row1['cust_lname'];
+                                            echo '<br><b>phone:</b> ' . $row1['cust_phone'];
+                                            echo '<b>Email:</b> ' . $row1['cust_email'];
+                                            echo '<br><br>';
+                                        }
+                                        ?>
                                     </td>
 
                                     <td>
-                                        <?php
-                                        $statement1 = $pdo->prepare("SELECT * FROM tbl_services WHERE servicename=?");
-                                        $statement1->execute(array($row['service']));
+                                    <?php
+                                        $statement1 = $pdo->prepare("SELECT * FROM tbl_order WHERE payment_id=?");
+                                        $statement1->execute(array($row['payment_id']));
                                         $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
                                         foreach ($result1 as $row1) {
-                                            echo '<b>Name:</b> ' . $row1['servicename'];
-                                            echo '<br>';
+                                            echo '<b>Product:</b> ' . $row1['product_name'];
+                                            echo '<br><b>Quantity:</b> ' . $row1['quantity'] . 'Pcs';
+                                            echo '<br><b>Unit Price:</b> Ksh ' . $row1['unit_price'] . '';
+                                            echo '<br><br>';
                                         }
                                         ?>
-                                        <b>Duration :</b> <?php echo ($row['duration']); ?><br>
-                                    </td>
-                                    <td>
-                                        <?php echo ($row['bdate']); ?><br>
-                                    </td>
-                                    <td>
-                                        <b>Start Date :</b> <?php echo ($row['sdate']); ?><br>
-                                        <b>End Date :</b><?php echo ($row['edate']); ?><br>
                                     </td>
                                     <td>
                                         <?php
@@ -201,52 +204,30 @@ if ($success_message != '') {
                                         ?>
                                     </td>
                                     <td>
-                                        <b>County :</b><?php echo $row['county']; ?><br>
-                                        <b>Location Details :</b><?php echo $row['location']; ?>
+                                    <?php
+                                        $statement1 = $pdo->prepare("SELECT * FROM tbl_customer WHERE cust_id=?");
+                                        $statement1->execute(array($row['customer_id']));
+                                        $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
+                                        foreach ($result1 as $row1) {
+                                           
+                                            echo '<b>Location</b> ' . $row1['cust_s_address'];
+                                            
+                                            echo '<br><br>';
+                                        }
+                                        ?>
                                     </td>
                                     <td>
                                         <?php echo $row['supervisor_status']; ?>
                                         <br><br>
-                                        <!DOCTYPE html>
-                                        <html>
-
-                                        <head>
-                                        </head>
-
-                                        <body>
-                                            <?php
-                                            // Check if the button is clicked
-                                            if (isset($_POST['complete'])) {
-                                                // Perform some action when the "Complete" button is clicked
-                                                echo "";
-                                            }
-                                            ?>
-
-                                            <!--<form method="post">
-        Your content here
-        
-        The "Complete" button 
-        <input type="submit" name="complete" value="Complete">
-    </form>-->
-                                        </body>
-
-                                        </html>
-
-                                        <!--<?php
-                                            if ($row['lndsize'] == '0') {
-                                            ?>
-                                    <a href="quotations.php?id=<?php echo $row['id']; ?>" class="btn btn-danger btn-md" >Add Report</a>
-                                    <?php
-                                            }
-                                    ?>-->
                                         <?php
                                         if ($row['supervisor_status'] == 'Pending') {
                                         ?>
-                                            <a href="delivery-change-status.php?id=<?php echo $row['id']; ?>&task=Complete" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Service Complete</a>
+                                            <a href="delivery-change-status.php?id=<?php echo $row['id']; ?>&task=Complete" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Service Delivered</a>
                                         <?php
                                         }
                                         ?>
                                     </td>
+                                   
                                 </tr>
                             <?php
                             }

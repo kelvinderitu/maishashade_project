@@ -173,7 +173,7 @@ if($success_message != '') {
                         <tbody>
                             <?php
                             $i=0;
-                            $statement = $pdo->prepare("SELECT * FROM tbl_bookings WHERE technician_request=''");
+                            $statement = $pdo->prepare("SELECT * FROM tbl_bookings WHERE technician_request='Requested'");
                             $statement->execute();
                             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
@@ -186,20 +186,15 @@ if($success_message != '') {
                                     <td>
                                         <?php echo $row['technician_request']; ?><br><br>
                                         <?php
-                                        if($row['technician_request']=='') {
+                                        if($row['technician_request']=='Requested') {
                                         ?>
                                             <a href="request-status.php?id=<?php echo $row['id']; ?>&task=submitted" class="btn btn-success btn-xs" style="width:50%;margin-bottom:4px;">Approve</a>
                                         <?php
-                                            // Update quantity when Approve button is clicked
-                                            $toolbox_name = $row['toolbox_name'];
-                                            $updateToolbox = $pdo->prepare("UPDATE tbl_request_toolbox SET quantity = quantity - 1 WHERE toolbox_name = ?");
-                                            $updateToolbox->execute(array($toolbox_name));
-                                        }
-                                        ?>
+                                       ?>
                                     </td>
                                 </tr>
                             <?php
-                            }
+                            }}
                             ?>
                         </tbody>
                     </table>

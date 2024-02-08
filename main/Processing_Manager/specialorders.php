@@ -140,59 +140,52 @@ if ($success_message != '') {
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Customer</th>
-                                <th>Service </th>
-                                <th>Booked On </th>
-                                <th>Service Period </th>
-                                <th>Designer</th>
-                                <th>Location Details</th>
-                                <th>toolbox type</th>
-                                <th>Completion Status</th>
+                                <th>Customer Details</th>
+                                <th>Product Image</th>                               
+                                <th>Product details</th>
+                                <th>Location</th>
+                                <th>Supervisor Details</th>
+                                <th>Delivery Status</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $i = 0;
-                            $statement = $pdo->prepare("SELECT * FROM tbl_bookings WHERE  technician_status='Pending' and technician='" . $_SESSION['user']['full_name'] . "'");
+                            $statement = $pdo->prepare("SELECT * FROM tbl_specialorders WHERE  supervisor_status='pending' and supervisor='" . $_SESSION['user']['full_name'] . "'");
                             $statement->execute();
                             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                             foreach ($result as $row) {
                                 $i++;
                             ?>
-                                <tr class="<?php if ($row['payment_status'] == 'Pending') {
+                                <tr class="<?php if ($row['payment_status'] == 'pending') {
                                                 echo 'bg-r';
                                             } else {
                                                 echo 'bg-g';
                                             } ?>">
                                     <td><?php echo $i; ?></td>
                                     <td>
-                                        <b>Name:</b><br> <?php echo $row['cust_name'] . ' ' . $row['cust_lname']; ?><br>
-                                        <b>Email:</b><br> <?php echo $row['email']; ?><br><br>
+                                        <b>Name:</b><br> <?php echo $row['customer_fullName']; ?><br>
+                                        <b>Email:</b><br> <?php echo $row['customer_email']; ?><br><br>
                                     </td>
+                                    <td><img src="../services/uploads/<?php echo $row['image']; ?>" style="width: 200px;"></td>
+                                    <td>
+                                        <?php echo $row['product details']; ?>
+                                        Date Of Order:<?php echo $row['payment_date']?>
+                                
+                                
+                                </td>
 
                                     <td>
-                                        <?php
-                                        $statement1 = $pdo->prepare("SELECT * FROM tbl_services WHERE servicename=?");
-                                        $statement1->execute(array($row['service']));
-                                        $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
-                                        foreach ($result1 as $row1) {
-                                            echo '<b>Name:</b> ' . $row1['servicename'];
-                                            echo '<br>';
-                                        }
-                                        ?>
-                                        <b>Duration :</b> <?php echo ($row['duration']); ?><br>
+                                        <b>County: </b><?php echo $row['county']; ?><br>
+                                        <b>Specific Location: </b><?php echo $row['detail_location']; ?><br>
                                     </td>
-                                    <td>
-                                        <?php echo ($row['bdate']); ?><br>
-                                    </td>
-                                    <td>
-                                        <b>Start Date :</b> <?php echo ($row['sdate']); ?><br>
-                                        <b>End Date :</b><?php echo ($row['edate']); ?><br>
-                                    </td>
+                                    
+                                   
                                     <td>
                                         <?php
                                         $statement1 = $pdo->prepare("SELECT * FROM tbl_staff WHERE full_name=?");
-                                        $statement1->execute(array($row['technician']));
+                                        $statement1->execute(array($row['supervisor']));
                                         $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
                                         foreach ($result1 as $row1) {
                                             echo '<b>Name:</b> ' . $row1['full_name'];
@@ -202,13 +195,12 @@ if ($success_message != '') {
                                         ?>
                                     </td>
                                     <td>
-                                        <b>County :</b><?php echo $row['county']; ?><br>
-                                        <b>Location Details :</b><?php echo $row['location']; ?>
+                                        <?php echo $row['shipping_status']; ?>
+                                        <br><br>
+
                                     </td>
-                                    <td><?php echo $row['toolbox_type']; ?></td>
-                            
                                     <td>
-                                        <?php echo $row['technician_status']; ?>
+                                        <?php echo $row['supervisor_status']; ?>
                                         <br><br>
                                         <!DOCTYPE html>
                                         <html>
@@ -243,16 +235,9 @@ if ($success_message != '') {
                                             }
                                     ?>-->
                                         <?php
-                                        if ($row['technician_status'] == 'Pending') {
+                                        if ($row['supervisor_status'] == 'pending') {
                                         ?>
-                                            <a href="delivery-change-status.php?id=<?php echo $row['id']; ?>&task=Complete" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Service Complete</a>
-                                        <?php
-                                        }
-                                        ?>
-                                        <?php
-                                        if ($row['technician_request'] == 'Not Approved') {
-                                        ?>
-                                            <a href="request-status.php?id=<?php echo $row['id']; ?>&task=Requested" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Request Toolbox</a>
+                                            <a href="special-delivery-change-status.php?id=<?php echo $row['id']; ?>&task=Complete" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Service Complete</a>
                                         <?php
                                         }
                                         ?>

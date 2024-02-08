@@ -129,22 +129,43 @@ if(!isset($_SESSION['user'])) {
                         </a>
                     </li>-->
 					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
-                        <a href="register/Request2.php">
+                        <a href="Request2.php">
                             <i class="fa fa-sticky-note"></i> <span>Pending  services Task</span>
                         </a>
                     </li>
 					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
-                        <a href="register/requestedmat.php">
-                            <i class="fa fa-sticky-note"></i> <span>completed Task</span>
+                        <a href="specialorders.php">
+                            <i class="fa fa-sticky-note"></i> <span>Pending  Special Orders Tasks</span>
                         </a>
                     </li>
+					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
+                        <a href="pendingorders.php">
+                            <i class="fa fa-sticky-note"></i> <span>Pending  order Tasks</span>
+                        </a>
+                    </li>
+					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
+                        <a href="ordercompletion.php">
+                            <i class="fa fa-sticky-note"></i> <span>completed  order Tasks</span>
+                        </a>
+                    </li>
+					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
+                        <a href="requestedmat.php">
+                            <i class="fa fa-sticky-note"></i> <span>completed Service Tasks</span>
+                        </a>
+                    </li>
+					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
+                        <a href="completespecialorders.php">
+                            <i class="fa fa-sticky-note"></i> <span>completed Special Orders Tasks</span>
+                        </a>
+                    </li>
+					
 					<!--<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
                         <a href="register\finished.php">
                             <i class="fa fa-sticky-note"></i> <span>All Tasks</span>
                         </a>
                     </li>-->
 			      			        <li class="treeview <?php if( ($cur_page == 'faq.php') ) {echo 'active';} ?>">
-			          <a href="register/inbox.php">
+			          <a href="inbox.php">
 			            <i class="fa fa-envelope"></i> <span>Inbox</span>
 			          </a>
 			        </li>

@@ -1,4 +1,4 @@
-<?php require_once('header2.php'); ?>
+<?php require_once('header.php'); ?>
 
 <?php
 $error_message = '';
@@ -140,114 +140,89 @@ if ($success_message != '') {
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Customer</th>
-                                <th>Orders </th>
-                                <th>Booked On </th>
-                                <th>Supervisor</th>
-                                <th>Completion Status</th>
+                                <th>Customer Details</th>
+                                <th>Product Image</th>
+                                <th>Product details</th>
+                                <th>Location</th>
+                                <th>Designer Details</th>
+                                <th>Delivery Status</th>
+                                <th>ToolBox</th>
+                                <th>Completion Status</th>                                
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $i = 0;
-                            $statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE supervisor_status='pending' AND supervisor='" . $_SESSION['user']['full_name'] . "' ORDER BY id DESC");
-
+                            $statement = $pdo->prepare("SELECT * FROM tbl_specialorders WHERE  designer_status='pending' and Designer='" . $_SESSION['user']['full_name'] . "'");
                             $statement->execute();
                             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                             foreach ($result as $row) {
                                 $i++;
                             ?>
-                                <tr class="<?php if ($row['payment_status'] == 'Pending') {
+                                <tr class="<?php if ($row['payment_status'] == 'pending') {
                                                 echo 'bg-r';
                                             } else {
                                                 echo 'bg-g';
                                             } ?>">
                                     <td><?php echo $i; ?></td>
                                     <td>
+                                        <b>Name:</b><br> <?php echo $row['customer_fullName']; ?><br>
+                                        <b>Email:</b><br> <?php echo $row['customer_email']; ?><br><br>
+                                    </td>
+                                    <td><img src="../services/uploads/<?php echo $row['image']; ?>" style="width: 200px;"></td>
+                                    <td>
+                                        <?php echo $row['product details']; ?>
+                                        Date Of Order:<?php echo $row['payment_date'] ?>
 
-                                        <?php
-                                        $statement1 = $pdo->prepare("SELECT * FROM tbl_customer WHERE cust_id=?");
-                                        $statement1->execute(array($row['customer_id']));
-                                        $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
-                                        foreach ($result1 as $row1) {
-                                            echo '<b>Name:</b> ' . $row1['cust_name'] . $row1['cust_lname'];
-                                            echo '<br><b>Phone:</b> ' . $row1['cust_phone'];
-                                            echo '<br><b>email:</b> ' . $row1['cust_email'];
-                                            echo '<br><br>';
-                                        }
-                                        ?>
+
                                     </td>
 
                                     <td>
-                                        <?php
-                                        $statement1 = $pdo->prepare("SELECT * FROM tbl_order WHERE payment_id=?");
-                                        $statement1->execute(array($row['payment_id']));
-                                        $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
-                                        foreach ($result1 as $row1) {
-                                            echo '<b>Product:</b> ' . $row1['product_name'];
-                                            echo '<br><b>Quantity:</b> ' . $row1['quantity'] . 'Pcs';
-                                            echo '<br><b>Unit Price:</b> Ksh ' . $row1['unit_price'] . '';
-                                            echo '<br><br>';
-                                        }
-                                        ?>
+                                        <b>County: </b><?php echo $row['county']; ?><br>
+                                        <b>Specific Location: </b><?php echo $row['detail_location']; ?><br>
                                     </td>
-                                    <td>
-                                        <?php echo ($row['payment_date']); ?><br>
-                                    </td>
+
 
                                     <td>
                                         <?php
                                         $statement1 = $pdo->prepare("SELECT * FROM tbl_staff WHERE full_name=?");
-                                        $statement1->execute(array($row['supervisor']));
+                                        $statement1->execute(array($row['Designer']));
                                         $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
                                         foreach ($result1 as $row1) {
                                             echo '<b>Name:</b> ' . $row1['full_name'];
                                             echo '<br><b>Phone:</b> ' . $row1['phone'];
                                             echo '<br><br>';
                                         }
+
+
                                         ?>
+                                        
                                     </td>
                                     <td>
-                                        <?php echo $row['supervisor_status']; ?>
+                                        <?php echo $row['shipping_status']; ?>
                                         <br><br>
-                                        <!DOCTYPE html>
-                                        <html>
 
-                                        <head>
-                                        </head>
-
-                                        <body>
-                                            <?php
-                                            // Check if the button is clicked
-                                            if (isset($_POST['complete'])) {
-                                                // Perform some action when the "Complete" button is clicked
-                                                echo "";
-                                            }
-                                            ?>
-
-                                            <!--<form method="post">
-        Your content here
-        
-        The "Complete" button 
-        <input type="submit" name="complete" value="Complete">
-    </form>-->
-                                        </body>
-
-                                        </html>
-
-                                        <!--<?php
-                                            if ($row['lndsize'] == '0') {
-                                            ?>
-                                    <a href="quotations.php?id=<?php echo $row['id']; ?>" class="btn btn-danger btn-md" >Add Report</a>
-                                    <?php
-                                            }
-                                    ?>-->
+                                    </td>
+                                    <td><?php echo $row['toolbox_type'] ?></td>
+                                    <td><?php echo $row['designer_status'] ?></td>
+                                    <td>
+                                        
+                                        
                                         <?php
-                                        if ($row['supervisor_status'] == 'pending') {
+                                        if ($row['designer_status'] == 'pending') {
                                         ?>
-                                            <a href="orderdeliverystatus.php?id=<?php echo $row['id']; ?>&task=Complete" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Service Complete</a>
+                                            <a href="special-delivery-change-status.php?id=<?php echo $row['id']; ?>&task=Complete" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Service Complete</a>
                                         <?php
                                         }
+                                        ?>
+                                        <?php
+                                        if ($row['designer_request'] == 'pending') {
+                                            ?>
+                                                <a href="specialtoolbox.php?id=<?php echo $row['id']; ?>&task=Requested" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Request Toolbox</a>
+                                            <?php
+                                            }
+
                                         ?>
                                     </td>
                                 </tr>
@@ -263,7 +238,23 @@ if ($success_message != '') {
 </section>
 
 
-
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Delete Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                Sure you want to delete this item?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-danger btn-ok">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <?php require_once('footer.php'); ?>

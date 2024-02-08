@@ -144,16 +144,15 @@ if ($success_message != '') {
                                 <th>Service </th>
                                 <th>Booked On </th>
                                 <th>Service Period </th>
-                                <th>Designer</th>
+                                <th>Supervisor</th>
                                 <th>Location Details</th>
-                                <th>toolbox type</th>
                                 <th>Completion Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $i = 0;
-                            $statement = $pdo->prepare("SELECT * FROM tbl_bookings WHERE  technician_status='Pending' and technician='" . $_SESSION['user']['full_name'] . "'");
+                            $statement = $pdo->prepare("SELECT * FROM tbl_bookings WHERE  supervisor_status='pending' and supervisor='" . $_SESSION['user']['full_name'] . "'");
                             $statement->execute();
                             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                             foreach ($result as $row) {
@@ -192,7 +191,7 @@ if ($success_message != '') {
                                     <td>
                                         <?php
                                         $statement1 = $pdo->prepare("SELECT * FROM tbl_staff WHERE full_name=?");
-                                        $statement1->execute(array($row['technician']));
+                                        $statement1->execute(array($row['supervisor']));
                                         $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
                                         foreach ($result1 as $row1) {
                                             echo '<b>Name:</b> ' . $row1['full_name'];
@@ -205,10 +204,8 @@ if ($success_message != '') {
                                         <b>County :</b><?php echo $row['county']; ?><br>
                                         <b>Location Details :</b><?php echo $row['location']; ?>
                                     </td>
-                                    <td><?php echo $row['toolbox_type']; ?></td>
-                            
                                     <td>
-                                        <?php echo $row['technician_status']; ?>
+                                        <?php echo $row['supervisor_status']; ?>
                                         <br><br>
                                         <!DOCTYPE html>
                                         <html>
@@ -243,16 +240,9 @@ if ($success_message != '') {
                                             }
                                     ?>-->
                                         <?php
-                                        if ($row['technician_status'] == 'Pending') {
+                                        if ($row['supervisor_status'] == 'Pending') {
                                         ?>
                                             <a href="delivery-change-status.php?id=<?php echo $row['id']; ?>&task=Complete" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Service Complete</a>
-                                        <?php
-                                        }
-                                        ?>
-                                        <?php
-                                        if ($row['technician_request'] == 'Not Approved') {
-                                        ?>
-                                            <a href="request-status.php?id=<?php echo $row['id']; ?>&task=Requested" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Request Toolbox</a>
                                         <?php
                                         }
                                         ?>

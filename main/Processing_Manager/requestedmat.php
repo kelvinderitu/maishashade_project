@@ -1,4 +1,4 @@
-<?php require_once('header1.php'); ?>
+<?php require_once('header.php'); ?>
 
 <?php
 $error_message = '';
@@ -34,7 +34,7 @@ if(isset($_POST['form1'])) {
         }
 
         $order_detail = '';
-        $statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE payment_id=?");
+        $statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE payment_id=? AND payment_status='Pending'");
         $statement->execute(array($_POST['payment_id']));
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);                            
         foreach ($result as $row) {
@@ -123,71 +123,88 @@ if($success_message != '') {
 
 <section class="content-header">
 	<div class="content-header-left">
-		<center><h4>MESSAGES</h4></center>
+		<h3>Completed Task</h3>
 	</div>
 </section>
-<div class="container">
-<button><a href="../index.php"><font color="black">Back</font></a></button>
-</div>
+
 
 <section class="content">
 
   <div class="row">
     <div class="col-md-12">
-      <div class="box box-danger">
+
+
+      <div class="box box-success">
         
-        <div class="box-body table-responsive table-bordered">
+        <div class="box-body table-responsive">
           <table id="example1" class="table table-bordered table-hover table-striped">
-          <div class="container">
-    <button class="btn btn-sm btn-primary"><a href="sendmsg.php"><font color="white"><i class="fa fa-edit"></i>&nbsp;Compose New</font></a></button>
-</div><br>
 			<thead>
 			    <tr>
 			        <th>#</th>
-                    <th>Messages</th>
+                    <th>Customer</th>
+			        <th>Service </th>  
+                    <th>Supervisor</th>                
+                    <th>Location Details</th>
+                    <th>Completion Status</th>
+                    <th>customer Remark</th>
 			    </tr>
 			</thead>
             <tbody>
-            	<?php
+            <?php
             	$i=0;
-            	$statement = $pdo->prepare("SELECT * FROM `tbmessages` where user_id='".$_SESSION['user']['id']."' or  recepient='".$_SESSION['user']['id']."' ");
+            	$statement = $pdo->prepare("SELECT * FROM tbl_bookings WHERE  supervisor_status='Complete' and supervisor='".$_SESSION['user']['full_name']."'");
             	$statement->execute();
             	$result = $statement->fetchAll(PDO::FETCH_ASSOC);							
             	foreach ($result as $row) {
             		$i++;
             		?>
-                    
-					<tr>
+					<tr class="<?php if($row['payment_status']=='Pending'){echo 'bg-r';}else{echo 'bg-g';} ?>">
 	                    <td><?php echo $i; ?></td>
                         <td>
-                        <b> Message :</b><?php echo $row['message']; ?><br>
-                        <b> Date :</b><?php echo $row['date']; ?><br>
-                       
+    <b>Name:</b><br> <?php echo $row['cust_name'] . ' ' . $row['cust_lname']; ?><br>
+    <b>Email:</b><br> <?php echo $row['email']; ?><br><br>
+</td>
+
+                        <td>
+                           <?php
+                           $statement1 = $pdo->prepare("SELECT * FROM tbl_services WHERE servicename=?");
+                           $statement1->execute(array($row['service']));
+                           $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
+                           foreach ($result1 as $row1) {
+                                echo '<b>service:</b> '.$row1['servicename'];
+                                echo '<br><br>';
+                           }
+                           ?>
+                        </td>
+                        <td>
                         <?php
-                           $statement1 = $pdo->prepare("SELECT * FROM tbl_customer WHERE cust_id=?");
-                           $statement1->execute(array($row['user_id']));
+                           $statement1 = $pdo->prepare("SELECT * FROM tbl_staff WHERE full_name=?");
+                           $statement1->execute(array($row['supervisor']));
                            $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
                            foreach ($result1 as $row1) {
-                            
-                            echo '<b>Sender :</b>'.$row1['cust_name'] .$row1['cust_lname'];
+                                echo '<b>Name:</b> '.$row1['full_name'];
+                                echo '<br><b>Phone:</b> '.$row1['phone'];
+                                echo '<br><br>';
                            }
                            ?>
-                          <?php
-                           $statement1 = $pdo->prepare("SELECT * FROM tbl_customer WHERE cust_id=?");
-                           $statement1->execute(array($row['recepient']));
-                           $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
-                           foreach ($result1 as $row1) {
-                                echo ' <b>Recepient :</b>'.$row1['cust_name'] .$row1['cust_lname'];
-                           }
-                           ?>
-                              <?php
-                                if($row['fname']!==''){
+                    </td>
+                        <td>  
+                             <b>County :</b><?php echo $row['county']; ?><br>
+                        <b>Location Details :</b><?php echo $row['location']; ?>
+                        </td>
+                        <td>
+                            <?php echo $row['supervisor_status']; ?>
+                            <br><br>
+                            <?php
+                            if($row['supervisor_status']=='Pending') {
                                     ?>
-                                     <a href="reply.php?id=<?php echo $row['id']; ?>" class="btn btn-danger btn-exsm">Reply</a>
+                                    <a href="delivery-change-status.php?id=<?php echo $row['id']; ?>&task=Complete" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Service Delivered</a>
                                     <?php
-                                }
+                            }
                             ?>
-                          
+                        </td>
+                        <td>
+                        <?php echo $row['cust_remark']; ?>
                         </td>
 	                </tr>
             		<?php
@@ -201,3 +218,24 @@ if($success_message != '') {
 
 </section>
 
+
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Delete Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                Sure you want to delete this item?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-danger btn-ok">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<?php require_once('footer.php'); ?>
