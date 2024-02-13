@@ -265,7 +265,7 @@ if ($success_message != '') {
                                         <?php
                                         if ($row['materials'] == '') {
                                         ?>
-                                            <a href="requestmaterial.php?id=<?php echo $row['id']; ?>" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Request Materials</a>
+                                            <a href="materials.php?id=<?php echo $row['id']; ?>&task=pending" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Request Materials</a>
                                         <?php
                                         }
                                         ?>

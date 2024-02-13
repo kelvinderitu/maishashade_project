@@ -34,7 +34,7 @@ if (isset($_POST['form1'])) {
         }
 
         $order_detail = '';
-        $statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE payment_id=? AND payment_status='Pending'");
+        $statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE payment_id=?");
         $statement->execute(array($_POST['payment_id']));
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         foreach ($result as $row) {
@@ -122,7 +122,7 @@ if ($success_message != '') {
 
 <section class="content-header">
     <div class="content-header-left">
-        <h3>My Pending Task</h3>
+        <h3>ORDERS MATERIALS REQUEST</h3>
     </div>
 </section>
 
@@ -133,105 +133,81 @@ if ($success_message != '') {
         <div class="col-md-12">
 
 
-            <div class="box box-info">
+            <div class="box box-success">
 
                 <div class="box-body table-responsive">
                     <table id="example1" class="table table-bordered table-hover table-striped">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Customer Details</th>
-                                <th>Product Image</th>
-                                <th>Product details</th>
-                                <th>Location</th>
-                                <th>Designer Details</th>
-                                <th>Delivery Status</th>
-                                <th>ToolBox</th>
-                                <th>Completion Status</th>                                
+                                <th>Customer name</th>
+                                <th>Technician Details</th>
+                                <th>Materials</th>
+                                <th>
+                                    Current Quantity
+                                </th>
+                                <th>Requested Quantity</th>
+
                                 <th>Action</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $i = 0;
-                            $statement = $pdo->prepare("SELECT * FROM tbl_specialorders WHERE  designer_status='pending' and Designer='" . $_SESSION['user']['full_name'] . "'");
+                            $statement = $pdo->prepare("SELECT * FROM tbl_requestedmaterials ORDER by id DESC");
                             $statement->execute();
                             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                             foreach ($result as $row) {
                                 $i++;
                             ?>
-                                <tr class="<?php if ($row['payment_status'] == 'pending') {
-                                                echo 'bg-r';
-                                            } else {
-                                                echo 'bg-g';
-                                            } ?>">
+                                <tr>
                                     <td><?php echo $i; ?></td>
                                     <td>
-                                        <b>Name:</b><br> <?php echo $row['customer_fullName']; ?><br>
-                                        <b>Email:</b><br> <?php echo $row['customer_email']; ?><br><br>
-                                    </td>
-                                    <td><img src="../services/uploads/<?php echo $row['image']; ?>" style="width: 200px;"></td>
-                                    <td>
-                                        <?php echo $row['product details']; ?>
-                                        Date Of Order:<?php echo $row['payment_date'] ?>
-
-
-                                    </td>
-
-                                    <td>
-                                        <b>County: </b><?php echo $row['county']; ?><br>
-                                        <b>Specific Location: </b><?php echo $row['detail_location']; ?><br>
-                                    </td>
-
-
-                                    <td>
-                                        <?php
-                                        $statement1 = $pdo->prepare("SELECT * FROM tbl_staff WHERE full_name=?");
-                                        $statement1->execute(array($row['Designer']));
-                                        $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
-                                        foreach ($result1 as $row1) {
-                                            echo '<b>Name:</b> ' . $row1['full_name'];
-                                            echo '<br><b>Phone:</b> ' . $row1['phone'];
-                                            echo '<br><br>';
-                                        }
-
-
-                                        ?>
-                                        
+                                        <?php echo $row['customer_name']; ?>
                                     </td>
                                     <td>
-                                        <?php echo $row['shipping_status']; ?>
+                                        <b>name:</b><?php echo $row['technician_name']; ?><br>
+                                        <b>email: </b><?php echo $row['technician_email']; ?><br>
+                                        <b>phone:</b> <?php echo $row['technician_phone']; ?><br>
+                                    </td>
+                                    <td>
+                                        <?php echo $row['Materials']; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row['current_quantity']; ?>
+
+                                    </td>
+                                    <td>
+                                        <?php echo $row['Quantity']; ?>
+                                    </td>
+                                    
+                                    
+                                    <td>
+                                        <?php echo $row['status']; ?>
                                         <br><br>
-
-                                    </td>
-                                    <td><?php echo $row['toolbox_type'] ?></td>
-                                    <td><?php echo $row['designer_status'] ?></td>
-                                    <td>
-                                        
+                                       
                                         
                                         <?php
-                                        if ($row['designer_status'] == 'pending') {
+                                        if ($row['status'] == 'pending') {
+                                            
                                         ?>
-                                            <a href="special-delivery-change-status.php?id=<?php echo $row['id']; ?>&task=Complete" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Service Complete</a>
+                                                <a href="orderrejected.php?id=<?php echo $row['id']; ?>&task=Rejected" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Reject</a>
                                         <?php
+                                            
                                         }
-                                        ?>
+                                        ?><br>
                                         <?php
-                                        if ($row['designer_request'] == 'pending') {
-                                            ?>
-                                                <a href="specialtoolbox.php?id=<?php echo $row['id']; ?>&task=Requested" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Request Toolbox</a>
-                                            <?php
-                                            }
-
+                                        if ($row['status'] == 'pending') {
+                                            
                                         ?>
-                                         <?php
-                                        if ($row['Materials'] == '') {
-                                        ?>
-                                            <a href="specialordermaterials.php?id=<?php echo $row['id']; ?>&task=pending" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Request Materials</a>
+                                                <a href="approvedmaterials.php?id=<?php echo $row['id']; ?>&task=Approved" class="btn btn-primary btn-xs" style="width:100%;margin-bottom:4px;">Approve</a>
                                         <?php
+                                            
                                         }
                                         ?>
                                     </td>
+                                    
                                 </tr>
                             <?php
                             }

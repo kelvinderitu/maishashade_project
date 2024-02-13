@@ -142,7 +142,7 @@ if ($success_message != '') {
                         <tbody>
                             <?php
                             $i = 0;
-                            $statement = $pdo->prepare("SELECT * FROM tbl_bookings WHERE technician_request='submitted'");
+                            $statement = $pdo->prepare("SELECT * FROM tbl_bookings WHERE technician_request='returned'");
                             $statement->execute();
                             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 

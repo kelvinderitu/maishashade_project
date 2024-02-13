@@ -154,6 +154,23 @@ if(!isset($_SESSION['user'])) {
                             <i class="fa fa-shopping-bag"></i> <span>Product Management</span>
                         </a>
                     </li>
+					<li class="treeview <?php if( ($cur_page == 'size.php') || ($cur_page == 'size-add.php') || ($cur_page == 'size-edit.php') || ($cur_page == 'color.php') || ($cur_page == 'color-add.php') || ($cur_page == 'color-edit.php') || ($cur_page == 'country.php') || ($cur_page == 'country-add.php') || ($cur_page == 'country-edit.php') || ($cur_page == 'shipping-cost.php') || ($cur_page == 'shipping-cost-edit.php') || ($cur_page == 'top-category.php') || ($cur_page == 'top-category-add.php') || ($cur_page == 'top-category-edit.php') || ($cur_page == 'mid-category.php') || ($cur_page == 'mid-category-add.php') || ($cur_page == 'mid-category-edit.php') || ($cur_page == 'end-category.php') || ($cur_page == 'end-category-add.php') || ($cur_page == 'end-category-edit.php') ) {echo 'active';} ?>">
+                        <a href="#">
+                            <i class="fa fa-cogs"></i>
+                            <span>Technician Requests</span>
+                            <span class="pull-right-container">
+								<i class="fa fa-angle-left pull-right"></i>
+							</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <!--<li><a href="size.php"><i class="fa fa-circle-o"></i> Size</a></li>
+                            <li><a href="color.php"><i class="fa fa-circle-o"></i> Color</a></li>-->
+                            <li><a href="bookingrequests.php"><i class="fa fa-circle-o"></i> order materials requests</a></li>
+                            <li><a href="servicematerials.php"><i class="fa fa-circle-o"></i> Service materials Requests</a></li>
+                            <li><a href="specialordermaterials.php"><i class="fa fa-circle-o"></i>Special Order materials Requests</a></li>
+                            
+                        </ul>
+                    </li>
 
 
                     <li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
@@ -163,12 +180,17 @@ if(!isset($_SESSION['user'])) {
                     </li>
 					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
                         <a href="register1/RequestProduct.php">
-                            <i class="fa fa-sticky-note"></i> <span>Request Product</span>
+                            <i class="fa fa-sticky-note"></i> <span>Request Materials</span>
                         </a>
                     </li>
 					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
                         <a href="productsupplies.php">
-                            <i class="fa fa-sticky-note"></i> <span>Requested Products</span>
+                            <i class="fa fa-sticky-note"></i> <span>Requested Materials</span>
+                        </a>
+                    </li>
+                    <li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
+                        <a href="productavailable.php">
+                            <i class="fa fa-sticky-note"></i> <span>Available Materials</span>
                         </a>
                     </li>
 					<!--<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
