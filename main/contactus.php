@@ -20,7 +20,7 @@ $query->execute();
 $lastInsertId = $dbh->lastInsertId();
 if($lastInsertId)
 {
-$msg="Message Sent, Thankyou for contacting Harrow Lighting East Africa Limited.";
+$msg="Message Sent, Thankyou for contacting Maisha car parking shades and carports limited.";
 }
 else 
 {
