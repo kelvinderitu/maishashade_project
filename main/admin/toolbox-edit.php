@@ -23,11 +23,11 @@ if(isset($_POST['form1'])) {
         							
         							$_REQUEST['id']
         						));
-        }
+        
 		
 
 	
-    	$success_message = 'Product is updated successfully.';
+    	$success_message = 'Product is updated successfully.';}
     
 
 ?>
