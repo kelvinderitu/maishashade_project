@@ -131,7 +131,7 @@ if (isset($_POST['send'])) {
             <div class="col-lg-8 mb-4">
 
                 <center>
-                    <h5><b>REQUEST PRODUCT :</b></h5>
+                    <h5><b>REQUEST MATERIALS :</b></h5>
                 </center>
 
                 <?php if ($error) { ?><div class="errorWrap"><strong>ERROR</strong>:<?php echo htmlentities($error); ?> </div><?php } else if ($msg) { ?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?> </div><?php } ?>

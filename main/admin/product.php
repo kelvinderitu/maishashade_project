@@ -22,7 +22,7 @@
 								<th width="160">Product Name</th>
 								<th width="60">Old Price</th>
 								<th width="60">(Current) Price</th>
-								<th>Quantity</th>
+								
 							    <th>Featured?</th>
 								<th>Active?</th>
 								<th>Category</th>
@@ -74,7 +74,7 @@
 									<td><?php echo $row['p_name']; ?></td>
 									<td>Ksh<?php echo $row['p_old_price']; ?></td>
 									<td>Ksh<?php echo $row['p_current_price']; ?></td>
-									<td><?php echo $row['p_qty']; ?></td>
+									
 									
 									<td>
 										<?php if($row['p_is_featured'] == 1) {echo '<span class="badge badge-success" style="background-color:green;">Yes</span>';} else {echo '<span class="badge badge-success" style="background-color:red;">No</span>';} ?>
@@ -84,7 +84,7 @@
 									</td>
 									<td><?php echo $row['tcat_name']; ?><br><?php echo $row['mcat_name']; ?><br><?php echo $row['ecat_name']; ?></td>
 									<td>	
-									<a href="product-update.php?id=<?php echo $row['p_id']; ?>" class="btn btn-success btn-xs">Add Qty</a>									
+									<!--<a href="product-update.php?id=<?php echo $row['p_id']; ?>" class="btn btn-success btn-xs">Add Qty</a>-->									
 										<a href="product-edit.php?id=<?php echo $row['p_id']; ?>" class="btn btn-primary btn-xs">Edit</a>
 										<a href="#" class="btn btn-danger btn-xs" data-href="product-delete.php?id=<?php echo $row['p_id']; ?>" data-toggle="modal" data-target="#confirm-delete">Delete</a>  
 									</td>

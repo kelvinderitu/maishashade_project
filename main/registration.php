@@ -150,6 +150,8 @@ if (isset($_POST['form1'])) {
         unset($_POST['cust_phone']);
         unset($_POST['cust_address']);
 
+        header("location:index.php");
+
         $success_message = 'Registration Was Successfully, Please Wait for Account approval';
     }
 }

@@ -17,18 +17,18 @@ if (!$request) {
 }
 
 // Check if the product already exists in the store
-$up = $pdo->prepare("SELECT * FROM tbl_product WHERE p_name=?");
+$up = $pdo->prepare("SELECT * FROM tbl_material WHERE p_name=?");
 $up->execute(array($p_name));
 $product = $up->fetch(PDO::FETCH_ASSOC);
 
 if ($product) {
     // Product exists, update the quantity
-    $p_qty = $product['p_qty'] + $request['quantity'];
-    $up = $pdo->prepare("UPDATE tbl_product SET p_qty=? WHERE p_name=?");
+    $p_qty = $product['qty'] + $request['quantity'];
+    $up = $pdo->prepare("UPDATE tbl_material SET qty=? WHERE p_name=?");
     $up->execute(array($p_qty, $p_name));
 } else {
     // Product doesn't exist, insert a new row
-	$insert = $pdo->prepare("INSERT INTO tbl_product ( p_name, qty,supplier) VALUES ( ?, ?,?)");
+	$insert = $pdo->prepare("INSERT INTO tbl_material ( p_name, qty,supplier) VALUES ( ?, ?,?)");
 	$insert->execute(array( $p_name, $request['quantity'], $request['supplier']));
 	
 }

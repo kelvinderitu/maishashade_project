@@ -138,6 +138,17 @@ if(!isset($_SESSION['login_username'])) {
 							<li><a href="inactivestaff.php"><i class="fa fa-user"></i>Staff</a></li>
 						</ul>
 					</li>
+					<li class="treeview">
+						<a href="#"><i class="fa fa-users"></i> <span>Rejected Users</span>
+							<span class="pull-right-container">
+								<i class="fa fa-angle-left pull-right"></i>
+							</span>
+						</a>
+						<ul class="treeview-menu">
+							<li><a href="rejectedcustomers.php"><i class="fa fa-user"></i>Customer</a></li>
+							
+						</ul>
+					</li>
 					<div class="container">
 						<font color="white"><i class="fa fa-plus"></i>&nbsp;ADD USERS</font>
 					</div>

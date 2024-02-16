@@ -1,7 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
-include('config1.php');
+include('config.php');
 require_once('header1.php');
 if (strlen($_SESSION['login_username']) == 0) {
     header('location:index.php');
@@ -16,7 +16,7 @@ if (strlen($_SESSION['login_username']) == 0) {
         $query->bindParam(':cust_id', $cust_id, PDO::PARAM_STR);
         $query->bindParam(':cust_status', $cust_status, PDO::PARAM_STR);
         $query->execute();
-        header('location:approvedcustomer.php');
+        header('location:inactivecustomer.php');
     }
 
 
@@ -24,13 +24,13 @@ if (strlen($_SESSION['login_username']) == 0) {
     //code for active students
     if (isset($_GET['cust_id'])) {
         $cust_id = $_GET['cust_id'];
-        $cust_status = 1;
+        $cust_status = 0;
         $sql = "update tbl_customer set cust_status=:cust_status  WHERE cust_id=:cust_id";
         $query = $dbh->prepare($sql);
         $query->bindParam(':cust_id', $cust_id, PDO::PARAM_STR);
         $query->bindParam(':cust_status', $cust_status, PDO::PARAM_STR);
         $query->execute();
-        header('location:approvedcustomer.php');
+        header('location:rejectedcustomers.php');
     }
 
 
@@ -44,16 +44,13 @@ if (strlen($_SESSION['login_username']) == 0) {
     <div class="container">
         <div class="row pad-botm">
             <div class="col-md-12">
-                <h4>
-                    <font color="black">
-                        <center>APPROVED CUSTOMERS REGISTRATION</center>
-                    </font>
-                </h4>
-
-            </div>
-            <div class="container">
+                <center>
+                    <h4>
+                        <font color="black">REJECTED CUSTOMER ACCOUNT:</font>
+                    </h4>
+                </center>
                 <button id="printButton" onclick="printPage()">
-                    <font color="black"><i class="fa fa-print"></i>&nbsp;GENERATE REPORT</font>
+                    <font color="black"><i class="fa fa-print"></i>&nbsp; Generate Report</a></font>
                 </button>
                 <style>
                     .button-container {
@@ -63,9 +60,13 @@ if (strlen($_SESSION['login_username']) == 0) {
                     }
 
                     #printButton {
-                        float: right;
+                        float: center;
                     }
                 </style>
+
+            </div>
+            <div class="container">
+
             </div>
 
         </div>
@@ -95,17 +96,15 @@ if (strlen($_SESSION['login_username']) == 0) {
                                             <font color="green">Email</font>
                                         </th>
                                         <th>
-                                            <font color="blue">Status</font>
+                                            <font color="blue">cust_status</font>
                                         </th>
                                         <th>
                                             <font color="blue">Action</font>
                                         </th>
-
-
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $sql = "SELECT * from tbl_customer where cust_status='1'";
+                                    <?php $sql = "SELECT * from tbl_customer where cust_status='3'";
                                     $query = $dbh->prepare($sql);
                                     $query->execute();
                                     $results = $query->fetchAll(PDO::FETCH_OBJ);
@@ -118,24 +117,22 @@ if (strlen($_SESSION['login_username']) == 0) {
                                                 <td class="center"><?php echo htmlentities($result->cust_cname); ?></td>
                                                 <td class="center"><?php echo htmlentities($result->cust_phone); ?></td>
                                                 <td class="center"><?php echo htmlentities($result->cust_email); ?></td>
-                                                <td style="background-color:yellow;" class="center"><?php if ($result->cust_status == 1) {
-                                                                                                        echo htmlentities("Active");
+                                                <td style="background-color:cyan;" class="center"><?php if ($result->cust_status == 1) {
+                                                                                                        echo htmlentities("Approved");
                                                                                                     } else {
 
 
-                                                                                                        echo htmlentities("Pending");
+                                                                                                        echo htmlentities("Rejected");
                                                                                                     }
                                                                                                     ?></td>
                                                 <td class="center">
-                                                    <?php if ($result->cust_status == 1) { ?>
-                                                        <a href="approvedcustomer.php?incust_id=<?php echo htmlentities($result->cust_id); ?>"> <button class="btn btn-danger btn-sm"> Deactivate</button>
-                                                        <?php } else { ?>
+                                                    <?php if ($result->cust_status == 3) { ?>
 
-                                                            <a href="approvedcustomer.php?cust_id=<?php echo htmlentities($result->cust_id); ?>"><button class="btn btn-primary btn-sm"> Approve</button>
-                                                            <?php } ?>
+
+                                                        <a href="inactivecustomer.php?cust_id=<?php echo htmlentities($result->cust_id); ?>"><button class="btn btn-success btn-sm"> Activate</button>
+                                                        <?php } ?>
 
                                                 </td>
-
                                             </tr>
                                     <?php $cnt = $cnt + 1;
                                         }
@@ -143,28 +140,28 @@ if (strlen($_SESSION['login_username']) == 0) {
                                 </tbody>
                             </table>
                         </div>
-
                         <button class="btn btn-warning"><a href="dashboard.php">
                                 <font color="black"><i class="fa fa-arrow-left"></i>&nbsp;Back</font>
                             </a></button>
+
                     </div>
                 </div>
                 <!--End Advanced Tables -->
             </div>
-
-
-
-
         </div>
-        <div class="col-md-12">
 
-        </div>
+
+
+    </div>
+    <div class="col-md-12">
+
     </div>
 
 
 
 
-    </html>
+
+
 <?php } ?>
 <script>
     function printPage() {
