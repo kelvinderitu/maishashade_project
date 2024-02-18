@@ -34,7 +34,7 @@ if (isset($_POST['form1'])) {
         }
 
         $order_detail = '';
-        $statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE payment_id=?");
+        $statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE payment_id=? AND payment_status='Pending'");
         $statement->execute(array($_POST['payment_id']));
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         foreach ($result as $row) {
@@ -122,7 +122,8 @@ if ($success_message != '') {
 
 <section class="content-header">
     <div class="content-header-left">
-        <h3>Available Materials</h3>
+        <h3>Materials Allocations</h3>
+        <div class="btn btn-float-right"> <a class="btn  btn-warning" href="myallocation.php?dashboard">Back</a></div>
     </div>
 </section>
 
@@ -133,55 +134,50 @@ if ($success_message != '') {
         <div class="col-md-12">
 
 
-            <div class="box box-success">
+            <div class="box box-info">
 
                 <div class="box-body table-responsive">
                     <table id="example1" class="table table-bordered table-hover table-striped">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Materials </th>
+                                <th>materials</th>
                                 <th>Quantity</th>
-                                <th>
-                                    Description
-                                </th>
-                                <th>Supplier</th>
-                                
-                                
-
-
-                                
+                                <th>Status</th>
+                               
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $i = 0;
-                            $statement = $pdo->prepare("SELECT * FROM tbl_material ORDER by id DESC");
+                            $statement = $pdo->prepare("SELECT * FROM tbl_requestedservicematerials WHERE  status='Approved'AND technician_name='" . $_SESSION['user']['full_name'] . "'");
                             $statement->execute();
                             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                             foreach ($result as $row) {
                                 $i++;
                             ?>
-                                <tr>
+                                <tr class="<?php if ($row['status'] == 'Approved') {
+                                                echo 'bg-r';
+                                            } else {
+                                                echo 'bg-g';
+                                            } ?>">
                                     <td><?php echo $i; ?></td>
+                                   
+
+                                  
                                     <td>
-                                        <?php echo $row['p_name']; ?>
+                                        
+                                        <?php echo $row['Materials']; ?>
                                     </td>
                                     <td>
-                                        <?php echo $row['qty']; ?>
-                                    </td>
-
-                                    <td>
-                                        <?php echo $row['specs']; ?>
+                                        
+                                        <?php echo $row['quantity']; ?>
                                     </td>
                                     <td>
-                                        <?php echo $row['supplier']; ?>
+                                        
+                                        <?php echo $row['status']; ?>
                                     </td>
-                    
-
-
-
-
+                                    
                                 </tr>
                             <?php
                             }

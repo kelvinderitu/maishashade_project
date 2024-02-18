@@ -147,7 +147,7 @@ if ($success_message != '') {
                                 <th>Designer Details</th>
                                 <th>Delivery Status</th>
                                 <th>ToolBox</th>
-                                <th>Completion Status</th>                                
+                                <th>Completion Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -197,7 +197,7 @@ if ($success_message != '') {
 
 
                                         ?>
-                                        
+
                                     </td>
                                     <td>
                                         <?php echo $row['shipping_status']; ?>
@@ -207,8 +207,8 @@ if ($success_message != '') {
                                     <td><?php echo $row['toolbox_type'] ?></td>
                                     <td><?php echo $row['designer_status'] ?></td>
                                     <td>
-                                        
-                                        
+
+
                                         <?php
                                         if ($row['designer_status'] == 'pending') {
                                         ?>
@@ -218,18 +218,21 @@ if ($success_message != '') {
                                         ?>
                                         <?php
                                         if ($row['designer_request'] == 'pending') {
-                                            ?>
-                                                <a href="specialtoolbox.php?id=<?php echo $row['id']; ?>&task=Requested" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Request Toolbox</a>
-                                            <?php
-                                            }
+                                        ?>
+                                            <a href="specialtoolbox.php?id=<?php echo $row['id']; ?>&task=Requested" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Request Toolbox</a>
+                                        <?php
+                                        }
 
                                         ?>
-                                         <?php
-                                        if ($row['Materials'] == '') {
+                                        <?php
+                                        
                                         ?>
                                             <a href="specialordermaterials.php?id=<?php echo $row['id']; ?>&task=pending" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Request Materials</a>
                                         <?php
-                                        }
+                                        
+                                        ?>
+                                        <a href="approvedspecialordermaterials.php?id=<?php echo $row['id']; ?>" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Approved Materials</a>
+                                        <?php
                                         ?>
                                     </td>
                                 </tr>

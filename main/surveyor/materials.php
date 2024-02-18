@@ -21,6 +21,7 @@ $resultBank = $statementBank->fetchAll(PDO::FETCH_ASSOC);
 if (isset($_POST['submit'])) {
     // Your form submission logic
     $id = $_POST["id"];
+    $orderid = $_POST["order_id"];
     $customer_id = $_POST["customer_id"];
     $customer_name = $_POST["customer_fullName"];
     $product = $_POST["product"];
@@ -35,21 +36,31 @@ if (isset($_POST['submit'])) {
         echo '<div class="alert alert-danger">Quantity requested is greater than available quantity!</div>';
     } else {
 
-    // Insert query using prepared statement
-    $insertQry = "INSERT INTO tbl_requestedmaterials (customer_id, customer_name, date, Materials, quantity,technician_name,technician_phone,technician_email) VALUES (?, ?, ?, ?, ?,?,?,?)";
-    $insertStatement = $pdo->prepare($insertQry);
+        // Insert query using prepared statement
+        $insertQry = "INSERT INTO tbl_requestedmaterials (orderid,customer_id, customer_name, date, Materials, quantity,technician_name,technician_phone,technician_email) VALUES (?, ?, ?, ?, ?,?,?,?,?)";
+        $insertStatement = $pdo->prepare($insertQry);
 
-    // Execute the prepared statement
-    $insertResult = $insertStatement->execute([$customer_id, $customer_name, $date, $product, $quantity_requested, $technician_name,$technician_phone,$technician_email]);
+        // Execute the prepared statement
+        $insertResult = $insertStatement->execute([$orderid, $customer_id, $customer_name, $date, $product, $quantity_requested, $technician_name, $technician_phone, $technician_email]);
 
-    if (!$insertResult) {
-        echo "ERROR" . implode(" ", $insertStatement->errorInfo());
-    } else {
-        echo '<div class="alert alert-success">Request submitted successfully!</div>';
+        if (!$insertResult) {
+            echo "ERROR updating tbl_payment: " . implode(" ", $insertStatement->errorInfo());
+        } else {
+            // Reduce the quantity in tbl_toolbox
+            $updateToolboxQry = "UPDATE tbl_material SET qty = qty - ? WHERE p_name = ?";
+            $updateToolboxStatement = $pdo->prepare($updateToolboxQry);
+            $updateToolboxResult = $updateToolboxStatement->execute([$quantity_requested, $product]);
+
+            if (!$updateToolboxResult) {
+                echo "ERROR updating tbl_toolbox: " . implode(" ", $updateToolboxStatement->errorInfo());
+            } else {
+                echo '<div class="alert alert-success">Material Successfully Requested!</div>';
+            }
+        }
+        $statement = $pdo->prepare("UPDATE tbl_payment SET materials=? WHERE id=?");
+        $statement->execute(array($_REQUEST['task'], $_REQUEST['id']));
     }
-    $statement = $pdo->prepare("UPDATE tbl_payment SET materials=? WHERE id=?");
-    $statement->execute(array($_REQUEST['task'], $_REQUEST['id']));
-}}
+}
 ?>
 
 <!DOCTYPE html>
@@ -115,6 +126,7 @@ if (isset($_POST['submit'])) {
                                     ?>
                                     <form role="form" action="" method="post">
                                         <div class="form-group">
+                                            <input type="hidden" name="order_id" value="<?php echo $row['id']; ?>">
                                             <input type="hidden" name="customer_id" value="<?php echo $row['customer_id']; ?>">
                                             <label>Customer Name</label>
                                             <?php
@@ -134,7 +146,6 @@ if (isset($_POST['submit'])) {
                                             $statement1->execute(array($row['technician']));
                                             $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
                                             foreach ($result1 as $row1) {
-                                               
                                             }
                                             ?>
                                             <label>Technician details</label>
@@ -148,7 +159,7 @@ if (isset($_POST['submit'])) {
                                             <option value=""><?php echo "SELECT" ?></option>
                                             <?php
                                             // Fetch data from tbl_bank
-                                            $statementBank = $pdo->prepare("SELECT * FROM  requestsproduct");
+                                            $statementBank = $pdo->prepare("SELECT * FROM  tbl_material");
                                             $statementBank->execute();
                                             $resultBank = $statementBank->fetchAll(PDO::FETCH_ASSOC);
 

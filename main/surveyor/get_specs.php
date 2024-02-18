@@ -1,5 +1,4 @@
 <?php
-// get_quantity.php
 
 $host = 'localhost';
 $dbname = 'nyabondobricks';
@@ -15,15 +14,15 @@ try {
 }
 
 if (isset($_GET['product'])) {
-    $product = $_GET['product'];
+    $selectedProduct = $_GET['product'];
 
-    // Fetch the quantity from the database based on the selected product
-    $statement = $pdo->prepare("SELECT qty FROM tbl_material WHERE p_name = ?");
-    $statement->execute([$product]);
-    $result = $statement->fetch(PDO::FETCH_ASSOC);
+    $statement = $pdo->prepare("SELECT p_name, specs FROM tbl_material WHERE p_name = ?");
+    $statement->execute([$selectedProduct]);
+    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-    // Return the quantity as the response
-    echo $result['qty'];
+    foreach ($results as $result) {
+        echo 'p_name: ' . $result['p_name'] . ', specs: ' . $result['specs'] . '<br>';
+    }
 } else {
     echo 'Invalid request';
 }

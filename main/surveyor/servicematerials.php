@@ -35,21 +35,32 @@ if (isset($_POST['submit'])) {
         echo '<div class="alert alert-danger">Quantity requested is greater than available quantity!</div>';
     } else {
 
-    // Insert query using prepared statement
-    $insertQry = "INSERT INTO tbl_requestedservicematerials (customer_id, customer_name, date, Materials, quantity,technician_name,technician_phone,technician_email,current_quantity) VALUES (?, ?, ?, ?, ?,?,?,?)";
-    $insertStatement = $pdo->prepare($insertQry);
+        // Insert query using prepared statement
+        $insertQry = "INSERT INTO tbl_requestedservicematerials (customer_id, customer_name, date, Materials, quantity, technician_name, technician_phone, technician_email, current_quantity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $insertStatement = $pdo->prepare($insertQry);
 
-    // Execute the prepared statement
-    $insertResult = $insertStatement->execute([$customer_id, $customer_name, $date, $product, $quantity_requested, $technician_name,$technician_phone,$technician_email,$availableQuantity]);
+        // Execute the prepared statement
+        $insertResult = $insertStatement->execute([$customer_id, $customer_name, $date, $product, $quantity_requested, $technician_name, $technician_phone, $technician_email, $availableQuantity]);
 
-    if (!$insertResult) {
-        echo "ERROR" . implode(" ", $insertStatement->errorInfo());
-    } else {
-        echo '<div class="alert alert-success">Request submitted successfully!</div>';
+        if (!$insertResult) {
+            echo "ERROR updating tbl_payment: " . implode(" ", $insertStatement->errorInfo());
+        } else {
+            // Reduce the quantity in tbl_toolbox
+            $updateToolboxQry = "UPDATE tbl_material SET qty = qty - ? WHERE p_name = ?";
+            $updateToolboxStatement = $pdo->prepare($updateToolboxQry);
+            $updateToolboxResult = $updateToolboxStatement->execute([$quantity_requested, $product]);
+
+            if (!$updateToolboxResult) {
+                echo "ERROR updating tbl_toolbox: " . implode(" ", $updateToolboxStatement->errorInfo());
+            } else {
+                echo '<div class="alert alert-success">Material Successfully Requested!</div>';
+            }
+        }
+
+      
+        $statement = $pdo->prepare("UPDATE tbl_bookings SET Materials=? WHERE id=?");
+        $statement->execute(array($_REQUEST['task'], $_REQUEST['id']));
     }
-    $statement = $pdo->prepare("UPDATE tbl_bookings SET Materials=? WHERE id=?");
-    $statement->execute(array($_REQUEST['task'], $_REQUEST['id']));
-}
 }
 ?>
 
@@ -144,7 +155,7 @@ if (isset($_POST['submit'])) {
                                             <option value=""><?php echo "SELECT" ?></option>
                                             <?php
                                             // Fetch data from tbl_bank
-                                            $statementBank = $pdo->prepare("SELECT * FROM  requestsproduct");
+                                            $statementBank = $pdo->prepare("SELECT * FROM  tbl_material where qty>0");
                                             $statementBank->execute();
                                             $resultBank = $statementBank->fetchAll(PDO::FETCH_ASSOC);
 

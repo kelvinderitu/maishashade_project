@@ -180,12 +180,12 @@ if(!isset($_SESSION['user'])) {
                     </li>
 					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
                         <a href="register1/RequestProduct.php">
-                            <i class="fa fa-sticky-note"></i> <span>Request Materials</span>
+                            <i class="fa fa-sticky-note"></i> <span>Order Materials</span>
                         </a>
                     </li>
 					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
                         <a href="productsupplies.php">
-                            <i class="fa fa-sticky-note"></i> <span>Requested Materials</span>
+                            <i class="fa fa-sticky-note"></i> <span>Ordered Materials</span>
                         </a>
                     </li>
                     <li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">

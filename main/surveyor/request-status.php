@@ -1,67 +1,191 @@
-<?php require_once('header.php'); ?>
-
 
 <?php
-// Include your database connection file
+$host = 'localhost';
+$dbname = 'nyabondobricks';
+$user = 'root';
+$password = '';
 
-
-// Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_toolbox'])) {
-	$booking_id = $_POST['booking_id'];
-	$toolbox_id = $_POST['toolbox_id'];
-
-	// Perform the database update with the selected toolbox
-	$update_statement = $pdo->prepare("UPDATE tbl_bookings SET toolbox_type = (SELECT toolbox_type FROM tbl_toolbox WHERE toolbox_id = ?) WHERE id = ?");
-	$update_statement->execute([$toolbox_id, $booking_id]);
-
-	// Insert your logic for additional actions here
-
-	// Redirect after processing the form
-	header('Location: myallocation.php');
-    exit();
-	// Make sure to exit after a header redirect
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo 'Connection failed: ' . $e->getMessage();
+    die();
 }
 
-// Check if the booking ID is set in the URL
-if (isset($_GET['id'])) {
-	$booking_id = $_GET['id'];
+// Fetch data from tbl_bank
+$statementBank = $pdo->prepare("SELECT * FROM tbl_toolbox");
+$statementBank->execute();
+$resultBank = $statementBank->fetchAll(PDO::FETCH_ASSOC);
 
-	// Fetch toolbox list from tbl_toolbox
-	$toolbox_sql = "SELECT * FROM tbl_toolbox";
-	$toolbox_query = $pdo->prepare($toolbox_sql);
-	$toolbox_query->execute();
-	$toolbox_list = $toolbox_query->fetchAll(PDO::FETCH_ASSOC);
-?>
+if (isset($_POST['submit'])) {
+    $id = $_POST["id"];
+    $tool = $_POST["tool"];
 
-	<!-- Display Toolbox List -->
-	<h3>Toolbox List</h3>
-	<form method="post" action="">
-		<input type="hidden" name="booking_id" value="<?php echo $booking_id; ?>">
-		<label for="toolbox">Select Toolbox:</label>
-		<select name="toolbox_id" id="toolbox" required>
-			<?php
-			foreach ($toolbox_list as $toolbox) {
-				echo '<option value="' . $toolbox['toolbox_id'] . '">' . $toolbox['toolbox_type'] . '</option>';
-			}
-			?>
-		</select>
-		<br><br>
-		<input type="submit" name="update_toolbox" value="Update Toolbox">
-	</form>
+    // Update query for tbl_specialorders
+    $updateSpecialOrderQry = "UPDATE tbl_bookings SET toolbox_type=? WHERE id=?";
+    $updateSpecialOrderStatement = $pdo->prepare($updateSpecialOrderQry);
+    $updateSpecialOrderResult = $updateSpecialOrderStatement->execute([$tool, $id]);
 
-<?php
-} else {
-	// Redirect to the home page or handle the case when the booking ID is not set
-	echo "Error occurred";
+    if (!$updateSpecialOrderResult) {
+        echo "ERROR updating tbl_bookings: " . implode(" ", $updateSpecialOrderStatement->errorInfo());
+    } else {
+        // Reduce the quantity in tbl_toolbox
+        $updateToolboxQry = "UPDATE tbl_toolbox SET quantity = quantity - 1 WHERE toolbox_type = ?";
+        $updateToolboxStatement = $pdo->prepare($updateToolboxQry);
+        $updateToolboxResult = $updateToolboxStatement->execute([$tool]);
+
+        if (!$updateToolboxResult) {
+            echo "ERROR updating tbl_toolbox: " . implode(" ", $updateToolboxStatement->errorInfo());
+        } else {
+            echo '<div class="alert alert-success">Toolbox Successfully Requested!</div>';
+        }
+    }
+	$statement = $pdo->prepare("UPDATE tbl_bookings SET technician_request=? WHERE id=?");
+	$statement->execute(array($_REQUEST['task'], $_REQUEST['id']));
+	
+    // Redirect to the original page
+    header("location: myallocation.php");
 }
-
-// Include necessary files (footer, etc.)
-require_once('footer.php');
 ?>
 
-<?php
-$statement = $pdo->prepare("UPDATE tbl_bookings SET technician_request=? WHERE id=?");
-$statement->execute(array($_REQUEST['task'], $_REQUEST['id']));
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title></title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="../icofont/icofont.min.css">
+
+</head>
+
+<body>
 
 
-?>
+
+    <div id="wrapper">
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <center>
+                        <h5 class="page-header"> TOOLBOX </h5>
+                    </center>
+                    <a class="btn btn-sm btn-warning" href="specialorders.php">Back</a>
+                </div><br>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                        </div>
+
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+
+                                    <?php
+                                    $id = $_GET['id'];
+                                    $qry = "SELECT * FROM tbl_bookings WHERE id=?";
+                                    $statement = $pdo->prepare($qry);
+                                    $statement->execute([$id]);
+                                    $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+                                    ?>
+                                    <form role="form" action="" method="post">
+
+
+
+
+                                        <label for=""><?php echo " Toolbox " ?> *</label>
+                                        <select name="tool" class="form-control select2">
+                                            <option value=""><?php echo "SELECT TOOLBOX" ?></option>
+
+                                            <?php
+                                            // Fetch data from tbl_bank
+                                            $statementBank = $pdo->prepare("SELECT * FROM tbl_toolbox");
+                                            $statementBank->execute();
+                                            $resultBank = $statementBank->fetchAll(PDO::FETCH_ASSOC);
+
+                                            // Display options based on the fetched data
+                                            foreach ($resultBank as $bank) {
+                                                echo '<option value="' . $bank['toolbox_type'] . '">' . $bank['toolbox_type'] . '</option>';
+                                            }
+                                            ?>
+                                        </select>
+
+
+
+
+                                        <!-- id hidden grna input type ma "hidden" -->
+                                        <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+
+                                        <button type="submit" name="submit" class="btn btn-success">Submit</button>
+                                    </form>
+
+                                </div>
+                                <?php
+
+                                ?>
+
+                            </div>
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+
+</body>
+
+
+<style>
+    footer {
+        background-color: #424558;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 35px;
+        text-align: center;
+        color: #CCC;
+    }
+
+    footer p {
+        padding: 10.5px;
+        margin: 0px;
+        line-height: 100%;
+    }
+</style>
+
+</html>
+

@@ -218,7 +218,8 @@ if($success_message != '') {
                                 if($row['status']=='Active'){
                                     if($row['inventoryStatus']=='Received'){
                                     ?>
-                                    <a href="updatep2.php?p_name=<?php echo $row['p_name']; ?>&task=Updated" class="btn btn-primary btn-xs" style="width:100%;margin-bottom:4px;">Update</a>
+                                   <a href="updatep2.php?p_name=<?php echo $row['p_name']; ?>&specs=<?php echo $row['specs']; ?>&task=Updated" class="btn btn-primary btn-xs" style="width:100%;margin-bottom:4px;">Update</a>
+
                                     <?php
                                 }}
                             ?>

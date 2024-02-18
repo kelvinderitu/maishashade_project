@@ -143,9 +143,7 @@ if ($success_message != '') {
                                 <th>Customer name</th>
                                 <th>Technician Details</th>
                                 <th>Materials</th>
-                                <th>
-                                    Current Quantity
-                                </th>
+                                
                                 <th>Requested Quantity</th>
 
                                 <th>Action</th>
@@ -174,10 +172,7 @@ if ($success_message != '') {
                                     <td>
                                         <?php echo $row['Materials']; ?>
                                     </td>
-                                    <td>
-                                        <?php echo $row['current_quantity']; ?>
-
-                                    </td>
+                                 
                                     <td>
                                         <?php echo $row['Quantity']; ?>
                                     </td>

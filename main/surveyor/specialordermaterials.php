@@ -35,21 +35,30 @@ if (isset($_POST['submit'])) {
         echo '<div class="alert alert-danger">Quantity requested is greater than available quantity!</div>';
     } else {
 
-    // Insert query using prepared statement
-    $insertQry = "INSERT INTO tbl_requestedspecialordermaterials (customer_id, customer_name, date, Materials, quantity,technician_name,technician_phone,technician_email,current_quantity) VALUES (?, ?, ?, ?, ?,?,?,?,?)";
-    $insertStatement = $pdo->prepare($insertQry);
+        // Insert query using prepared statement
+        $insertQry = "INSERT INTO tbl_requestedspecialordermaterials (customer_id, customer_name, date, Materials, quantity,technician_name,technician_phone,technician_email,current_quantity) VALUES (?, ?, ?, ?, ?,?,?,?,?)";
+        $insertStatement = $pdo->prepare($insertQry);
 
-    // Execute the prepared statement
-    $insertResult = $insertStatement->execute([$customer_id, $customer_name, $date, $product, $quantity_requested, $technician_name,$technician_phone,$technician_email,$availableQuantity]);
+        // Execute the prepared statement
+        $insertResult = $insertStatement->execute([$customer_id, $customer_name, $date, $product, $quantity_requested, $technician_name, $technician_phone, $technician_email, $availableQuantity]);
 
-    if (!$insertResult) {
-        echo "ERROR" . implode(" ", $insertStatement->errorInfo());
-    } else {
-        echo '<div class="alert alert-success">Request submitted successfully!</div>';
+        if (!$insertResult) {
+            echo "ERROR updating tbl_payment: " . implode(" ", $insertStatement->errorInfo());
+        } else {
+            // Reduce the quantity in tbl_toolbox
+            $updateToolboxQry = "UPDATE tbl_material SET qty = qty - ? WHERE p_name = ?";
+            $updateToolboxStatement = $pdo->prepare($updateToolboxQry);
+            $updateToolboxResult = $updateToolboxStatement->execute([$quantity_requested, $product]);
+
+            if (!$updateToolboxResult) {
+                echo "ERROR updating tbl_specialorders: " . implode(" ", $updateToolboxStatement->errorInfo());
+            } else {
+                echo '<div class="alert alert-success">Material Successfully Requested!</div>';
+            }
+        }
+        $statement = $pdo->prepare("UPDATE tbl_specialorders SET Materials=? WHERE id=?");
+        $statement->execute(array($_REQUEST['task'], $_REQUEST['id']));
     }
-    $statement = $pdo->prepare("UPDATE tbl_specialorders SET Materials=? WHERE id=?");
-    $statement->execute(array($_REQUEST['task'], $_REQUEST['id']));
-}
 }
 ?>
 
@@ -119,7 +128,7 @@ if (isset($_POST['submit'])) {
                                             <input type="hidden" name="customer_id" value="<?php echo $row['customer_id']; ?>"><br>
 
                                             <label>Customer Name</label>
-                                            
+
                                             <input class="form-control" type="text" readonly name="customer_fullName" value='<?php echo $row['customer_fullName']; ?>' required>
                                         </div>
                                         </br>
@@ -130,7 +139,6 @@ if (isset($_POST['submit'])) {
                                             $statement1->execute(array($row['Designer']));
                                             $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
                                             foreach ($result1 as $row1) {
-                                               
                                             }
                                             ?>
                                             <label>Technician details</label>
@@ -140,11 +148,13 @@ if (isset($_POST['submit'])) {
                                         </div><br>
 
                                         <label for=""><?php echo "AVAILABLE PRODUCTS " ?> *</label>
-                                        <select name="product" id="productDropdown" class="form-control select2" onchange="updateQuantity()">
+
+
+                                        <select name="product" id="productDropdown" class="form-control select2" onchange="updateDetails()">
                                             <option value=""><?php echo "SELECT" ?></option>
                                             <?php
                                             // Fetch data from tbl_bank
-                                            $statementBank = $pdo->prepare("SELECT * FROM  requestsproduct");
+                                            $statementBank = $pdo->prepare("SELECT * FROM  tbl_material");
                                             $statementBank->execute();
                                             $resultBank = $statementBank->fetchAll(PDO::FETCH_ASSOC);
 
@@ -158,6 +168,13 @@ if (isset($_POST['submit'])) {
                                             <label for="">Available Product Quantity </label>
                                             <input class="form-control" type="text" readonly name="available quantity" id="quantityTextbox" required>
                                         </div>
+
+                                        <div class="form-group">
+                                            <label for="">Available Product Specs </label>
+                                            <input class="form-control" type="text" readonly name="available_specs" id="specsTextbox" required>
+
+                                        </div>
+
                                         <div class="form-group">
                                             <label for="">Insert Quantity* </label>
                                             <input class="form-control" type="text" name="quantity" required>
@@ -169,7 +186,7 @@ if (isset($_POST['submit'])) {
                                             <input class="form-control" type="date" name="date" required>
                                         </div>
 
-                                        <!-- id hidden grna input type ma "hidden" -->
+
                                         <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
 
                                         <button type="submit" name="submit" class="btn btn-success">Submit</button>
@@ -177,42 +194,57 @@ if (isset($_POST['submit'])) {
                                     </form>
                                 </div>
                             </div>
-                            <!-- /.row (nested) -->
+
                         </div>
-                        <!-- /.panel-body -->
+
                     </div>
-                    <!-- /.panel -->
+
                 </div>
-                <!-- /.col-lg-12 -->
+
             </div>
-            <!-- /.row -->
+
         </div>
-        <!-- /#page-wrapper -->
+
     </div>
-    <!-- /#wrapper -->
+
+
+    <!-- ... (other script tags) ... -->
 
     <script>
-        function updateQuantity() {
+        function updateDetails() {
             var dropdown = document.getElementById("productDropdown");
             var quantityTextbox = document.getElementById("quantityTextbox");
+            var specsTextbox = document.getElementById("specsTextbox");
 
             // Get the selected product from the dropdown
             var selectedProduct = dropdown.value;
 
-            // Make an AJAX request to get the quantity
+            // Make an AJAX request to get the quantity and specs
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    // Update the quantity textbox with the response
-                    quantityTextbox.value = xhr.responseText;
+                    // Parse the JSON response
+                    var response = JSON.parse(xhr.responseText);
+
+                    // Check if the response is an array and has at least one entry
+                    if (Array.isArray(response) && response.length > 0) {
+                        // Display the details for the first entry in the array
+                        quantityTextbox.value = response[0].quantity;
+                        specsTextbox.value = response[0].specs;
+                    } else {
+                        // If no entries are found, set the textboxes to empty
+                        quantityTextbox.value = '';
+                        specsTextbox.value = '';
+                    }
                 }
             };
 
-            // Send a GET request to a PHP script that fetches the quantity based on the selected product
-            xhr.open("GET", "get_quantity.php?product=" + selectedProduct, true);
+            // Send the AJAX request
+            xhr.open("GET", "get_details.php?product=" + selectedProduct, true);
             xhr.send();
         }
     </script>
+
 </body>
 
 <style>
