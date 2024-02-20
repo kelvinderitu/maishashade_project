@@ -37,7 +37,7 @@ if (isset($_POST['form1'])) {
 
     $_SESSION['customer']['cust_country'] = strip_tags($_POST['cust_country']);
     $_SESSION['customer']['cust_s_address'] = strip_tags($_POST['cust_s_address']);
-    header("location:makepayment.php");
+    header("location:pay.php");
 }
 ?>
 
