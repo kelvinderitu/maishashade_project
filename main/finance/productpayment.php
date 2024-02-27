@@ -178,7 +178,7 @@ if($success_message != '') {
                         <td>
                     <?php echo $row['payStatus']; ?> <br>
                     <?php
-                                if($row['payStatus']=='Not Yet Paid' && $row['inventoryStatus']=='Supplied'){
+                                if($row['payStatus']=='Not Yet Paid' && $row['inventoryStatus']=='Supplied' ){
                                     
                                     ?>
                                     <a href="payy2.php?id=<?php echo $row['id']; ?>&task=Confirmed" class="btn btn-success btn-xs" >Pay</a>

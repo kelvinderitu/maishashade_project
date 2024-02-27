@@ -197,13 +197,13 @@ if (isset($_POST['form1'])) {
                                 <a href="checkout.php" style="display: block; margin-bottom: 5px;" class="btn btn-success">With Shipping</a>
                                 <a href="checkout-free.php" style="display: block;" class="btn btn-primary">With No Shipping</a>
                             </ul>
-                        </div>
 
-                        <div style="float: left;">
-                        <h3><b>Continue To Shop</b></h3>
+
+
+                            <h3><b>Continue To Shop</b></h3>
                             <ul>
                                 <a href="product-category.php" style="display: block; margin-bottom: 5px;" class="btn btn-success">Add to Cart</a>
-                               
+
                             </ul>
                         </div>
 

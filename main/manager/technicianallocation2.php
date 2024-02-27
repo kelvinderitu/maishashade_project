@@ -24,6 +24,12 @@
     <link href="inc/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" href="../icofont/icofont.min.css">
+    <style>
+        .form-group select {
+            max-width: 100%;
+        }
+    </style>
+      
 
 </head>
 

@@ -106,10 +106,16 @@ if (!isset($_SESSION['user'])) {
 						</a>
 					</li>-->
 					<li class="treeview <?php if (($cur_page == 'order.php')) {echo 'active';} ?>">
+						<a href="supplierbank.php">
+							<i class="fa fa-envelope"></i> <span>Bank Details</span>
+						</a>
+					</li>
+					<li class="treeview <?php if (($cur_page == 'order.php')) {echo 'active';} ?>">
 						<a href="register/inbox.php">
 							<i class="fa fa-envelope"></i> <span>Messages</span>
 						</a>
 					</li>
+					
 				</ul>
 			</section>
 		</aside>

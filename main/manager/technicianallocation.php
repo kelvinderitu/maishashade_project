@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title> </title>
+    <title></title>
 
     <!-- Bootstrap Core CSS -->
     <link href="inc/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -25,73 +25,61 @@
 
     <link rel="stylesheet" href="../icofont/icofont.min.css">
 
+    <style>
+        .form-group select {
+            max-width: 100%;
+        }
+    </style>
+
 </head>
 
 <body>
 
-
-
     <div id="wrapper">
-
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
                     <h3 class="page-header">ASSIGN TECHNICIAN</h3>
                     <?php
-
                     include 'dbconnect.php';
                     if (isset($_POST['technicianbtn'])) {
                         $id = $_POST["id"];
                         $customer_name = $_POST["customer_name"];
                         $technician = $_POST["technician"];
                         $order_status = $_POST["order_status"];
-                        //update query
                         $qry = "update tbl_payment set id='$id', customer_name='$customer_name', technician='$technician',order_status='$order_status' where id='$id'";
-                        $result = mysqli_query($conn, $qry); //query executes
-
+                        $result = mysqli_query($conn, $qry);
                         if (!$result) {
                             echo "ERROR" . mysqli_error();
                         } else {
-                        
                             echo '<div class="alert alert-success">Technician successfully assigned!</div>';
                         }
                     }
-
-
                     ?>
                     <a class="btn btn-info" href="pendingorders.php">Back</a>
                 </div><br>
-                <!-- /.col-lg-12 -->
             </div>
-            <!-- /.row -->
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-
-
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6">
-
                                     <?php
                                     include 'dbconnect.php';
                                     $id = $_GET['id'];
-                                    $qry = "SELECT * FROM tbl_payment where id='$id'
-";
+                                    $qry = "SELECT * FROM tbl_payment where id='$id'";
                                     $result = mysqli_query($conn, $qry);
                                     while ($row = mysqli_fetch_array($result)) {
-
                                     ?>
                                         <form role="form" action="#" method="post">
-
                                             <input class="form-control" readonly name="order_status" type="hidden" value='Goods On Transit' required>
                                             <input class="form-control" readonly name="id" type="hidden" value='<?php echo $row['id']; ?>' required>
                                             <input class="form-control" type="hidden" readonly name="customer_name" value='<?php echo $row['customer_name']; ?>' required>
 
-
                                             <div class="form-group">
                                                 <div class="font-italic">TECHNICIAN<span style="color:red">*</span></div>
-
                                                 <select name="technician" onchange="showLoanDetails(this.value)" class="form-control" required>
                                                     <option value="">Select</option>
                                                     <?php
@@ -103,38 +91,22 @@
                                                 </select>
                                             </div>
 
-
-                                            <!-- id hidden grna input type ma "hidden" -->
-
-
                                             <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-
-
-
-
-
                                             <button type="submit" class="btn btn-success" name="technicianbtn">Submit</button>
                                         </form>
-                                </div>
-                            <?php
+                                    </div>
+                                    <?php
                                     }
-                            ?>
-
+                                    ?>
+                                </div>
                             </div>
-                            <!-- /.row (nested) -->
                         </div>
-                        <!-- /.panel-body -->
                     </div>
-                    <!-- /.panel -->
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
-            <!-- /.row -->
         </div>
-        <!-- /#page-wrapper -->
 
     </div>
-    <!-- /#wrapper -->
 
     <!-- jQuery -->
     <script src="inc/vendor/jquery/jquery.min.js"></script>
@@ -149,7 +121,6 @@
     <script src="dist/js/sb-admin-2.js"></script>
 
 </body>
-
 
 <style>
     footer {

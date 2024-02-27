@@ -25,6 +25,13 @@
 
     <link rel="stylesheet" href="../icofont/icofont.min.css">
 
+    <style>
+        .form-group select {
+            max-width: 100%;
+        }
+    </style>
+
+
 </head>
 
 <body>

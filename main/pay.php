@@ -37,7 +37,7 @@ if (!isset($_SESSION['cart_p_id'])) {
                     </center>
                     <h4 class="special"><?php echo LANG_VALUE_26; ?></h4>
                     <div class="cart">
-                        <table class="table table-responsive table-hover table-bordered">
+                        <table class="hidden table table-responsive table-hover table-bordered">
                             <tr>
                                 <th><?php echo '#' ?></th>
                                 <th>Product Details</th>
@@ -172,80 +172,79 @@ if (!isset($_SESSION['cart_p_id'])) {
                                 <div class="col-md-12 form-group">
                                     <label for=""><?php echo LANG_VALUE_34; ?> *</label>
                                     <select name="payment_method" class="form-control select2" id="advFieldsStatus">
-                                        <option value=""><?php echo "PROCEED WITH PAYMENT" ?></option>                                       
-                                        <option value="Bank Deposit">BANK PAYMENT</option>
-                                       
+                                        <option value=""><?php echo "PROCEED WITH PAYMENT" ?></option>
+                                        <option value="Bank Deposit">PAYMENT</option>
+
 
                                     </select><br>
 
                                     <br><br>
 
-                                    
-                                    
 
 
 
-                                        <form action="payment/bank/init.php" method="post" id="bank_form">
-
-                                            <div class="container"><b>Total Amount</b><br>
-                                                <input type="text" readonly name="amount" value="<?php echo $final_total; ?>">
-                                            </div><br>
-                                            <div class="container"><b>Shipping Cost</b><br>
-                                                <input type="text" readonly name="shipping_fee" value="<?php echo $shipping_cost; ?>">
-                                            </div><br>
 
 
+                                    <form action="payment/bank/init.php" method="post" id="bank_form">
 
-                                            <label for=""><?php echo "BANK " ?> *</label>
-                                            <select name="Bank_List" class="form-control select2" id="advFieldsStatus">
-                                                <option value=""><?php echo "choose any bank" ?></option>
-
-                                                <?php
-                                                // Fetch data from tbl_bank
-                                                $statementBank = $pdo->prepare("SELECT * FROM tbl_bank");
-                                                $statementBank->execute();
-                                                $resultBank = $statementBank->fetchAll(PDO::FETCH_ASSOC);
-
-                                                // Display options based on the fetched data
-                                                foreach ($resultBank as $bank) {
-                                                    $optionValue = $bank['BankName'] . ' - ' . $bank['BankAccountNumber'];
-                                                    echo '<option value="' . $optionValue . '">' . $optionValue . '</option>';
-                                            
-                                                    
-                                                }
-                                                ?>
-                                            </select>
+                                        <div class="container"><b>Total Amount</b><br>
+                                            <input type="text" readonly name="amount" value="<?php echo $final_total; ?>">
+                                        </div><br>
+                                        <div class="container"><b>Shipping Cost</b><br>
+                                            <input type="text" readonly name="shipping_fee" value="<?php echo $shipping_cost; ?>">
+                                        </div><br>
 
 
 
-                                            <label for=""><?php echo "BANK NAME " ?> *</label>
-                                            <select name="Bank" class="form-control select2" id="advFieldsStatus">
-                                                <option value=""><?php echo "SELECT" ?></option>
+                                        <label for=""><?php echo "BANK " ?> *</label>
+                                        <select name="Bank_List" class="form-control select2" id="advFieldsStatus">
+                                            <option value=""><?php echo "choose any bank" ?></option>
 
-                                                <?php
-                                                // Fetch data from tbl_bank
-                                                $statementBank = $pdo->prepare("SELECT * FROM tbl_bank");
-                                                $statementBank->execute();
-                                                $resultBank = $statementBank->fetchAll(PDO::FETCH_ASSOC);
+                                            <?php
+                                            // Fetch data from tbl_bank
+                                            $statementBank = $pdo->prepare("SELECT * FROM tbl_bank");
+                                            $statementBank->execute();
+                                            $resultBank = $statementBank->fetchAll(PDO::FETCH_ASSOC);
 
-                                                // Display options based on the fetched data
-                                                foreach ($resultBank as $bank) {
-                                                    echo '<option value="' . $bank['BankName'] . '">' . $bank['BankName'] . '</option>';
-                                                }
-                                                ?>
-                                            </select>
-                                    </div>
-                                    <div class="col-md-12 form-group">
-                                        <label for="">Transaction Id <br><span style="font-size:12px;font-weight:normal;">(Input the Transaction Id Correctly)</span></label>
-                                        <textarea name="transaction_info" minlength="10" maxlength="10" required class="form-control" cols="30" rows="2"></textarea>
-                                    </div>
-                                
+                                            // Display options based on the fetched data
+                                            foreach ($resultBank as $bank) {
+                                                $optionValue = $bank['BankName'] . ' - ' . $bank['BankAccountNumber'];
+                                                echo '<option value="' . $optionValue . '">' . $optionValue . '</option>';
+                                            }
+                                            ?>
+                                        </select>
+
+
+
+                                        <label for=""><?php echo "BANK NAME " ?> *</label>
+                                        <select name="Bank" class="form-control select2" id="advFieldsStatus">
+                                            <option value=""><?php echo "SELECT" ?></option>
+
+                                            <?php
+                                            // Fetch data from tbl_bank
+                                            $statementBank = $pdo->prepare("SELECT * FROM tbl_bank");
+                                            $statementBank->execute();
+                                            $resultBank = $statementBank->fetchAll(PDO::FETCH_ASSOC);
+
+                                            // Display options based on the fetched data
+                                            foreach ($resultBank as $bank) {
+                                                echo '<option value="' . $bank['BankName'] . '">' . $bank['BankName'] . '</option>';
+                                            }
+                                            ?>
+                                        </select>
+
+                                        <div class="col-md-12 form-group">
+                                            <label for="">Transaction Id <br><span style="font-size:12px;font-weight:normal;">(Input the Transaction Id Correctly)</span></label>
+                                            <textarea name="transaction_info" minlength="10" maxlength="10" required class="form-control" cols="30" rows="2"></textarea>
+                                        </div>
+
                                         <div class="col-md-12 form-group">
                                             <input type="submit" class="btn btn-primary" value="Submit" name="form3">
-                                          </div>
+                                        </div>
+                                </div>
 
                                 </form>
-                            
+
                             </div>
 
                         </div>
