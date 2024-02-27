@@ -1,8 +1,6 @@
 <?php require_once('header.php'); ?>
 
-<?php
-$error_message = '';
-?>
+
 <?php
 if ($error_message != '') {
     echo "<script>alert('" . $error_message . "')</script>";
@@ -10,13 +8,11 @@ if ($error_message != '') {
 if ($success_message != '') {
     echo "<script>alert('" . $success_message . "')</script>";
 }
-$error_message = '';
-$id = isset($_GET['id']) ? $_GET['id'] : null;
 ?>
 
 <section class="content-header">
     <div class="content-header-left">
-        <h3>Special Orders</h3>
+        <h3>Completed Deliveries</h3>
     </div>
 </section>
 
@@ -34,58 +30,62 @@ $id = isset($_GET['id']) ? $_GET['id'] : null;
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Customer Details</th>
-                                <th>Product Image</th>
-                                <th>Location</th>
-                                <th>Payment Details</th>
-                                <th>Supervisor </th>
-                                <th>Designer </th>
-                                <th>order Status</th>
+                                <th>Customer</th>
+                                
+                                <th>Driver Allocated</th>
                                 <th>Customer Remark</th>
-                                <th>Shipping status</th>
+                                <th>Payment Status</th>
+                              
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $i = 0;
-                            $statement = $pdo->prepare("SELECT * FROM tbl_specialorders WHERE payment_status!='Rejected' and paid_amount!='0' and supervisor!='' and Designer!=''");
+                            $statement = $pdo->prepare("SELECT * FROM tbl_specialorders where driver!='' ORDER by id DESC");
                             $statement->execute();
                             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                             foreach ($result as $row) {
                                 $i++;
                             ?>
-                                <tr class="<?php echo $row['paymenttobemade'] == '0' ? 'bg-r' : 'bg-g'; ?>">
+                                <tr class="<?php if ($row['payment_status'] == 'pending') {
+                                                echo 'bg-r';
+                                            } else {
+                                                echo 'bg-g';
+                                            } ?>">
                                     <td><?php echo $i; ?></td>
                                     <td>
-                                        <b>Name:</b><br> <?php echo $row['customer_fullName']; ?><br>
+                                        <b>Name:</b><br> <?php echo $row['customer_fullName'];?>
                                         <b>Email:</b><br> <?php echo $row['customer_email']; ?><br><br>
                                     </td>
+                                    
+                                    <td> <?php
+                                            $statement1 = $pdo->prepare("SELECT * FROM tbl_staff WHERE role='driver' AND full_name=?");
+                                            $statement1->execute(array($row['driver']));
+                                            $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
+                                            foreach ($result1 as $row1) {
+                                                echo '<b>Driver name:</b> ' . $row1['full_name'];
+                                                echo '<br><b>Email:</b> ' . $row1['email'];
+                                                echo '<br><b>Phone Number:</b> ' . $row1['phone'];
+                                                echo '<br><br>';
+                                            }
+                                            ?>
+                                    </td>
 
-                                    <td><img src="../services/uploads/<?php echo $row['image']; ?>" style="width: 200px;"></td>
-
-
-                                    <td>
-                                        <b>County: </b><?php echo $row['county']; ?><br>
-                                        <b>Specific Location: </b><?php echo $row['detail_location']; ?><br>
+                                    <td><?php echo $row['cust_remark']; ?><br>
+                                        
                                     </td>
                                     <td>
-                                        <?php echo $row['paid_amount']; ?>
-
-
-
+                                        <?php echo $row['payment_status']; ?>
+                                        <br><br>
+                                        <?php
+                                        if ($row['payment_status'] == 'pending') {
+                                        ?>
+                                            <a href="paymentspecialorder.php?id=<?php echo $row['id']; ?>&task=Approved" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Mark Complete</a>
+                                        <?php
+                                        }
+                                        ?>
                                     </td>
-
-                                    <td><?php echo $row['supervisor']; ?></td>
-                                    <td><?php echo $row['Designer']; ?></td>
-                                    <td><?php echo $row['order_status']; ?></td>
-
-                                    <td><?php echo $row['cust_remark']; ?></td>
-
-                                    <td><?php echo $row['shipping_status']; ?></td>
-                                       
-
-                                    </td>
-
+                                    
                                 </tr>
                             <?php
                             }

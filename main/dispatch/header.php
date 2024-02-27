@@ -99,7 +99,7 @@ if(!isset($_SESSION['user'])) {
 					
                     <li class="treeview <?php if( ($cur_page == 'product.php') || ($cur_page == 'product-add.php') || ($cur_page == 'product-edit.php') ) {echo 'active';} ?>">
                         <a href="pendingpayment.php">
-                            <i class="fa fa-truck"></i> <span>Pending Deliveries</span>
+                            <i class="fa fa-truck"></i> <span>Pending order Deliveries</span>
                         </a>
                     </li>
 					<li class="treeview <?php if( ($cur_page == 'product.php') || ($cur_page == 'product-add.php') || ($cur_page == 'product-edit.php') ) {echo 'active';} ?>">
@@ -107,16 +107,26 @@ if(!isset($_SESSION['user'])) {
                             <i class="fa fa-truck"></i> <span>Pending Services Deliveries</span>
                         </a>
                     </li>
+					<li class="treeview <?php if( ($cur_page == 'product.php') || ($cur_page == 'product-add.php') || ($cur_page == 'product-edit.php') ) {echo 'active';} ?>">
+                        <a href="pendingspecialorder.php">
+                            <i class="fa fa-truck"></i> <span>Pending Special Order Deliveries</span>
+                        </a>
+                    </li>
 
 
                     <li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
                         <a href="approvedpayment.php">
-                            <i class="fa fa-truck"></i> <span>Completed Deliveries</span>
+                            <i class="fa fa-truck"></i> <span>Completed order Deliveries</span>
                         </a>
                     </li>
 					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
                         <a href="approvedservicepayment.php">
                             <i class="fa fa-truck"></i> <span>Completed Services Deliveries</span>
+                        </a>
+                    </li>
+					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
+                        <a href="approvedspecialorder.php">
+                            <i class="fa fa-truck"></i> <span>Completed Special Order Deliveries</span>
                         </a>
                     </li>
 

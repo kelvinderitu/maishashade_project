@@ -52,6 +52,7 @@ if (!isset($_SESSION['customer'])) {
                                     <th>Supervisor Details</th>
                                     <th>Designer Details</th>
                                     <th>Driver Details</th>
+                                    <th>Customer Comment</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -187,6 +188,8 @@ if (!isset($_SESSION['customer'])) {
                                         <td>
                                             <?php echo $row['driver']; ?></td>
                                         <td>
+                                            <?php echo $row['cust_comment']; ?></td>
+                                        <td>
                                             <a href="SpecialOrderReceipt.php?id=<?php echo $row['id']; ?>" class="btn btn-warning btn-md">Receipt</a> <br><br>
                                             <?php
 
@@ -199,6 +202,19 @@ if (!isset($_SESSION['customer'])) {
                                             <?php
 
                                                 }
+                                            }
+                                            ?>
+                                            <?php
+
+                                            if ($row['cust_remark'] == '') {
+
+
+
+                                            ?>
+                                                <a href="remark.php?id=<?php echo $row['id']; ?>&task=In Process" class="btn btn-primary btn-md">Remark</a>
+                                            <?php
+
+
                                             }
                                             ?>
                                         </td>
