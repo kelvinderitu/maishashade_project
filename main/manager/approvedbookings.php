@@ -147,6 +147,8 @@ if($success_message != '') {
                     <th>Service Period</th> 
                     <th>Location</th>
                     <th>Supervisor Allocation</th>
+                    <th>Technician Allocation</th>
+
                     <th>Client Feedback</th>
                     <th>Payment Status</th>  
                      <th>Booking Status</th>
@@ -190,6 +192,18 @@ if($success_message != '') {
                        <?php
                                            $statement1 = $pdo->prepare("SELECT * FROM tbl_staff WHERE full_name=?");
                                            $statement1->execute(array($row['supervisor']));
+                                           $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
+                                           foreach ($result1 as $row1) {
+                                               echo '<b>Name: </b>'.$row1['full_name'];
+                                               echo '<br><b>Phone: </b>'.$row1['phone'];
+                                               echo '<br><br>';
+                                           }
+                                           ?>
+                    </td>
+                    <td> 
+                       <?php
+                                           $statement1 = $pdo->prepare("SELECT * FROM tbl_staff WHERE full_name=?");
+                                           $statement1->execute(array($row['technician']));
                                            $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
                                            foreach ($result1 as $row1) {
                                                echo '<b>Name: </b>'.$row1['full_name'];

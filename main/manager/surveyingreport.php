@@ -153,7 +153,7 @@ if ($success_message != '') {
                         <tbody>
                             <?php
                             $i = 0;
-                            $statement = $pdo->prepare("SELECT * FROM tbl_bookings ");
+                            $statement = $pdo->prepare("SELECT * FROM tbl_bookings where payment_status='Approved' ");
                             $statement->execute();
                             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                             foreach ($result as $row) {
@@ -220,7 +220,7 @@ if ($success_message != '') {
 
                                         ?>
                                         <?php
-                                        if ($row['supervisor'] == 'Not Assigned') {
+                                        if ($row['supervisor'] == "'Not Assigned'") {
                                         ?>
                                             <a href="assign2.php?id=<?php echo $row['id']; ?>&task=Approved" class="btn btn-success btn-md">Assign Supervisor</a>
                                         <?php

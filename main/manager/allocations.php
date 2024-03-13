@@ -153,7 +153,7 @@ if ($success_message != '') {
                         <tbody>
                             <?php
                             $i = 0;
-                            $statement = $pdo->prepare("SELECT * FROM tbl_bookings ");
+                            $statement = $pdo->prepare("SELECT * FROM tbl_bookings where payment_status='Approved' ");
                             $statement->execute();
                             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                             foreach ($result as $row) {
