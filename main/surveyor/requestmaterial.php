@@ -20,7 +20,7 @@
                     <div class="card-body">
                         <form action="code.php" method="post">
                             <?php
-                            $con = mysqli_connect("localhost", "root", "", "nyabondobricks");
+                            $con = mysqli_connect("localhost", "root", "", "maishashades");
                             $brand_query = "SELECT * FROM requestsproduct";
                             $query_run = mysqli_query($con, $brand_query);
                             if (mysqli_num_rows($query_run) > 0) {

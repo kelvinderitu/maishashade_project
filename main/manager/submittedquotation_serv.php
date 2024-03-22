@@ -122,12 +122,12 @@ if($success_message != '') {
 ?>
 
 <center><div class="col-md-4 logo">
-			<h3>Bee-care Apiaries International Limited</h3><br>
-			P.O Box 4262, 01002, Thika East, Kiambu County<br>
-			Kisumu, Kenya<br>
-			Office Tel. +254 774823750<br>
-			Cellphone: +254 726 349853 / +254 720 420514/+254 791 053 285<br>
-			Email: info@beecareapiaries.com / beecareapiaries@gmail.com
+			<h3>Maisha car parking shades and Carports Limited</h3><br>
+		     Kimathi House, Nairobi CBD<br>
+			Nairobi, Kenya<br>
+			Office Tel. +2547060712320<br>
+			
+			Email: info@maishashades.co.ke
 			</div>
 </center>
 

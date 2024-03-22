@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-$con =mysqli_connect("localhost","root","","nyabondobricks");
+$con =mysqli_connect("localhost","root","","maishashades");
 if(isset($_POST['button'])){
     $id =$_POST['id'];
     

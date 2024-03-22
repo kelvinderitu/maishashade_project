@@ -1,6 +1,6 @@
 <?php
 // Create connection
-$con=mysqli_connect("localhost","root","","nyabondobricks");
+$con=mysqli_connect("localhost","root","","maishashades");
 
 // Check connection
 if (mysqli_connect_error())

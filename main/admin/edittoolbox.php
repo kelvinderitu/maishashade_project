@@ -3,7 +3,7 @@ $error_message = '';
 $success_message = '';
 
 try {
-    $pdo = new PDO("mysql:host=localhost;dbname=nyabondobricks", "root", "");
+    $pdo = new PDO("mysql:host=localhost;dbname=maishashades", "root", "");
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     die("Error connecting to the database: " . $e->getMessage());

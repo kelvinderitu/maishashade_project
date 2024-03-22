@@ -47,55 +47,55 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                         </div>
-                        
+
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6">
-                                
-                                <?php
-include 'dbconnect.php';
-$customer_message_id=$_GET['customer_message_id'];
-$qry= "SELECT * FROM tbl_tender_application WHERE customer_message_id='$customer_message_id'
-"; 
-$result=mysqli_query($conn,$qry);
-while($row=mysqli_fetch_array($result)){
-    
-?>                                    
-                                    <form role="form" action="edit.php" method="post">
-                                     
-                                        
-                                        <div class="form-group">
-                                            <label>Product Name</label>
-                                            <input class="form-control" type="text" readonly name="customer_name" value='<?php echo $row['product_name']; ?>' required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Product Quantity</label>
-                                            <input class="form-control" type="text" readonly name="customer_name" value='<?php echo $row['quantity']; ?>' required>
-                                        </div>
-                                 
-                                        <div class="form-group">
-                                            <label>New Quantity</label>
-                                            <input class="form-control" type="text" readonly name="customer_name" value='<?php echo $row['quantity']; ?>' required>
-                                        </div>
 
-                                       
-                                       
-                       <!-- id hidden grna input type ma "hidden" -->
-                      
-                                     
-    <input type="hidden" name="customer_message_id" value="<?php echo $row['customer_message_id'];?>">              
-                                    
-                                
-                                        
-                
-                                    
-                                    <button type="submit" class="btn btn-success">Submit</button>
-                                    </form>
+                                    <?php
+                                    include 'dbconnect.php';
+                                    $customer_message_id = $_GET['customer_message_id'];
+                                    $qry = "SELECT * FROM tbl_tender_application WHERE customer_message_id='$customer_message_id'
+";
+                                    $result = mysqli_query($conn, $qry);
+                                    while ($row = mysqli_fetch_array($result)) {
+
+                                    ?>
+                                        <form role="form" action="edit.php" method="post">
+
+
+                                            <div class="form-group">
+                                                <label>Product Name</label>
+                                                <input class="form-control" type="text" readonly name="customer_name" value='<?php echo $row['product_name']; ?>' required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Product Quantity</label>
+                                                <input class="form-control" type="text" readonly name="customer_name" value='<?php echo $row['quantity']; ?>' required>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>New Quantity</label>
+                                                <input class="form-control" type="text" readonly name="customer_name" value='<?php echo $row['quantity']; ?>' required>
+                                            </div>
+
+
+
+                                            <!-- id hidden grna input type ma "hidden" -->
+
+
+                                            <input type="hidden" name="customer_message_id" value="<?php echo $row['customer_message_id']; ?>">
+
+
+
+
+
+                                            <button type="submit" class="btn btn-success">Submit</button>
+                                        </form>
                                 </div>
-    <?php
-}
-?>
-                                
+                            <?php
+                                    }
+                            ?>
+
                             </div>
                             <!-- /.row (nested) -->
                         </div>
@@ -127,25 +127,25 @@ while($row=mysqli_fetch_array($result)){
 </body>
 
 <footer>
-        <p>&copy; <?php echo date("Y"); ?>: Kenya Clay</p>
-    </footer>
-	
-	<style>
-	footer{
-   background-color: #424558;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 35px;
-    text-align: center;
-    color: #CCC;
-}
+    <p>&copy; <?php echo date("Y"); ?>: Kenya Clay</p>
+</footer>
 
-footer p {
-    padding: 10.5px;
-    margin: 0px;
-    line-height: 100%;
-}
-	</style>
+<style>
+    footer {
+        background-color: #424558;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 35px;
+        text-align: center;
+        color: #CCC;
+    }
+
+    footer p {
+        padding: 10.5px;
+        margin: 0px;
+        line-height: 100%;
+    }
+</style>
 
 </html>

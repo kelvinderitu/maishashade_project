@@ -21,8 +21,8 @@ $statement = $pdo->prepare("SELECT * FROM tbl_payment where shipping_status='Pen
 $statement->execute();
 $pendingdeliveries = $statement->rowCount();
 
-$statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE driver!=' '");
-$statement->execute();
+$statement = $pdo->prepare("SELECT * FROM tbl_specialorders WHERE shipping_status=?");
+$statement->execute(array('pending'));
 $driver = $statement->rowCount();
 
 $statement = $pdo->prepare("SELECT * FROM tbl_subscriber WHERE subs_active='1'");
@@ -41,8 +41,8 @@ $statement = $pdo->prepare("SELECT * FROM tbl_payment");
 $statement->execute();
 $paymentrecord = $statement->rowCount();
 
-$statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE shipping_status=?");
-$statement->execute(array('Goods Delivered'));
+$statement = $pdo->prepare("SELECT * FROM tbl_bookings WHERE shipping_status=?");
+$statement->execute(array('Pending'));
 $completedstatus = $statement->rowCount();
 
 $statement = $pdo->prepare("SELECT * FROM tbl_customer_message");
@@ -76,7 +76,7 @@ $messages = $statement->rowCount();
                 <div class="inner">
                   <h3><?php echo $completedstatus; ?></h3>
 
-                  <p>Completed Deliveries</p>
+                  <p>Pending bookings Deliveries</p>
                 </div>
                 <div class="container">
                 <a href="approvedpayment.php"><font color="white"><i class="fa fa-eye"></i>&nbsp;View</font></a>
@@ -94,7 +94,7 @@ $messages = $statement->rowCount();
                 <div class="inner">
                   <h3><?php echo $driver; ?></h3>
 
-                  <p>Driver Allocations</p>
+                  <p>Pending Special Order Tasks</p>
                 </div>
                 <div class="container">
                 <a href="allocations.php"><font color="white"><i class="fa fa-eye"></i>&nbsp;View</font></a>

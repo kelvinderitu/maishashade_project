@@ -21,7 +21,7 @@ $statement = $pdo->prepare("SELECT * FROM tbl_bookings where technician_status='
 $statement->execute();
 $pendingdeliveries = $statement->rowCount();
 
-$statement = $pdo->prepare("SELECT * FROM tbl_bookings where technician='".$_SESSION['user']['full_name']."'ORDER by id DESC");
+$statement = $pdo->prepare("SELECT * FROM tbl_specialorders where designer_status='pending' and designer='".$_SESSION['user']['full_name']."'ORDER by id DESC");
 $statement->execute();
 $driver = $statement->rowCount();
 
@@ -41,8 +41,8 @@ $statement = $pdo->prepare("SELECT * FROM tbl_payment");
 $statement->execute();
 $paymentrecord = $statement->rowCount();
 
-$statement = $pdo->prepare("SELECT * FROM tbl_bookings WHERE technician_status = 'Delivered' AND technician = :full_name ORDER BY id DESC");
-$statement->execute(array(':full_name' => $_SESSION['user']['full_name']));
+$statement = $pdo->prepare("SELECT * FROM tbl_payment where technician_status='pending' and technician='".$_SESSION['user']['full_name']."'ORDER by id DESC");
+$statement->execute();
 $completedstatus = $statement->rowCount();
 
 
@@ -59,7 +59,7 @@ $messages = $statement->rowCount();
                 <div class="inner">
                   <h3><?php echo $pendingdeliveries; ?></h3>
 
-                  <p>Pending Task</p>
+                  <p>Pending booking Task</p>
                 </div>
                 <a href="myallocation.php">
                 <div class="icon">
@@ -75,7 +75,7 @@ $messages = $statement->rowCount();
                 <div class="inner">
                   <h3><?php echo $completedstatus; ?></h3>
 
-                  <p>Completed Task</p>
+                  <p>Pending Order Task</p>
                 </div>
                 <a href="approvedpayment.php">
                 <div class="icon">
@@ -91,7 +91,7 @@ $messages = $statement->rowCount();
                 <div class="inner">
                   <h3><?php echo $driver; ?></h3>
 
-                  <p>All task</p>
+                  <p>Pending Special Orders </p>
                 </div>
                 <a href="alldeliveries.php">
                 <div class="icon">

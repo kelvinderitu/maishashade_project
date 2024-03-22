@@ -17,7 +17,7 @@ $statement = $pdo->prepare("SELECT * FROM tbl_end_category");
 $statement->execute();
 $total_end_category = $statement->rowCount();
 
-$statement = $pdo->prepare("SELECT * FROM tbl_bookings where supervisor_status='pending' and engineer='" . $_SESSION['user']['full_name'] . "'ORDER by id DESC");
+$statement = $pdo->prepare("SELECT * FROM tbl_payment where supervisor_status='pending' and supervisor='" . $_SESSION['user']['full_name'] . "'ORDER by id DESC");
 $statement->execute();
 $pendingdeliveries = $statement->rowCount();
 
@@ -41,11 +41,12 @@ $statement = $pdo->prepare("SELECT * FROM tbl_payment");
 $statement->execute();
 $paymentrecord = $statement->rowCount();
 
-$statement = $pdo->prepare("SELECT * FROM tbl_payment where shipping_status='Goods Delivered' and driver='" . $_SESSION['user']['full_name'] . "'ORDER by id DESC");
-$statement->execute(array());
+$statement = $pdo->prepare("SELECT * FROM tbl_bookings where supervisor_status='pending' and supervisor='" . $_SESSION['user']['full_name'] . "'ORDER by id DESC");
+$statement->execute();
 $completedstatus = $statement->rowCount();
 
-$statement = $pdo->prepare("SELECT * FROM tbl_customer_message");
+
+$statement = $pdo->prepare("SELECT * FROM tbl_specialorders where supervisor_status='pending' and supervisor='" . $_SESSION['user']['full_name'] . "'ORDER by id DESC");
 $statement->execute();
 $messages = $statement->rowCount();
 ?>
@@ -58,7 +59,7 @@ $messages = $statement->rowCount();
         <div class="inner">
           <h3><?php echo $pendingdeliveries; ?></h3>
 
-          <p>Pending Task</p>
+          <p>Pending order Task</p>
         </div>
         <a href="myallocation.php">
           <div class="icon">
@@ -74,7 +75,7 @@ $messages = $statement->rowCount();
         <div class="inner">
           <h3><?php echo $completedstatus; ?></h3>
 
-          <p>Completed Task</p>
+          <p>Pending booking Tasks</p>
         </div>
         <a href="approvedpayment.php">
           <div class="icon">
@@ -93,7 +94,7 @@ $messages = $statement->rowCount();
         <div class="inner">
           <h3><?php echo $messages; ?></h3>
 
-          <p>Messages</p>
+          <p>Pending Special Orders</p>
         </div>
         <div class="icon">
           <i class="ionicons ion-android-checkbox-outline"></i>

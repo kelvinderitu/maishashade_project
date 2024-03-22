@@ -41,9 +41,13 @@ $statement = $pdo->prepare("SELECT * FROM tbl_payment");
 $statement->execute();
 $paymentrecord = $statement->rowCount();
 
-$statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE payment_status=?");
-$statement->execute(array('Completed'));
+$statement = $pdo->prepare("SELECT * FROM tbl_bookings WHERE payment_status=?");
+$statement->execute(array('Pending'));
 $completedpayment = $statement->rowCount();
+
+$statement = $pdo->prepare("SELECT * FROM tbl_specialorders WHERE payment_status=?");
+$statement->execute(array('pending'));
+$payment = $statement->rowCount();
 
 $statement = $pdo->prepare("SELECT * FROM tbl_customer_message");
 $statement->execute();
@@ -73,7 +77,7 @@ $messages = $statement->rowCount();
         <div class="inner">
           <h3><?php echo $completedpayment; ?></h3>
 
-          <p>Completed Order Payment</p>
+          <p>Pending  Services bookings</p>
         </div>
         <div class="icon">
           <i class="ionicons ion-clipboard"></i>
@@ -86,9 +90,9 @@ $messages = $statement->rowCount();
       <!-- small box -->
       <div class="small-box bg-secondary" box-shadow: 1px 1px 1px 1px #888888;">
         <div class="inner">
-          <h3><?php echo $paymentrecord; ?></h3>
+          <h3><?php echo $payment; ?></h3>
 
-          <p>All Order Payment Records</p>
+          <p>pending Special Orders</p>
         </div>
         <div class="icon">
           <i class="ionicons ion-android-dollar"></i>

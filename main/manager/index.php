@@ -20,7 +20,7 @@ $statement = $pdo->prepare("SELECT * FROM tbl_services where status='Active'");
 $statement->execute();
 $pendingdeliveries = $statement->rowCount();
 
-$statement = $pdo->prepare("SELECT * FROM tbl_bookings WHERE status='Approved'");
+$statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE technician!='' and  supervisor !=''");
 $statement->execute();
 $driver = $statement->rowCount();
 
@@ -44,7 +44,7 @@ $statement = $pdo->prepare("SELECT * FROM tbl_bookings WHERE status=?");
 $statement->execute(array('pending'));
 $completedstatus = $statement->rowCount();
 
-$statement = $pdo->prepare("SELECT * FROM tbl_bookings where technician='Not Assigned'");
+$statement = $pdo->prepare("SELECT * FROM tbl_specialorders WHERE designer!='' and  supervisor !=''");
 $statement->execute();
 $messages = $statement->rowCount();
 ?>
@@ -87,7 +87,7 @@ $messages = $statement->rowCount();
                 <div class="inner">
                   <h3><?php echo $driver; ?></h3>
 
-                  <p>Approved Bookings</p>
+                  <p>Pending orders</p>
                 </div>
                 <div class="icon">
                   <i class="ionicons ion-android-dollar"></i>
@@ -103,7 +103,7 @@ $messages = $statement->rowCount();
                 <div class="inner">
                   <h3><?php echo $messages; ?></h3>
 
-                  <p>Pending Allocations</p>
+                  <p>Pending Special orders</p>
                 </div>
                 <div class="icon">
                   <i class="ionicons ion-android-checkbox-outline"></i>

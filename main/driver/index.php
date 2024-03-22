@@ -21,7 +21,7 @@ $statement = $pdo->prepare("SELECT * FROM tbl_payment where shipping_status='Goo
 $statement->execute();
 $pendingdeliveries = $statement->rowCount();
 
-$statement = $pdo->prepare("SELECT * FROM tbl_payment where driver='".$_SESSION['user']['full_name']."'ORDER by id DESC");
+$statement = $pdo->prepare("SELECT * FROM tbl_specialorders where shipping_status='Goods On transit,It will delivered to your destination within short period of time.Thank You' or shipping_status='Pending' and driver='".$_SESSION['user']['full_name']."'");
 $statement->execute();
 $driver = $statement->rowCount();
 
@@ -41,8 +41,8 @@ $statement = $pdo->prepare("SELECT * FROM tbl_payment");
 $statement->execute();
 $paymentrecord = $statement->rowCount();
 
-$statement = $pdo->prepare("SELECT * FROM tbl_payment where shipping_status='Goods Delivered' and driver='".$_SESSION['user']['full_name']."'ORDER by id DESC");
-$statement->execute(array());
+$statement = $pdo->prepare("SELECT * FROM tbl_bookings where shipping_status='Goods On transit,It will delivered to your destination within short period of time.Thank You' or shipping_status='Pending' and driver='".$_SESSION['user']['full_name']."'");
+$statement->execute();
 $completedstatus = $statement->rowCount();
 
 $statement = $pdo->prepare("SELECT * FROM tbl_customer_message");
@@ -58,7 +58,7 @@ $messages = $statement->rowCount();
                 <div class="inner">
                   <h3><?php echo $pendingdeliveries; ?></h3>
 
-                  <p>Pending Deliveries</p>
+                  <p>Pending order Deliveries</p>
                 </div>
                 <div class="container">
                 <a href="myallocation.php"><font color="white"><i class="fa fa-eye"></i>&nbsp;View</font></a>
@@ -77,7 +77,7 @@ $messages = $statement->rowCount();
                 <div class="inner">
                   <h3><?php echo $completedstatus; ?></h3>
 
-                  <p>Completed Deliveries</p>
+                  <p>pending bookings Deliveries</p>
                 </div>
                 <div class="container">
                 <a href="approvedpayment.php"><font color="white"><i class="fa fa-eye"></i>&nbsp;View</font></a>
@@ -96,7 +96,7 @@ $messages = $statement->rowCount();
                 <div class="inner">
                   <h3><?php echo $driver; ?></h3>
 
-                  <p>All Deliveries</p>
+                  <p>Pending Special Orders Deliveries</p>
                 </div>
                 <div class="container">
                 <a href="alldeliveries.php"><font color="white"><i class="fa fa-eye"></i>&nbsp;View</font></a>

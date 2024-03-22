@@ -33,7 +33,7 @@
                                 if (isset($_POST['submit2'])) {
 
                                     $host = "localhost";
-                                    $dbname = "nyabondobricks";
+                                    $dbname = "maishashades";
                                     $username = "root";
                                     $password = "";
 

@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Nyabondo Bricks</title>
+    <title>Maisha Shades </title>
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -104,7 +104,7 @@
 </body>
 
 <footer>
-        <p>&copy; <?php echo date("Y"); ?> Nyabondo Bricks</p>
+        <p>&copy; <?php echo date("Y"); ?> Maisha Shades</p>
     </footer>
 	
 	<style>

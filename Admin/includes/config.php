@@ -4,7 +4,7 @@ ini_set('error_reporting', E_ALL);
 
 // DATABASE INFORMATION
 define('DATABASE_HOST', getenv('IP'));
-define('DATABASE_NAME', 'nyabondobricks');
+define('DATABASE_NAME', 'maishashades');
 define('DATABASE_USER', 'root');
 define('DATABASE_PASS', '');
 

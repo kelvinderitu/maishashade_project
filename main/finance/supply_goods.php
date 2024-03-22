@@ -45,72 +45,72 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                      
-                        
+
+
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6">
-                                
-                                <?php
-include 'dbconnect.php';
-$id=$_GET['id'];
-$qry= "SELECT * FROM tbl_tender_application where id='$id'
-"; 
-$result=mysqli_query($conn,$qry);
-while($row=mysqli_fetch_array($result)){
-    
-?>                                    
-                                    <form role="form" action="postsupply.php" method="post">
-                                     
-                                        
-                                    <input class="form-control"  type="hidden" readonly name="status" value='Supplied' required>
-                                        <div class="form-group">
-                                            <label>SUPPLY NAME</label>
-                                            <input class="form-control" readonly  name="subject" value='<?php echo $row['subject']; ?>' required>
-                                            
-                                        </div>
-                                        <div class="form-group">
-                                            <label>PRODUCT NAME</label>
-                                            <input class="form-control" readonly  name="product_name" value='<?php echo $row['product_name']; ?>' required>
-                                            
-                                        </div>
-                                        <div class="form-group">
-                                            <label>QUANTITY (In Tonnes)</label>
-                                            <input class="form-control" readonly  name="quantity" value='<?php echo $row['quantity']; ?>' required>
-                                            
-                                        </div>
-                                        <div class="form-group">
-                                            <label>PRICE PER UNIT</label>
-                                            <input class="form-control"  type="number" readonly name="price" value='<?php echo $row['price']; ?>' required>
-                                            
-                                        </div>
-                                        <div class="form-group">
-                                            <label>TOTAL PRICE</label>
-                                            <input class="form-control"  type="number" readonly name="total_amount" value='<?php echo $row['total_amount']; ?>' required>
-                                            
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Transaction Code</label>
-                                            <input class="form-control" minlength="10" type="text" maxlength="10"  name="transactioncode">
-                                        </div>
 
-                                       
-                       <!-- id hidden grna input type ma "hidden" -->
-                      
-                                     
-    <input type="hidden" name="id" value="<?php echo $row['id'];?>">              
-                                    
-                                
-                                        
-                
-                                    
-                                    <button type="submit" class="btn btn-success">Submit</button>
-                                    </form>
+                                    <?php
+                                    include 'dbconnect.php';
+                                    $id = $_GET['id'];
+                                    $qry = "SELECT * FROM tbl_tender_application where id='$id'
+";
+                                    $result = mysqli_query($conn, $qry);
+                                    while ($row = mysqli_fetch_array($result)) {
+
+                                    ?>
+                                        <form role="form" action="postsupply.php" method="post">
+
+
+                                            <input class="form-control" type="hidden" readonly name="status" value='Supplied' required>
+                                            <div class="form-group">
+                                                <label>SUPPLY NAME</label>
+                                                <input class="form-control" readonly name="subject" value='<?php echo $row['subject']; ?>' required>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label>PRODUCT NAME</label>
+                                                <input class="form-control" readonly name="product_name" value='<?php echo $row['product_name']; ?>' required>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label>QUANTITY (In Tonnes)</label>
+                                                <input class="form-control" readonly name="quantity" value='<?php echo $row['quantity']; ?>' required>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label>PRICE PER UNIT</label>
+                                                <input class="form-control" type="number" readonly name="price" value='<?php echo $row['price']; ?>' required>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label>TOTAL PRICE</label>
+                                                <input class="form-control" type="number" readonly name="total_amount" value='<?php echo $row['total_amount']; ?>' required>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Transaction Code</label>
+                                                <input class="form-control" minlength="10" type="text" maxlength="10" name="transactioncode">
+                                            </div>
+
+
+                                            <!-- id hidden grna input type ma "hidden" -->
+
+
+                                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+
+
+
+
+
+                                            <button type="submit" class="btn btn-success">Submit</button>
+                                        </form>
                                 </div>
-    <?php
-}
-?>
-                                
+                            <?php
+                                    }
+                            ?>
+
                             </div>
                             <!-- /.row (nested) -->
                         </div>
@@ -142,23 +142,23 @@ while($row=mysqli_fetch_array($result)){
 </body>
 
 
-	
-	<style>
-	footer{
-   background-color: #424558;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 35px;
-    text-align: center;
-    color: #CCC;
-}
 
-footer p {
-    padding: 10.5px;
-    margin: 0px;
-    line-height: 100%;
-}
-	</style>
+<style>
+    footer {
+        background-color: #424558;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 35px;
+        text-align: center;
+        color: #CCC;
+    }
+
+    footer p {
+        padding: 10.5px;
+        margin: 0px;
+        line-height: 100%;
+    }
+</style>
 
 </html>
