@@ -66,35 +66,45 @@ if (isset($_POST['form1'])) {
         $cust_timestamp = time();
 
         // saving into the database
+        $statement_country = $pdo->prepare("SELECT * FROM tbl_country WHERE country_id=?");
+        $statement_country->execute(array($_POST['cust_country']));
+        $country_result = $statement_country->fetch(PDO::FETCH_ASSOC);
+
+        $cust_address = $country_result['country_name']; // Assigning country_name to cust_address
+
+        // saving into the database
         $statement = $pdo->prepare("INSERT INTO tbl_customer (
-                                        cust_name,
-                                        cust_cname,
-                                        cust_lname,
-                                        cust_email,
-                                        cust_phone,
-                                        cust_country,
-                                        cust_city,
-                                        cust_state,
-                                        cust_zip,
-                                        cust_b_name,
-                                        cust_b_cname,
-                                        cust_b_phone,
-                                        cust_b_country,
-                                        cust_b_address,
-                                        cust_b_city,
-                                        cust_b_state,
-                                        cust_b_zip,
-                                        cust_s_name,
-                                        cust_s_cname,
-                                        cust_s_phone,
-                                        cust_s_country,
-                                        cust_s_address,
-                                        cust_password,
-                                        cust_token,
-                                        cust_datetime,
-                                        cust_timestamp,
-                                        cust_status
-                                    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            cust_name,
+            cust_cname,
+            cust_lname,
+            cust_email,
+            cust_phone,
+            cust_country,
+            cust_address,  -- Modified field
+            cust_city,
+            cust_state,
+            cust_zip,
+            cust_b_name,
+            cust_b_cname,
+            cust_b_phone,
+            cust_b_country,
+            cust_b_address,
+            cust_b_city,
+            cust_b_state,
+            cust_b_zip,
+            cust_s_name,
+            cust_s_cname,
+            cust_s_phone,
+            cust_s_country,
+            cust_s_address,
+            cust_password,
+            cust_token,
+            cust_datetime,
+            cust_timestamp,
+            cust_status
+        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+
+        // Execute the statement with modified cust_address value
         $statement->execute(array(
             strip_tags($_POST['cust_name']),
             strip_tags($_POST['cust_cname']),
@@ -102,6 +112,7 @@ if (isset($_POST['form1'])) {
             strip_tags($_POST['cust_email']),
             strip_tags($_POST['cust_phone']),
             strip_tags($_POST['cust_country']),
+            $cust_address,  // Modified field
             '',
             '',
             '',
@@ -124,7 +135,6 @@ if (isset($_POST['form1'])) {
             $cust_timestamp,
             0
         ));
-
         // Send email for confirmation of the account
         $to = $_POST['cust_email'];
 
@@ -189,59 +199,69 @@ if (isset($_POST['form1'])) {
                                     echo "<div class='success' style='padding: 10px;background:#f1f1f1;margin-bottom:20px;'>" . $success_message . "</div>";
                                 }
                                 ?>
+                                <div class="form-row">
 
-                                <div class="col-md-8 form-group">
-                                    <label for="">First Name *</label>
-                                    <input type="text" class="form-control" name="cust_name" value="<?php if (isset($_POST['cust_name'])) {
-                                                                                                        echo $_POST['cust_name'];
-                                                                                                    } ?>">
-                                </div>
-                                <div class="col-md-8 form-group">
-                                    <label for="">Last Name *</label>
-                                    <input type="text" class="form-control" name="cust_lname" value="<?php if (isset($_POST['cust_lname'])) {
-                                                                                                            echo $_POST['cust_lname'];
+                                    <div class="col-sm-3 form-group">
+                                        <label for="">First Name *</label>
+                                        <input type="text" class="form-control" name="cust_name" value="<?php if (isset($_POST['cust_name'])) {
+                                                                                                            echo $_POST['cust_name'];
                                                                                                         } ?>">
+                                    </div>
+
+                                    <div class="col-sm-3 form-group">
+                                        <label for="">Last Name *</label>
+                                        <input type="text" class="form-control" name="cust_lname" value="<?php if (isset($_POST['cust_lname'])) {
+                                                                                                                echo $_POST['cust_lname'];
+                                                                                                            } ?>">
+                                    </div>
                                 </div>
+
                                 <div class="col-md-8 form-group">
                                     <label for="">Gender</label><br>
                                     <input type="radio" name="cust_cname" value="Male" required="required">Male <input type="radio" name="cust_cname" value="Female" required="required">Female
                                 </div>
-                                <div class="col-md-8 form-group">
-                                    <label for=""><?php echo LANG_VALUE_94; ?> *</label>
-                                    <input type="email" class="form-control" name="cust_email" value="<?php if (isset($_POST['cust_email'])) {
-                                                                                                            echo $_POST['cust_email'];
-                                                                                                        } ?>">
+                                <div class="form-row">
+                                    <div class="col-sm-3 form-group">
+                                        <label for=""><?php echo LANG_VALUE_94; ?> *</label>
+                                        <input type="email" class="form-control" name="cust_email" value="<?php if (isset($_POST['cust_email'])) {
+                                                                                                                echo $_POST['cust_email'];
+                                                                                                            } ?>">
+                                    </div>
+                                    <div class="col-sm-3 form-group">
+                                        <label for=""><?php echo LANG_VALUE_104; ?> *</label>
+                                        <input type="tel" class="form-control" minlength="10" name="cust_phone" place-holder="0700000000" maxlength="10" value="<?php if (isset($_POST['cust_phone'])) {
+                                                                                                                                                                    echo $_POST['cust_phone'];
+                                                                                                                                                                } ?>">
+                                    </div>
                                 </div>
-                                <div class="col-md-8 form-group">
-                                    <label for=""><?php echo LANG_VALUE_104; ?> *</label>
-                                    <input type="tel" class="form-control" minlength="10" name="cust_phone" place-holder="0700000000" maxlength="10" value="<?php if (isset($_POST['cust_phone'])) {
-                                                                                                                                                                echo $_POST['cust_phone'];
-                                                                                                                                                            } ?>">
+                                <div class="form-row">
+                                    <div class="col-sm-8 form-group">
+                                        <label for="">County*</label>
+                                        <select name="cust_country" class="form-control select2">
+                                            <option value="">Select county</option>
+                                            <?php
+                                            $statement = $pdo->prepare("SELECT * FROM tbl_country ORDER BY country_name ASC");
+                                            $statement->execute();
+                                            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+                                            foreach ($result as $row) {
+                                            ?>
+                                                <option value="<?php echo $row['country_id']; ?>"><?php echo $row['country_name']; ?></option>
+                                            <?php
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-md-8 form-group">
-                                    <label for="">County*</label>
-                                    <select name="cust_country" class="form-control select2">
-                                        <option value="">Select county</option>
-                                        <?php
-                                        $statement = $pdo->prepare("SELECT * FROM tbl_country ORDER BY country_name ASC");
-                                        $statement->execute();
-                                        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                                        foreach ($result as $row) {
-                                        ?>
-                                            <option value="<?php echo $row['country_id']; ?>"><?php echo $row['country_name']; ?></option>
-                                        <?php
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
+                                <div class="form-row">
 
-                                <div class="col-md-6 form-group">
-                                    <label for=""><?php echo LANG_VALUE_96; ?> *</label>
-                                    <input type="password" class="form-control" name="cust_password">
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label for=""><?php echo LANG_VALUE_98; ?> *</label>
-                                    <input type="password" class="form-control" name="cust_re_password">
+                                    <div class="col-sm-2 form-group">
+                                        <label for=""><?php echo LANG_VALUE_96; ?> *</label>
+                                        <input type="password" class="form-control" name="cust_password">
+                                    </div>
+                                    <div class="col-sm-10 form-group">
+                                        <label for=""><?php echo LANG_VALUE_98; ?> *</label>
+                                        <input type="password" class="form-control" name="cust_re_password">
+                                    </div>
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label for=""></label>
@@ -253,7 +273,7 @@ if (isset($_POST['form1'])) {
                                 <div class="col-md-6 form-group">
                                     <button class="btn btn-warning"><a href="index.php">
                                             <font color="black"><i class="fa fa-arrow-left"></i>&nbsp;Back</font>
-                                    </a></button>
+                                        </a></button>
                                 </div>
                             </div>
                         </div>

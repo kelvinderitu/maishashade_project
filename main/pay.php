@@ -16,11 +16,7 @@ if (!isset($_SESSION['cart_p_id'])) {
 }
 ?>
 
-<div class="page-banner" style="background-image: url(assets/uploads/<?php echo $banner_checkout; ?>)">
-    <div class="overlay"></div>
-    <div class="page-banner-inner">
-    </div>
-</div>
+
 
 <div class="page">
     <div class="container">
@@ -167,8 +163,6 @@ if (!isset($_SESSION['cart_p_id'])) {
                         <div class="col-md-4">
 
                             <div class="row">
-
-
                                 <div class="col-md-12 form-group">
                                     <label for=""><?php echo LANG_VALUE_34; ?> *</label>
                                     <select name="payment_method" class="form-control select2" id="advFieldsStatus">

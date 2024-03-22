@@ -212,7 +212,8 @@ if($success_message != '') {
                            $statement1->execute(array($row['customer_id']));
                            $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
                            foreach ($result1 as $row1) {
-                                echo '<br><b>Location Details:</b> '.$row1['cust_s_address'];
+                                echo '<b>specific Details:</b> '.$row1['cust_s_address'] ;
+                                echo '<br><b>County:</b> '.$row1['cust_address'] ;
                                
                                 echo '<br><br>';
                            }

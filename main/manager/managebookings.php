@@ -192,7 +192,7 @@ if ($success_message != '') {
                                     </td>
                                     <td>
                                         <b>County :</b><?php echo $row['county']; ?><br>
-                                        <b>Location Details: </b><?php echo $row['location']; ?>
+                                        <b>Specific Location: </b><?php echo $row['location']; ?>
                                     </td>
                                     <td>
                                         <?php echo $row['payment_status'];
