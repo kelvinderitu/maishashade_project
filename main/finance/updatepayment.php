@@ -1,7 +1,7 @@
 <?php
 require_once('header.php');
 $host = 'localhost';
-$dbname = 'nyabondobricks';
+$dbname = 'maishashades';
 $user = 'root';
 $password = '';
 
@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
         <div class="row">
             <div class="col-lg-12">
                 <CENTER>
-                    <h5 class="page-header">UPATING PAYMENT ON SPECIAL ORDERS </h5>
+                    <h5 class="page-header">UPDATING PAYMENT ON SPECIAL ORDERS </h5>
                 </CENTER>
                 <a class="btn btn-sm btn-warning" href="specialorder.php?dashboard">Back</a>
             </div><br>

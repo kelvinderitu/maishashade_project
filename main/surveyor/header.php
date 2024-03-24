@@ -73,7 +73,7 @@ if (!isset($_SESSION['user'])) {
 										<a href="profile-edit.php" class="btn btn-default btn-flat">Edit Profile</a>
 									</div>
 									<div>
-										<a href="../login-staff.php" class="btn btn-default btn-flat">Log out</a>
+										<a href="logout.php" class="btn btn-default btn-flat">Log out</a>
 									</div>
 								</li>
 							</ul>

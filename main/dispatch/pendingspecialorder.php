@@ -122,7 +122,7 @@ if ($success_message != '') {
 
 <section class="content-header">
     <div class="content-header-left">
-        <h3>Approved Pending Services Delivery</h3>
+        <h3>Pending Special Orders </h3>
     </div>
 </section>
 
@@ -145,6 +145,8 @@ if ($success_message != '') {
                                 <th>Location</th>
                                
                                 <th>driver</th>
+                                <th>shipping_status</th>
+
                                 <th>Client Feedback</th>
                                 
                                
@@ -154,7 +156,7 @@ if ($success_message != '') {
                         <tbody>
                             <?php
                             $i = 0;
-                            $statement = $pdo->prepare("SELECT * FROM tbl_specialorders where driver_status='pending' and payment_status='Approved' ORDER by id DESC");
+                            $statement = $pdo->prepare("SELECT * FROM tbl_specialorders where shipping_status='pending' and payment_status='Approved' ORDER by id DESC");
                             $statement->execute();
                             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                             foreach ($result as $row) {
@@ -178,6 +180,9 @@ if ($success_message != '') {
                                    
                                     <td>
                                         <?php echo $row['driver']; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row['shipping_status']; ?>
                                     </td>
 
                                     <td>

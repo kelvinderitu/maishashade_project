@@ -72,6 +72,7 @@ if ($success_message != '') {
                                     </td>
 
                                     <td><?php echo $row['cust_remark']; ?><br>
+                                    <?php echo $row['cust_comment']; ?><br>
                                         
                                     </td>
                                     <td>

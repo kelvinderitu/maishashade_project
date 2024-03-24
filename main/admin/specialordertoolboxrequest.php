@@ -173,7 +173,7 @@ if($success_message != '') {
                         <tbody>
                             <?php
                             $i=0;
-                            $statement = $pdo->prepare("SELECT * FROM tbl_bookings WHERE technician_request='Approve'");
+                            $statement = $pdo->prepare("SELECT * FROM tbl_specialorders WHERE designer_request='Approve'");
                             $statement->execute();
                             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
@@ -182,13 +182,13 @@ if($success_message != '') {
                             ?>
                                 <tr>
                                     <td><?php echo $i; ?></td>
-                                    <td><?php echo $row['technician']; ?></td>
+                                    <td><?php echo $row['Designer']; ?></td>
                                     <td>
-                                        <?php echo $row['technician_request']; ?><br><br>
+                                        <?php echo $row['designer_request']; ?><br><br>
                                         <?php
-                                        if($row['technician_request']=='Approve') {
+                                        if($row['designer_request']=='Approve') {
                                         ?>
-                                            <a href="request-status.php?id=<?php echo $row['id']; ?>&task=submitted" class="btn btn-success btn-xs" style="width:50%;margin-bottom:4px;">Approve</a>
+                                            <a href="specialordertoolstatus.php?id=<?php echo $row['id']; ?>&task=submitted" class="btn btn-success btn-xs" style="width:50%;margin-bottom:4px;">Approve</a>
                                         <?php
                                        ?>
                                     </td>

@@ -142,7 +142,7 @@ if($success_message != '') {
 			    <tr>
 			        <th>#</th>
                     <th>Customer</th>
-			        <th>Order Num</th>
+			        <th>Order Materials</th>
                     <th>Driver Details</th>
                      <th>Delivery Status</th>
                      <th>Destination details</th>
@@ -177,7 +177,7 @@ if($success_message != '') {
                            $statement1->execute(array($row['payment_id']));
                            $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
                            foreach ($result1 as $row1) {
-                                echo ''.$row1['id'];
+                                echo ''.$row1['product_name'];
                            }
                            ?>
                         </td>

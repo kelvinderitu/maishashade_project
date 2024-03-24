@@ -1,6 +1,6 @@
 <?php
 require_once('header.php');
-$con = new mysqli('localhost', 'root', '', 'nyabondobricks');
+$con = new mysqli('localhost', 'root', '', 'maishashades');
 
 if ($con->connect_error) {
     die("Connection failed: " . $con->connect_error);
@@ -24,7 +24,7 @@ date_default_timezone_set('America/Los_Angeles');
 $dbhost = 'localhost';
 
 // Database Name
-$dbname = 'nyabondobricks';
+$dbname = 'maishashades';
 
 // Database Username
 $dbuser = 'root';
@@ -97,7 +97,7 @@ if (isset($_POST['add_product_btn'])) {
     $filename = time() . '.' . $image_ext;
 
     // Assuming $_SESSION['customer']['cust_lname'] is the correct key
-    $full_name = $_SESSION['customer']['technician'] . ' ' . $_SESSION['customer']['cust_lname'];
+    $full_name = $_SESSION['customer']['cust_name'] . ' ' . $_SESSION['customer']['cust_lname'];
 
     $statement = $pdo->prepare("INSERT INTO tbl_specialorders( 
         customer_id,

@@ -130,11 +130,7 @@ if(!isset($_SESSION['user'])) {
                             <i class="fa fa-truck"></i> <span>Completed  Special orders Allocations</span>
                         </a>
                     </li>
-					<li class="treeview <?php if( ($cur_page == 'order.php') ) {echo 'active';} ?>">
-                        <a href="alldeliveries.php">
-                            <i class="fa fa-truck"></i> <span>All Deliveries</span>
-                        </a>
-                    </li>
+					
 					<li class="treeview <?php if( ($cur_page == 'faq.php') ) {echo 'active';} ?>">
 			          <a href="register/inbox.php">
 			            <i class="fa fa-envelope"></i> <span>Inbox</span>

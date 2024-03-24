@@ -220,7 +220,7 @@ if ($success_message != '') {
 
                                         ?>
                                         <?php
-                                        if ($row['supervisor'] == "'Not Assigned'") {
+                                        if ($row['supervisor'] == "Not Assigned") {
                                         ?>
                                             <a href="assign2.php?id=<?php echo $row['id']; ?>&task=Approved" class="btn btn-success btn-md">Assign Supervisor</a>
                                         <?php

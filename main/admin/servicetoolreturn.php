@@ -34,7 +34,7 @@ if (isset($_POST['form1'])) {
         }
 
         $order_detail = '';
-        $statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE payment_id=? AND payment_status='Pending'");
+        $statement = $pdo->prepare("SELECT * FROM tbl_payment WHERE payment_id=?");
         $statement->execute(array($_POST['payment_id']));
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         foreach ($result as $row) {
@@ -122,85 +122,50 @@ if ($success_message != '') {
 
 <section class="content-header">
     <div class="content-header-left">
-        <h3>Manage Payment</h3>
+        <h3>Returned Toolbox</h3>
     </div>
 </section>
 
-
 <section class="content">
-
     <div class="row">
         <div class="col-md-12">
-
-
-            <div class="box box-info">
-
+            <div class="box box-success">
                 <div class="box-body table-responsive">
                     <table id="example1" class="table table-bordered table-hover table-striped">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Customer Details</th>
-                                <th>Product Image</th>
-                                <th>Location</th>
-                                <th>Payment Details</th>
-
-                                <th>Action</th>
+                                <th>Name</th>
+                                <th>Action </th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $i = 0;
-                            $statement = $pdo->prepare("SELECT * FROM tbl_specialorders WHERE  payment_status='pending'ORDER by id DESC");
+                            $statement = $pdo->prepare("SELECT * FROM tbl_bookings WHERE technician_return='returned'");
                             $statement->execute();
                             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
                             foreach ($result as $row) {
                                 $i++;
                             ?>
-                                <tr class="<?php if ($row['payment_status'] == 'Pending') {
-                                                echo 'bg-r';
-                                            } else {
-                                                echo 'bg-g';
-                                            } ?>">
+                                <tr>
                                     <td><?php echo $i; ?></td>
+                                    <td><?php echo $row['technician']; ?></td>
                                     <td>
-                                        <b>Name:</b><br> <?php echo $row['customer_fullName']; ?><br>
-                                        <b>Email:</b><br> <?php echo $row['customer_email']; ?><br><br>
-                                    </td>
-                                    <td><img src="../services/uploads/<?php echo $row['image']; ?>" style="width: 200px;"></td>
-                                    <td>
-                                        <b>County: </b><?php echo $row['county']; ?><br>
-                                        <b>Specific Location: </b><?php echo $row['detail_location']; ?><br>
-                                    </td>
-                                    <td>Ksh<?php echo $row['paid_amount']; ?><br><br>
-                                       <b>Reference number:</b><br><?php echo $row['transaction_info'];?><br><br>
-                                       <b>Account:</b><br><?php echo $row['Bank_List'];?>
-                                    </td>
-
-                                    <td>
-                                        <?php echo $row['payment_status']; ?>
-                                        <br><br>
                                         <?php
-                                        if ($row['payment_status'] == 'pending') {
-                                            if ($row['transaction_info'] != '') {
+                                        if ($row['technician_return'] == 'returned') {
                                         ?>
-                                                <a href="special-order-change-status.php?id=<?php echo $row['id']; ?>&task=Approved" class="btn btn-success btn-xs" style="width:100%;margin-bottom:4px;">Approve</a>
-
-                                                <?php
-
-
-                                                if ($row['order_status'] == 'In Process') {
-                                                ?>
-
-                                                    <a href="special-order-change-status-rejected.php?id=<?php echo $row['id']; ?>&task=Rejected&task2=Rejected" class="btn btn-xs" style="width:100%; margin-bottom:4px; background-color: red; color: white;">Reject</a>
-
+                                            <a href="return-status2.php?id=<?php echo $row['id']; ?>&task=confirmed" class="btn btn-success btn-xs" style="width:85%;margin-bottom:4px;">Confirm</a>
                                         <?php
-                                                }
-                                            }
+                                            // Update quantity when Confirm button is clicked
+                                            $toolbox_name = $row['toolbox_name'];
+                                            $updateToolbox = $pdo->prepare("UPDATE tbl_request_toolbox SET quantity = quantity + 1 WHERE toolbox_name = ?");
+                                            $updateToolbox->execute(array($toolbox_name));
                                         }
-                                        ?>
+                                        ?><br><br>
+                                        <?php echo $row['technician_return']; ?><br><br>
                                     </td>
-
                                 </tr>
                             <?php
                             }
@@ -209,10 +174,9 @@ if ($success_message != '') {
                     </table>
                 </div>
             </div>
-
-
+        </div>
+    </div>
 </section>
-
 
 <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -231,6 +195,5 @@ if ($success_message != '') {
         </div>
     </div>
 </div>
-
 
 <?php require_once('footer.php'); ?>

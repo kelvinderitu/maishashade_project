@@ -88,7 +88,7 @@ $messages = $statement->rowCount();
                   $serviceid = isset($_GET['serviceid']) ? $_GET['serviceid'] : null;
                   
                   $sql = "SELECT *FROM tbl_services  ";
-                  $dbh = new PDO('mysql:host=localhost;dbname=nyabondobricks', 'root', '');
+                  $dbh = new PDO('mysql:host=localhost;dbname=maishashades', 'root', '');
 
                   $query = $dbh->prepare($sql);
                   $query->execute();

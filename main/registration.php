@@ -201,14 +201,14 @@ if (isset($_POST['form1'])) {
                                 ?>
                                 <div class="form-row">
 
-                                    <div class="col-sm-3 form-group">
+                                    <div class="col-sm-6 form-group">
                                         <label for="">First Name *</label>
                                         <input type="text" class="form-control" name="cust_name" value="<?php if (isset($_POST['cust_name'])) {
                                                                                                             echo $_POST['cust_name'];
                                                                                                         } ?>">
                                     </div>
 
-                                    <div class="col-sm-3 form-group">
+                                    <div class="col-sm-6 form-group">
                                         <label for="">Last Name *</label>
                                         <input type="text" class="form-control" name="cust_lname" value="<?php if (isset($_POST['cust_lname'])) {
                                                                                                                 echo $_POST['cust_lname'];
@@ -221,13 +221,13 @@ if (isset($_POST['form1'])) {
                                     <input type="radio" name="cust_cname" value="Male" required="required">Male <input type="radio" name="cust_cname" value="Female" required="required">Female
                                 </div>
                                 <div class="form-row">
-                                    <div class="col-sm-3 form-group">
+                                    <div class="col-sm-6 form-group">
                                         <label for=""><?php echo LANG_VALUE_94; ?> *</label>
                                         <input type="email" class="form-control" name="cust_email" value="<?php if (isset($_POST['cust_email'])) {
                                                                                                                 echo $_POST['cust_email'];
                                                                                                             } ?>">
                                     </div>
-                                    <div class="col-sm-3 form-group">
+                                    <div class="col-sm-6 form-group">
                                         <label for=""><?php echo LANG_VALUE_104; ?> *</label>
                                         <input type="tel" class="form-control" minlength="10" name="cust_phone" place-holder="0700000000" maxlength="10" value="<?php if (isset($_POST['cust_phone'])) {
                                                                                                                                                                     echo $_POST['cust_phone'];
@@ -254,11 +254,11 @@ if (isset($_POST['form1'])) {
                                 </div>
                                 <div class="form-row">
 
-                                    <div class="col-sm-2 form-group">
+                                    <div class="col-sm-8 form-group">
                                         <label for=""><?php echo LANG_VALUE_96; ?> *</label>
                                         <input type="password" class="form-control" name="cust_password">
                                     </div>
-                                    <div class="col-sm-10 form-group">
+                                    <div class="col-sm-8 form-group">
                                         <label for=""><?php echo LANG_VALUE_98; ?> *</label>
                                         <input type="password" class="form-control" name="cust_re_password">
                                     </div>

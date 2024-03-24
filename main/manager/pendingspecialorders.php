@@ -47,7 +47,7 @@ $id = isset($_GET['id']) ? $_GET['id'] : null;
                         <tbody>
                             <?php
                             $i = 0;
-                            $statement = $pdo->prepare("SELECT * FROM tbl_specialorders WHERE  payment_status != 'Rejected' and paid_amount !='0' and supervisor='' and Designer=''");
+                            $statement = $pdo->prepare("SELECT * FROM tbl_specialorders WHERE (payment_status != 'Rejected' AND payment_status != 'Pending') AND shipping_status != 'Not Available' AND (supervisor = '' OR Designer = '')");
                             $statement->execute();
                             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                             foreach ($result as $row) {

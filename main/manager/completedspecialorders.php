@@ -79,7 +79,10 @@ $id = isset($_GET['id']) ? $_GET['id'] : null;
                                     <td><?php echo $row['Designer']; ?></td>
                                     <td><?php echo $row['order_status']; ?></td>
 
-                                    <td><?php echo $row['cust_remark']; ?></td>
+                                    <td><?php echo $row['cust_remark']; ?><br>
+                                    <?php echo $row['cust_comment']; ?>
+                                
+                                </td>
 
                                     <td><?php echo $row['shipping_status']; ?></td>
                                        

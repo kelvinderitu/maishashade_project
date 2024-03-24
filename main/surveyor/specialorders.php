@@ -172,7 +172,7 @@ if ($success_message != '') {
                                     </td>
                                     <td><img src="../services/uploads/<?php echo $row['image']; ?>" style="width: 200px;"></td>
                                     <td>
-                                        <?php echo $row['product details']; ?>
+                                        
                                         Date Of Order:<?php echo $row['payment_date'] ?>
 
 
